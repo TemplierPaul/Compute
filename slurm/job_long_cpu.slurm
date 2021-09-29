@@ -30,7 +30,6 @@
 echo '
 print("Long")
 import gym
-import dqnes
 ' | python
 
 echo $cmd

@@ -35,7 +35,6 @@
 echo '
 print("Light")
 import gym
-import dqnes
 ' | python
 
 echo $cmd
