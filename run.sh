@@ -35,6 +35,9 @@ do
                 dqn)
                 slurm_file="$path/slurm/job_light_gpu.slurm"
                 ;;
+                mpi)
+                slurm_file="$path/slurm/job_mpi.slurm"
+                ;;
                 none)
                 slurm_file=""
                 ;;
