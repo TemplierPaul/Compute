@@ -1,42 +1,43 @@
 #!/bin/bash                                                                                                                                                                                                        
                                                                                                                                                                                                                    
-#SBATCH -J Light
-#SBATCH --nodes=1
+#SBATCH -J MPI
 
-# Test
-# SBATCH --ntasks=2
-# SBATCH --ntasks-per-node=2
-# SBATCH --time=00:05:00
+# SBATCH -N 16
+# SBATCH --ntasks-per-node=4
 
-# Run
-#SBATCH --ntasks=2
-#SBATCH --ntasks-per-node=2
-#SBATCH --time=24:00:00
-#SBATCH --mem=18G
-
-# GPU
-# SBATCH --partition=gpu
-# SBATCH --gres=gpu:1
-
-# Big memory
-# SBATCH --partition=bigmem
-
+#SBATCH -n 300
 #SBATCH --ntasks-per-core=1
+#SBATCH --time=01:00:00
+
+#SBATCH --partition=medium
+
 #SBATCH --begin=now
 #SBATCH --mail-user=paul.templier@isae-supaero.fr
 #SBATCH --mail-type=ALL
 
-# module purge
 # module load python/3.7
 # conda init bash
 # conda activate myenv
-# which python
 
+export OMP_NUM_THREADS=1
+
+module purge
+module load python/3.7
+module load gcc/8.2.0
+module load openmpi/4.0.0-gcc8.2
+module load mpi4py/3.0.1-openmpi4.0.0-gcc8.2-python3.7
+
+cd /home/disc/p.templier/parallelpy
+source pyenv/bin/activate
+echo $(which python)
+cd
+
+# srun
 echo '
-print("Light")
+print("MPI")
 import gym
 ' | python
 
 echo $cmd
-$cmd
+srun $cmd 
 

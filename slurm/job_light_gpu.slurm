@@ -31,7 +31,6 @@
 echo '
 print("DQN")
 import gym
-import dqnes
 ' | python
 
 echo $cmd

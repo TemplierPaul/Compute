@@ -34,7 +34,6 @@
 echo '
 print("GPU")
 import gym
-import dqnes
 ' | python
 
 echo $cmd
