@@ -1,0 +1,70 @@
+default:
+  cpus:
+    pando: 24
+    calmip: 36
+    localhost: 8
+    ninox: 16
+  gpu: False
+  time: 0-12:00:00
+  mail: True
+  mail-user: paul.templier@isae-supaero.fr
+
+sentinel:
+  cpus: 1
+  time: 1-00:00:00
+
+single:
+  cpus: 1
+  time: 01:00:00
+
+test:
+  cpus: 1
+  time: 00:05:00
+  partition:
+    pando: debug
+
+light:
+  cpus:
+    pando: 48
+    calmip: 72
+    localhost: 8
+    ninox: 16
+  time: 1-00:00:00
+
+medium:
+  cpus:
+    pando: 48
+    calmip: 72
+    localhost: 8
+    ninox: 16
+  time: 1-00:00:00
+
+heavy:
+  cpus:
+    pando: 384
+    calmip: 396
+    localhost: 8
+    ninox: 16
+  partition:
+    pando: medium
+  time: 1-00:00:00
+
+# SPECIFIC CONFIGS
+
+mujoco:
+  cpus:
+    pando: 48
+    calmip: 72
+    localhost: 8
+    ninox: 16
+  time: 1-00:00:00
+
+atari:
+  cpus:
+    pando: 384
+    calmip: 396
+    localhost: 8
+    ninox: 16
+  partition:
+    pando: medium
+  time: 1-00:00:00

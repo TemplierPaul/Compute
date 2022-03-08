@@ -1,0 +1,107 @@
+pando , 1289083 , --env=Pong-v0 --theta_init_std=0.5 --theta_init_bias=0 
+pando , 1289084 , --env=Pong-v0 --theta_init_std=0.05 --theta_init_bias=0.1 
+pando , 1289085 , --env=Pong-v0 --theta_init_std=0.5 --theta_init_bias=0 
+pando , 1289086 , --env=Pong-v0 --theta_init_bias=0 --xavier_init 
+pando , 1289087 , --env=Pong-v0 --theta_init_std=0.5 --theta_init_bias=0 
+pando , 1289088 , --env=Pong-v0 --theta_init_std=0.05 --theta_init_bias=0.1 
+pando , 1289089 , --env=Pong-v0 --theta_init_std=0.5 --theta_init_bias=0 
+pando , 1289090 , --env=Pong-v0 --theta_init_bias=0 --xavier_init 
+pando ,  , --freq=20 
+pando , 1289092 , --env=Pong-v0 --theta_init_std=0.5 --theta_init_bias=0 
+pando , 1289093 , --env=Pong-v0 --theta_init_std=0.05 --theta_init_bias=0.1 
+pando , 1289094 , --env=Pong-v0 --theta_init_std=0.5 --theta_init_bias=0 
+pando , 1289095 , --env=Pong-v0 --theta_init_bias=0 --xavier_init 
+pando , 1289096 , --freq=20 
+pando , 1289097 , --env=Pong-v0 --theta_init_std=0.5 --theta_init_bias=0 
+pando , 1289098 , --env=Pong-v0 --theta_init_std=0.05 --theta_init_bias=0.1 
+pando , 1289099 , --env=Pong-v0 --theta_init_std=0.5 --theta_init_bias=0 
+pando , 1289100 , --env=Pong-v0 --theta_init_bias=0 --xavier_init 
+pando , 1289101 , --freq=20 
+pando , 1289102 , --env=Pong-v0 --theta_init_std=0.5 --theta_init_bias=0 
+pando , 1289103 , --env=Pong-v0 --theta_init_std=0.05 --theta_init_bias=0.1 
+pando , 1289104 , --env=Pong-v0 --theta_init_std=0.5 --theta_init_bias=0 
+pando , 1289105 , --env=Pong-v0 --theta_init_bias=0 --xavier_init 
+pando , 1289106 , --freq=20 
+pando , 1291977 , --save_freq=50 --preset pando mujoco openai --tag=new_openai --pop_per_cpu=2 --net=mujoco-light --env=HalfCheetah-v2 
+pando , 1291978 , --save_freq=50 --preset pando mujoco openai --tag=new_openai --pop_per_cpu=2 --net=mujoco-light --env=InvertedDoublePendulum-v2 
+pando , 1291979 , --save_freq=50 --preset pando mujoco openai --tag=new_openai --pop_per_cpu=2 --net=mujoco-discrete --env=Swimmer-v2 
+pando , 1291980 , --save_freq=50 --preset pando mujoco openai --tag=new_openai --pop_per_cpu=2 --net=mujoco-discrete --env=Hopper-v2 
+pando , 1291981 , --save_freq=50 --preset pando mujoco openai --tag=new_openai --pop_per_cpu=2 --net=mujoco-light --env=InvertedPendulum-v2 
+pando , 1291982 , --save_freq=50 --preset pando mujoco openai --tag=new_openai --pop_per_cpu=2 --net=mujoco-light --env=Walker2d-v2 
+pando , 1291984 , --save_freq=50 --preset pando mujoco openai --tag=new_openai --pop_per_cpu=2 --net=mujoco-light --env=HalfCheetah-v2 
+pando , 1291985 , --save_freq=50 --preset pando mujoco openai --tag=new_openai --pop_per_cpu=2 --net=mujoco-light --env=InvertedDoublePendulum-v2 
+pando , 1291986 , --save_freq=50 --preset pando mujoco openai --tag=new_openai --pop_per_cpu=2 --net=mujoco-discrete --env=Swimmer-v2 
+pando , 1291987 , --save_freq=50 --preset pando mujoco openai --tag=new_openai --pop_per_cpu=2 --net=mujoco-discrete --env=Hopper-v2 
+pando , 1291988 , --save_freq=50 --preset pando mujoco openai --tag=new_openai --pop_per_cpu=2 --net=mujoco-light --env=InvertedPendulum-v2 
+pando , 1291989 , --save_freq=50 --preset pando mujoco openai --tag=new_openai --pop_per_cpu=2 --net=mujoco-light --env=Walker2d-v2 
+pando , 1291993 , --save_freq=50 --preset pando mujoco openai --tag=new_openai_02 ----es_sigma=0.02 --pop_per_cpu=2 --net=mujoco-light --env=HalfCheetah-v2 
+pando , 1291994 , --save_freq=50 --preset pando mujoco openai --tag=new_openai_02 ----es_sigma=0.02 --pop_per_cpu=2 --net=mujoco-light --env=InvertedDoublePendulum-v2 
+pando , 1291995 , --save_freq=50 --preset pando mujoco openai --tag=new_openai_02 ----es_sigma=0.02 --pop_per_cpu=2 --net=mujoco-discrete --env=Swimmer-v2 
+pando , 1291996 , --save_freq=50 --preset pando mujoco openai --tag=new_openai_02 ----es_sigma=0.02 --pop_per_cpu=2 --net=mujoco-discrete --env=Hopper-v2 
+pando , 1291997 , --save_freq=50 --preset pando mujoco openai --tag=new_openai_02 ----es_sigma=0.02 --pop_per_cpu=2 --net=mujoco-light --env=InvertedPendulum-v2 
+pando , 1291998 , --save_freq=50 --preset pando mujoco openai --tag=new_openai_02 ----es_sigma=0.02 --pop_per_cpu=2 --net=mujoco-light --env=Walker2d-v2 
+pando , 1291999 , --save_freq=50 --preset pando mujoco openai --tag=new_openai_02 ----es_sigma=0.02 --pop_per_cpu=2 --net=mujoco-light --env=HalfCheetah-v2 
+pando , 1292000 , --save_freq=50 --preset pando mujoco openai --tag=new_openai_02 ----es_sigma=0.02 --pop_per_cpu=2 --net=mujoco-light --env=InvertedDoublePendulum-v2 
+pando , 1292001 , --save_freq=50 --preset pando mujoco openai --tag=new_openai_02 ----es_sigma=0.02 --pop_per_cpu=2 --net=mujoco-discrete --env=Swimmer-v2 
+pando , 1292002 , --save_freq=50 --preset pando mujoco openai --tag=new_openai_02 ----es_sigma=0.02 --pop_per_cpu=2 --net=mujoco-discrete --env=Hopper-v2 
+pando , 1292003 , --save_freq=50 --preset pando mujoco openai --tag=new_openai_02 ----es_sigma=0.02 --pop_per_cpu=2 --net=mujoco-light --env=InvertedPendulum-v2 
+pando , 1292004 , --save_freq=50 --preset pando mujoco openai --tag=new_openai_02 ----es_sigma=0.02 --pop_per_cpu=2 --net=mujoco-light --env=Walker2d-v2 
+pando , 1292005 , --save_freq=50 --preset pando mujoco openai --tag=new_openai_02 --es_sigma=0.02 --pop_per_cpu=2 --net=mujoco-light --env=HalfCheetah-v2 
+pando , 1292006 , --save_freq=50 --preset pando mujoco openai --tag=new_openai_02 --es_sigma=0.02 --pop_per_cpu=2 --net=mujoco-light --env=InvertedDoublePendulum-v2 
+pando , 1292007 , --save_freq=50 --preset pando mujoco openai --tag=new_openai_02 --es_sigma=0.02 --pop_per_cpu=2 --net=mujoco-discrete --env=Swimmer-v2 
+pando , 1292008 , --save_freq=50 --preset pando mujoco openai --tag=new_openai_02 --es_sigma=0.02 --pop_per_cpu=2 --net=mujoco-discrete --env=Hopper-v2 
+pando , 1292009 , --save_freq=50 --preset pando mujoco openai --tag=new_openai_02 --es_sigma=0.02 --pop_per_cpu=2 --net=mujoco-light --env=InvertedPendulum-v2 
+pando , 1292010 , --save_freq=50 --preset pando mujoco openai --tag=new_openai_02 --es_sigma=0.02 --pop_per_cpu=2 --net=mujoco-light --env=Walker2d-v2 
+pando , 1292011 , --save_freq=50 --preset pando mujoco openai --tag=weight_decay --es_sigma=0.02 --es_wd=0.01 --pop_per_cpu=2 --net=mujoco-light --env=HalfCheetah-v2 
+pando , 1292012 , --save_freq=50 --preset pando mujoco openai --tag=weight_decay --es_sigma=0.02 --es_wd=0.01 --pop_per_cpu=2 --net=mujoco-light --env=InvertedDoublePendulum-v2 
+pando , 1292013 , --save_freq=50 --preset pando mujoco openai --tag=weight_decay --es_sigma=0.02 --es_wd=0.01 --pop_per_cpu=2 --net=mujoco-discrete --env=Swimmer-v2 
+pando , 1292014 , --save_freq=50 --preset pando mujoco openai --tag=weight_decay --es_sigma=0.02 --es_wd=0.01 --pop_per_cpu=2 --net=mujoco-discrete --env=Hopper-v2 
+pando , 1292015 , --save_freq=50 --preset pando mujoco openai --tag=weight_decay --es_sigma=0.02 --es_wd=0.01 --pop_per_cpu=2 --net=mujoco-light --env=InvertedPendulum-v2 
+pando , 1292016 , --save_freq=50 --preset pando mujoco openai --tag=weight_decay --es_sigma=0.02 --es_wd=0.01 --pop_per_cpu=2 --net=mujoco-light --env=Walker2d-v2 
+pando , 1292017 , --save_freq=50 --preset pando mujoco openai --tag=weight_decay --es_sigma=0.02 --es_wd=0.1 --pop_per_cpu=2 --net=mujoco-light --env=HalfCheetah-v2 
+pando , 1292018 , --save_freq=50 --preset pando mujoco openai --tag=weight_decay --es_sigma=0.02 --es_wd=0.1 --pop_per_cpu=2 --net=mujoco-light --env=InvertedDoublePendulum-v2 
+pando , 1292019 , --save_freq=50 --preset pando mujoco openai --tag=weight_decay --es_sigma=0.02 --es_wd=0.1 --pop_per_cpu=2 --net=mujoco-discrete --env=Swimmer-v2 
+pando , 1292020 , --save_freq=50 --preset pando mujoco openai --tag=weight_decay --es_sigma=0.02 --es_wd=0.1 --pop_per_cpu=2 --net=mujoco-discrete --env=Hopper-v2 
+pando , 1292021 , --save_freq=50 --preset pando mujoco openai --tag=weight_decay --es_sigma=0.02 --es_wd=0.1 --pop_per_cpu=2 --net=mujoco-light --env=InvertedPendulum-v2 
+pando , 1292022 , --save_freq=50 --preset pando mujoco openai --tag=weight_decay --es_sigma=0.02 --es_wd=0.1 --pop_per_cpu=2 --net=mujoco-light --env=Walker2d-v2 
+pando , 1292023 , --save_freq=50 --preset pando mujoco openai --tag=weight_decay --es_sigma=0.02 --es_wd=0.01 --pop_per_cpu=2 --net=mujoco-light --env=HalfCheetah-v2 
+pando , 1292024 , --save_freq=50 --preset pando mujoco openai --tag=weight_decay --es_sigma=0.02 --es_wd=0.01 --pop_per_cpu=2 --net=mujoco-light --env=InvertedDoublePendulum-v2 
+pando , 1292025 , --save_freq=50 --preset pando mujoco openai --tag=weight_decay --es_sigma=0.02 --es_wd=0.01 --pop_per_cpu=2 --net=mujoco-discrete --env=Swimmer-v2 
+pando , 1292026 , --save_freq=50 --preset pando mujoco openai --tag=weight_decay --es_sigma=0.02 --es_wd=0.01 --pop_per_cpu=2 --net=mujoco-discrete --env=Hopper-v2 
+pando , 1292027 , --save_freq=50 --preset pando mujoco openai --tag=weight_decay --es_sigma=0.02 --es_wd=0.01 --pop_per_cpu=2 --net=mujoco-light --env=InvertedPendulum-v2 
+pando , 1292028 , --save_freq=50 --preset pando mujoco openai --tag=weight_decay --es_sigma=0.02 --es_wd=0.01 --pop_per_cpu=2 --net=mujoco-light --env=Walker2d-v2 
+pando , 1292029 , --save_freq=50 --preset pando mujoco openai --tag=weight_decay --es_sigma=0.02 --es_wd=0.1 --pop_per_cpu=2 --net=mujoco-light --env=HalfCheetah-v2 
+pando , 1292030 , --save_freq=50 --preset pando mujoco openai --tag=weight_decay --es_sigma=0.02 --es_wd=0.1 --pop_per_cpu=2 --net=mujoco-light --env=InvertedDoublePendulum-v2 
+pando , 1292031 , --save_freq=50 --preset pando mujoco openai --tag=weight_decay --es_sigma=0.02 --es_wd=0.1 --pop_per_cpu=2 --net=mujoco-discrete --env=Swimmer-v2 
+pando , 1292032 , --save_freq=50 --preset pando mujoco openai --tag=weight_decay --es_sigma=0.02 --es_wd=0.1 --pop_per_cpu=2 --net=mujoco-discrete --env=Hopper-v2 
+pando , 1292033 , --save_freq=50 --preset pando mujoco openai --tag=weight_decay --es_sigma=0.02 --es_wd=0.1 --pop_per_cpu=2 --net=mujoco-light --env=InvertedPendulum-v2 
+pando , 1292034 , --save_freq=50 --preset pando mujoco openai --tag=weight_decay --es_sigma=0.02 --es_wd=0.1 --pop_per_cpu=2 --net=mujoco-light --env=Walker2d-v2 
+pando , 1292042 , --net=mujoco-light --env=HalfCheetah-v2 --es_wd=0.001 
+pando , 1292043 , --net=mujoco-light --env=InvertedDoublePendulum-v2 --es_wd=0.001 
+pando , 1292044 , --net=mujoco-discrete --env=Swimmer-v2 --es_wd=0.001 
+pando , 1292045 , --net=mujoco-discrete --env=Hopper-v2 --es_wd=0.001 
+pando , 1292046 , --net=mujoco-light --env=InvertedPendulum-v2 --es_wd=0.001 
+pando , 1292047 , --net=mujoco-light --env=Walker2d-v2 --es_wd=0.001 
+pando , 1292048 , --net=mujoco-light --env=HalfCheetah-v2 --es_wd=0.01 
+pando , 1292049 , --net=mujoco-light --env=InvertedDoublePendulum-v2 --es_wd=0.01 
+pando , 1292050 , --net=mujoco-discrete --env=Swimmer-v2 --es_wd=0.01 
+pando , 1292051 , --net=mujoco-discrete --env=Hopper-v2 --es_wd=0.01 
+pando , 1292052 , --net=mujoco-light --env=InvertedPendulum-v2 --es_wd=0.01 
+pando , 1292053 , --net=mujoco-light --env=Walker2d-v2 --es_wd=0.01 
+pando , 1292054 , --net=mujoco-light --env=HalfCheetah-v2 --es_wd=0.1 
+pando , 1292055 , --net=mujoco-light --env=InvertedDoublePendulum-v2 --es_wd=0.1 
+pando , 1292056 , --net=mujoco-discrete --env=Swimmer-v2 --es_wd=0.1 
+pando , 1292057 , --net=mujoco-discrete --env=Hopper-v2 --es_wd=0.1 
+pando , 1292058 , --net=mujoco-light --env=InvertedPendulum-v2 --es_wd=0.1 
+pando , 1292059 , --net=mujoco-light --env=Walker2d-v2 --es_wd=0.1 
+calmip , 796193 , --net=canonical --env=Pong-v0 --es_wd=0.001 --es_sigma=0.02 --es_lr=0.01 --es_momentum=0.9 
+pando , 1292364 , --net=mujoco-light --env=HalfCheetah-v2 --tag=no_momentum --es_lr=0.01 --es_sigma=0.02 --es_wd=0.001 --es_momentum=0 
+pando , 1292365 , --net=mujoco-light --env=InvertedDoublePendulum-v2 --tag=no_momentum --es_lr=0.01 --es_sigma=0.02 --es_wd=0.001 --es_momentum=0 
+pando , 1292366 , --net=mujoco-discrete --env=Swimmer-v2 --tag=no_momentum --es_lr=0.01 --es_sigma=0.02 --es_wd=0.001 --es_momentum=0 
+pando , 1292367 , --net=mujoco-discrete --env=Hopper-v2 --tag=no_momentum --es_lr=0.01 --es_sigma=0.02 --es_wd=0.001 --es_momentum=0 
+calmip , 796496 , --net=canonical --env=Pong-v0 --tag=weight_decay --es_wd=0.001 --es_sigma=0.02 --es_lr=0.01 --es_momentum=0.9 
+pando , 1292368 , --net=mujoco-light --env=InvertedPendulum-v2 --tag=no_momentum --es_lr=0.01 --es_sigma=0.02 --es_wd=0.001 --es_momentum=0 
+pando , 1292369 , --net=mujoco-light --env=Walker2d-v2 --tag=no_momentum --es_lr=0.01 --es_sigma=0.02 --es_wd=0.001 --es_momentum=0 
+calmip , 796519 , --net=canonical --env=Pong-v0 --tag=weight_decay --es_wd=0.001 --es_sigma=0.02 --es_lr=0.01 --es_momentum=0.9 
+pando ,  , --net=canonical --env=Pong-v0 --tag=weight_decay --es_wd=0.001 --es_sigma=0.02 --es_lr=0.01 --es_momentum=0.9 
+pando , 1292377 , --net=canonical --env=Pong-v0 --tag=weight_decay --es_wd=0.001 --es_sigma=0.02 --es_lr=0.01 --es_momentum=0.9 

@@ -1,0 +1,13 @@
+inventory:
+  hosts: hosts.yaml
+  configs: configs.yaml
+
+tasks:
+  - name: "Pip install"
+    hosts:
+      - raspi
+    pip:
+      - pandas
+      - numpy
+      - scipy
+      - matplotlib

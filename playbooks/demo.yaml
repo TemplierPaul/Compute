@@ -1,0 +1,55 @@
+inventory:
+  hosts: hosts.yaml
+  configs: configs.yaml
+
+tasks:
+  - name: "Pip install"
+    hosts:
+      - raspi
+    pip:
+      - pandas
+      - numpy
+
+  - name: "Git push"
+    hosts:
+      - localhost
+    git:
+      action: push
+      path: "/home/disc/p.templier/Documents/Doctorat/Dev/BERL"
+
+  - name: "Git pull"
+    hosts:
+      - pando
+      - calmip
+    git:
+      path: "~/BERL"
+
+  - name: "Run SLURM"
+    hosts:
+      - pando
+    srun:
+      job_name: "JOBS"
+      cmd: "echo"
+      config: test
+      args:
+        - "--env=Pong-v0 --theta_init_std=0.5 --theta_init_bias=0"
+        - "--env=Pong-v0 --theta_init_std=0.05 --theta_init_bias=0.1"
+
+  - name: "Run in tmux"
+    hosts:
+      - raspi
+    tmux:
+      cd: "~/Documents/"
+      job_name: "Test"
+      cmd: "echo 'Hello World'"
+      parallel: False # If true, the command will start one tmux per argument
+      args:
+        - ""
+
+  - name: "Copy file from server"
+    hosts:
+      - pando
+    copy:
+      mode: "pull" # "pull" or "push"
+      src: "~/testfile.txt" # File
+      dest: "/home/disc/p.templier/Documents/Doctorat/Dev/Compute/" # Directory

@@ -1,0 +1,5 @@
+archive/pando/*
+archive/calmip/*
+.vscode
+__pycache__*
+*.pyc

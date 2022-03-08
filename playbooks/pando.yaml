@@ -1,0 +1,56 @@
+inventory:
+  hosts: hosts.yaml
+  configs: configs.yaml
+
+tasks:
+  # - name: "Git push BERL"
+  #   hosts:
+  #     - localhost
+  #   git:
+  #     action: push
+  #     path: "/home/disc/p.templier/Documents/Doctorat/Dev/BERL"
+
+  # - name: "Git pull BERL"
+  #   hosts:
+  #     - pando
+  #   git:
+  #     path: "~/BERL"
+
+  - name: "Run Mujoco"
+    hosts:
+      - pando
+    srun:
+      job_name: "BERL"
+      cmd: "srun python BERL/run.py --wandb=sureli/BERL_paper --seed=$seed --job=$SLURM_JOB_ID --save_freq=50 --preset pando mujoco openai --pop_per_cpu=1"
+      config: mujoco
+      seeds: 0 1 2
+      sweep:
+        "--tag": ["no_momentum"]
+        "--es_lr": [0.01]
+        "--es_sigma": [0.02]
+        "--es_wd": [0.001]
+        "--es_momentum": [0]
+      args:
+        - "--net=mujoco-light --env=HalfCheetah-v2"
+        - "--net=mujoco-light --env=InvertedDoublePendulum-v2"
+        - "--net=mujoco-discrete --env=Swimmer-v2"
+        - "--net=mujoco-discrete --env=Hopper-v2"
+        - "--net=mujoco-light --env=InvertedPendulum-v2"
+        - "--net=mujoco-light --env=Walker2d-v2"
+
+  - name: "Run Atari"
+    hosts:
+      - pando
+    srun:
+      job_name: "BERL"
+      cmd: "srun python BERL/run.py --wandb=sureli/BERL_paper --seed=$seed --job=$SLURM_JOB_ID --save_freq=50 --preset pando atari openai --pop_per_cpu=2"
+      config: atari
+      seeds: 0
+      sweep:
+        "--tag": ["weight_decay"]
+        "--es_wd": [0.001]
+        "--es_sigma": [0.02]
+        "--es_lr": [0.01]
+        "--es_momentum": [0.9]
+      args:
+        - "--net=canonical --env=Pong-v0"
