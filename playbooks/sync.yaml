@@ -1,0 +1,12 @@
+inventory:
+  hosts: hosts.yaml
+  configs: configs.yaml
+
+tasks:
+  - name: "Sync wandb"
+    hosts:
+      - calmip
+    sync:
+      # jobs:
+        # - 813456
+      job_array: [815734, 815741]

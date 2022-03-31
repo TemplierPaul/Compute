@@ -1,0 +1,52 @@
+## CPU
+# Minatar
+# python BERL/run.py --preset minatar pando canonical --wandb=BERL --c51=True --optim=canonical --env=min-asterix --gen=10000000
+# python BERL/run.py --preset minatar pando canonical --wandb=BERL --c51=True --optim=canonical --env=min-breakout --gen=10000000
+# python BERL/run.py --preset minatar pando canonical --wandb=BERL --c51=True --optim=canonical --env=min-freeway --gen=10000000
+# python BERL/run.py --preset minatar pando canonical --wandb=BERL --c51=True --optim=canonical --env=min-space_invaders --gen=10000000
+# python BERL/run.py --preset minatar pando canonical --wandb=BERL --c51=True --optim=canonical --env=min-seaquest --gen=10000000
+
+# Atari
+python BERL/run.py --preset atari pando canonical --wandb=BERL --c51=False --net=conv --optim=canonical --env=Alien-v0 --gen=10000000
+python BERL/run.py --preset atari pando canonical --wandb=BERL --c51=False --net=conv --optim=canonical --env=BeamRider-v0 --gen=10000000
+python BERL/run.py --preset atari pando canonical --wandb=BERL --c51=False --net=conv --optim=canonical --env=Breakout-v0 --gen=10000000
+python BERL/run.py --preset atari pando canonical --wandb=BERL --c51=False --net=conv --optim=canonical --env=Enduro-v0 --gen=10000000
+python BERL/run.py --preset atari pando canonical --wandb=BERL --c51=False --net=conv --optim=canonical --env=Pong-v0 --gen=10000000
+python BERL/run.py --preset atari pando canonical --wandb=BERL --c51=False --net=conv --optim=canonical --env=Qbert-v0 --gen=10000000
+python BERL/run.py --preset atari pando canonical --wandb=BERL --c51=False --net=conv --optim=canonical --env=Seaquest-v0 --gen=10000000
+python BERL/run.py --preset atari pando canonical --wandb=BERL --c51=False --net=conv --optim=canonical --env=SpaceInvaders-v0 --gen=10000000
+
+## Long
+python DQNES/run_xp.py --preset pando minatar dqnes --gen=10000000 --env=min-asterix --optim=snes --wandb=NeuroEvolution --c51 --nu_max=1000 
+python DQNES/run_xp.py --preset pando minatar dqnes --gen=10000000 --env=min-asterix --optim=snes --wandb=NeuroEvolution --c51 --nu_max=1000
+
+## Light
+python BERL/run.py --preset pando --wandb=BERL --optim=canonical --env=CartPole-v1
+python BERL/run.py --preset pando --wandb=BERL --optim=canonical --env=LunarLander-v2
+
+## GPU
+
+## DQN
+
+## MPI
+# python BERL/run.py --preset pando canonical --wandb=BERL --gen=10000 --env=swingup --episode_frames=600 --seed=0
+# python BERL/run.py --preset pando openai --wandb=BERL --gen=10000 --env=swingup --episode_frames=600 --seed=0
+# python BERL/run.py --preset pando --wandb=BERL --gen=10000 --env=swingup --episode_frames=600 --seed=0
+
+# python BERL/run.py --preset pando minatar canonical --wandb=BERL --env=min-space_invaders
+# python BERL/run.py --preset pando minatar canonical --wandb=BERL --env=min-asterix
+# python BERL/run.py --preset pando minatar canonical --wandb=BERL --env=min-freeway
+
+# python BERL/run.py --preset pando minatar canonical --es_sigma=0.1 --wandb=BERL --env=min-space_invaders
+# python BERL/run.py --preset pando minatar canonical --es_sigma=0.1 --wandb=BERL --env=min-asterix
+# python BERL/run.py --preset pando minatar canonical --es_sigma=0.1 --wandb=BERL --env=min-freeway
+
+# python BERL/run.py --preset pando minatar canonical --es_sigma=1 --wandb=BERL --env=min-space_invaders
+# python BERL/run.py --preset pando minatar canonical --es_sigma=1 --wandb=BERL --env=min-asterix
+# python BERL/run.py --preset pando minatar canonical --es_sigma=1 --wandb=BERL --env=min-freeway
+
+# python BERL/run.py --preset pando minatar openai --wandb=BERL --env=min-asterix
+
+# python BERL/run.py --preset pando --wandb=BERL --gen=10000 --env=LunarLander-v2 --episode_frames=600 --seed=0
+# python BERL/run.py --preset pando --wandb=BERL --gen=10000 --env=LunarLander-v2 --episode_frames=600 --seed=1
+python BERL/run.py --preset pando atari openai --wandb=BERL

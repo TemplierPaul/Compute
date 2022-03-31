@@ -29,10 +29,25 @@ class Server:
         return f"Server {self.alias} ({self.user}@{self.host})"
 
     def connect(self):
+        assert self.test_connect(), f"{self} | Failed to connect"
         self.ssh = paramiko.SSHClient()
         self.ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         self.ssh.connect(self.host, self.port, self.user)
         self.connected = True
+
+    def test_connect(self):
+        s = f"""timeout 5 ssh {self.user}@{self.host} << EOF
+echo "Connected!"
+EOF"""
+        out, err = self.run_local(s)
+        if "Connected!" in out:
+            return True
+        return False
+
+    def run_local(self, cmd):
+        sp = subprocess.run(
+            cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        return sp.stdout.decode('utf-8'), sp.stderr.decode('utf-8')
 
     def run(self, command):
         if not self.connected:
@@ -122,10 +137,8 @@ class LocalHost(LinuxServer):
     def __repr__(self):
         return f"Localhost ({self.user}@{self.host})"
 
-    def run(self, cmd):
-        sp = subprocess.run(
-            cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        return sp.stdout.decode('utf-8'), sp.stderr.decode('utf-8')
+    def run(self, command):
+        return self.run_local(command)
 
     def connect(self):
         self.connected = True
@@ -289,6 +302,30 @@ class Compute:
         print(cmd)
         self.local_run(cmd)
 
+    def sync(self, task, server):
+        cmd = server.init + "\n" or ''
+        # get save_path
+        save_path = server.save_path
+        # get jobs
+        jobs = task["jobs"] if 'jobs' in task else[]
+        if "job_array" in task:
+            job_array = task["job_array"]
+            jobs += list(range(job_array[0], job_array[1]))
+        print(jobs)
+
+        sync_cmd = []
+        for job in jobs:
+            s = f"{cmd} cat {save_path}/slurm.{job}.err | grep 'wandb sync'"
+            out, err = server.run(s)
+            l = out.split("\n")[:-1]
+            for i in l:
+                i = i.replace("wandb:", "")
+                sync_cmd.append(i)
+            # sync_cmd.append(f"echo '{job}: {len(l)-1} synced'")
+        cmd = cmd + " \n".join(sync_cmd)
+        # print(cmd)
+        server.run(cmd)
+
     def parse_playbook(self, path):
         playbook = read(path)
         inventory = playbook["inventory"]
@@ -310,17 +347,22 @@ class Compute:
                 server = self.servers[server_name]
                 if "run" in task:
                     self.run(task["run"], server)
-                if "pip" in task:
-                    self.pip(task["pip"], server)
-                elif "srun" in task:
-                    self.slurm_run(task["srun"], server)
-                elif "tmux" in task:
-                    self.tmux_run(task["tmux"], server)
-                elif "git" in task:
+
+                mapping = {
+                    "pip": self.pip,
+                    "copy": self.copy,
+                    "sync": self.sync,
+                    "tmux": self.tmux_run,
+                    "srun": self.slurm_run,
+                }
+
+                for k, v in mapping.items():
+                    if k in task:
+                        v(task[k], server)
+
+                if "git" in task:
                     action = task["git"]["action"] if "action" in task["git"] else "pull"
                     server.git(task["git"]["path"], action)
-                elif "copy" in task:
-                    self.copy(task["copy"], server)
 
 
 if __name__ == "__main__":

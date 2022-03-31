@@ -53,3 +53,11 @@ tasks:
       mode: "pull" # "pull" or "push"
       src: "~/testfile.txt" # File
       dest: "/home/disc/p.templier/Documents/Doctorat/Dev/Compute/" # Directory
+
+  - name: "Sync wandb"
+    hosts:
+      - calmip
+    sync:
+      jobs:
+        - 813451
+      job_array: [813451, 813457]

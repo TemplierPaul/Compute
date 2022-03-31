@@ -21,14 +21,38 @@ tasks:
       - calmip
     srun:
       job_name: "BERL"
-      cmd: "srun python BERL/run.py --wandb=sureli/BERL_paper --seed=$seed --job=$SLURM_JOB_ID --save_freq=50 --preset calmip atari openai --pop_per_cpu=2"
-      config: atari
-      seeds: 0 1
+      cmd: "srun python BERL/run.py --wandb=sureli/BERL_paper --seed=$seed --job=$SLURM_JOB_ID --save_freq=50 --eval_freq=50 --preset calmip atari openai --es_sigma=0.02 --net=canonical --pop_per_cpu=4"
+      config: atari_half
+      seeds: 0 1 2
       sweep:
-        "--tag": ["weight_decay"]
-        "--es_wd": [0.001]
-        "--es_sigma": [0.02]
-        "--es_lr": [0.01]
-        "--es_momentum": [0.9]
+        "--tag": ["big_noise"]
       args:
-        - "--net=canonical --env=Pong-v0"
+        - "--env=Pong-v0 --noise_size: 10"
+        # - "--env=Alien-v0"
+        # - "--env=BeamRider-v0"
+        # - "--env=Breakout-v0"
+        # - "--env=Enduro-v0"
+        # - "--env=Qbert-v0"
+        # - "--env=Seaquest-v0"
+        # - "--env=SpaceInvaders-v0"
+
+  - name: "Run Atari sticky"
+    hosts:
+      - calmip
+    srun:
+      job_name: "BERL"
+      cmd: "srun python BERL/run.py --wandb=sureli/BERL_paper --seed=$seed --job=$SLURM_JOB_ID --save_freq=50 --eval_freq=50 --es_sigma=0.02 --net=canonical --pop_per_cpu=4"
+      config: atari_half
+      seeds: 0 1 2
+      sweep:
+        "--preset": ["calmip atari openai", "calmip atari canonical"]
+        "--tag": ["sticky"]
+      args:
+        # - "--env=Pong-v0"
+        # - "--env=Alien-v0"
+        # - "--env=BeamRider-v0"
+        # - "--env=Breakout-v0"
+        # - "--env=Enduro-v0"
+        # - "--env=Qbert-v0"
+        # - "--env=Seaquest-v0"
+        # - "--env=SpaceInvaders-v0"

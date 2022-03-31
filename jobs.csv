@@ -105,3 +105,27 @@ pando , 1292369 , --net=mujoco-light --env=Walker2d-v2 --tag=no_momentum --es_lr
 calmip , 796519 , --net=canonical --env=Pong-v0 --tag=weight_decay --es_wd=0.001 --es_sigma=0.02 --es_lr=0.01 --es_momentum=0.9 
 pando ,  , --net=canonical --env=Pong-v0 --tag=weight_decay --es_wd=0.001 --es_sigma=0.02 --es_lr=0.01 --es_momentum=0.9 
 pando , 1292377 , --net=canonical --env=Pong-v0 --tag=weight_decay --es_wd=0.001 --es_sigma=0.02 --es_lr=0.01 --es_momentum=0.9 
+calmip , 813436 , --env=Pong-v0 --tag=canonical_paper 
+calmip , 813437 , --env=Alien-v0 --tag=canonical_paper 
+calmip , 813438 , --env=BeamRider-v0 --tag=canonical_paper 
+calmip , 813439 , --env=Breakout-v0 --tag=canonical_paper 
+calmip , 813440 , --env=Enduro-v0 --tag=canonical_paper 
+calmip , 813441 , --env=Qbert-v0 --tag=canonical_paper 
+calmip , 813442 , --env=Seaquest-v0 --tag=canonical_paper 
+calmip , 813443 , --env=SpaceInvaders-v0 --tag=canonical_paper 
+calmip , 813450 , --env=Pong-v0 --tag=canonical_paper 
+calmip , 813451 , --env=Alien-v0 --tag=canonical_paper 
+calmip , 813452 , --env=BeamRider-v0 --tag=canonical_paper 
+calmip , 813453 , --env=Breakout-v0 --tag=canonical_paper 
+calmip , 813454 , --env=Enduro-v0 --tag=canonical_paper 
+calmip , 813455 , --env=Qbert-v0 --tag=canonical_paper 
+calmip , 813456 , --env=Seaquest-v0 --tag=canonical_paper 
+calmip , 813457 , --env=SpaceInvaders-v0 --tag=canonical_paper 
+calmip , 815734 , --env=Pong-v0 --tag=openai_paper 
+calmip , 815735 , --env=Alien-v0 --tag=openai_paper 
+calmip , 815736 , --env=BeamRider-v0 --tag=openai_paper 
+calmip , 815737 , --env=Breakout-v0 --tag=openai_paper 
+calmip , 815738 , --env=Enduro-v0 --tag=openai_paper 
+calmip , 815739 , --env=Qbert-v0 --tag=openai_paper 
+calmip , 815740 , --env=Seaquest-v0 --tag=openai_paper 
+calmip , 815741 , --env=SpaceInvaders-v0 --tag=openai_paper 
