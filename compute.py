@@ -68,10 +68,13 @@ EOF"""
                 success = True
                 break
             print(f"{self} | Waiting for git... ({i+1}/{max_tests})")
+
         if not success:
             # raise warning
             print(f"{self} | Failed to git {action} {path}")
-        self.run(f"cd {path} && git {action} && cd")
+
+        if action in ['push', 'pull']:
+            return self.run(f"cd {path} && git {action} && cd")
 
     def test_git(self):
         s = "timeout 5 ssh -T git@github.com"
@@ -248,6 +251,12 @@ class Compute:
 
         return args_list
 
+    def run(self, task, server):
+        for t in task:
+            print(f"> {t}")
+            out, err = server.run(t)
+            print(out, err)
+
     def slurm_run(self, task, server):
         args_list = self.get_args(task)
 
@@ -285,20 +294,39 @@ class Compute:
             server.tmux(s, task["job_name"])
 
     def pip(self, task, server):
-        cmd = "pip3 install -y --upgrade " + " ".join(task)
+        cmd = f"{server.init}\n python3 -m pip install -y " + \
+            " ".join(task)
+        print(cmd)
         server.run(cmd)
 
-    def copy(self, task, server):
-        cmd = "scp -r "
+    def clone(self, task, server):
+        repos = task["repos"]
+        for repo in repos:
+            cmd = f"git clone {repo}"
+            print(cmd)
+            server.run(cmd)
+            if task["install"]:
+                repo_name = repo.split("/")[-1].replace(".git", "")
+                cmd = f"{server.init}\n cd {repo_name}\n python3 -m pip install -y -e . \ncd"
+                print(cmd)
+                server.run(cmd)
+
+    def copy(self, task, server):  # sourcery skip: raise-specific-error
         source = task["src"]
         dest = task["dest"]
         if task["mode"] == "pull":  # Get files from server
             source = f'{server.user}@{server.host}:{source}'
+            # Make directory if it doesn't exist
+            if not os.path.exists(dest):
+                os.makedirs(dest)
         elif task["mode"] == "push":  # Put files on server
+            # Make directory if it doesn't exist
+            cmd = f"mkdir -p {dest}"
             dest = f'{server.user}@{server.host}:{dest}'
+            server.run(cmd)
         else:
             raise Exception("Unknown mode")
-        cmd += f'{source} {dest}'
+        cmd = f'scp -r {source} {dest}'
         print(cmd)
         self.local_run(cmd)
 
@@ -310,7 +338,7 @@ class Compute:
         jobs = task["jobs"] if 'jobs' in task else[]
         if "job_array" in task:
             job_array = task["job_array"]
-            jobs += list(range(job_array[0], job_array[1]))
+            jobs += list(range(job_array[0], job_array[1]+1))
         print(jobs)
 
         sync_cmd = []
@@ -354,6 +382,8 @@ class Compute:
                     "sync": self.sync,
                     "tmux": self.tmux_run,
                     "srun": self.slurm_run,
+                    "cmd": self.run,
+                    "clone": self.clone,
                 }
 
                 for k, v in mapping.items():

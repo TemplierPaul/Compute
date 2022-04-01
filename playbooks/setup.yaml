@@ -3,11 +3,75 @@ inventory:
   configs: configs.yaml
 
 tasks:
+  - name: "Copy bashrc"
+    hosts:
+      - calmip2
+    copy:
+      mode: "push" # "pull" or "push"
+      src: "/home/disc/p.templier/Documents/Doctorat/Dev/Compute/setup/.bashrc" # File
+      dest: "~/" # Directory
+
+  - name: "Create venv"
+    hosts:
+      - calmip2
+    cmd:
+      - "module load python/3.6.8; 
+      conda create -y -n myenv;"
+      - "module load python/3.6.8;
+      source activate myenv; 
+      conda install -y -n myenv pip;"
+
   - name: "Pip install"
     hosts:
-      - raspi
+      - calmip2
     pip:
       - pandas
       - numpy
       - scipy
       - matplotlib
+      - seaborn
+      - atari-py
+      - cma
+      - gym
+      - gym3
+      - mpi4py
+      - pybullet
+      - torch
+      - torchvision
+      - tensorboardX
+      - tqdm
+      - pyyaml
+      - wandb
+
+  - name: "Git clone"
+    hosts:
+      - calmip2
+    clone:
+      repos:  
+        - https://github.com/kenjyoung/MinAtar.git
+        - git@github.com:TemplierPaul/BERL.git
+      install: true
+
+  - name: "Copy sentinel"
+    hosts:
+      - calmip2
+    copy:
+      mode: "push" # "pull" or "push"
+      src: "/home/disc/p.templier/Documents/Doctorat/Dev/Compute/setup/sentinel.py" # File
+      dest: "~/" # Directory
+
+  - name: "Copy Atari ROMS"
+    hosts:
+      - calmip2
+    copy:
+      mode: "push" # "pull" or "push"
+      src: "/home/disc/p.templier/Documents/Doctorat/Dev/Compute/setup/*.zip" # File
+      dest: "~/Atari_ROM" # Directory
+
+  - name: "Install Atari ROMS"
+    hosts:
+      - calmip2
+    cmd:
+      - "module load python/3.6.8; 
+      source activate myenv; 
+      python -m atari_py.import_roms --roms_dir ~/Atari_ROM"

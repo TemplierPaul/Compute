@@ -69,6 +69,16 @@ atari:
     pando: medium
   time: 1-00:00:00
 
+procgen:
+  cpus:
+    pando: 192
+    calmip: 216
+    localhost: 8
+    ninox: 16
+  partition:
+    pando: medium
+  time: 1-00:00:00
+
 atari_half:
   cpus:
     pando: 192
@@ -77,4 +87,4 @@ atari_half:
     ninox: 16
   partition:
     pando: medium
-  time: 3-00:00:00
+  time: 04:00:00

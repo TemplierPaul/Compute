@@ -38,19 +38,36 @@ tasks:
   #       - "--net=mujoco-light --env=InvertedPendulum-v2"
   #       - "--net=mujoco-light --env=Walker2d-v2"
 
-  - name: "Run Atari"
+  - name: "Run Procgen"
     hosts:
       - pando
     srun:
       job_name: "BERL"
-      cmd: "srun python BERL/run.py --wandb=sureli/BERL_paper --seed=$seed --job=$SLURM_JOB_ID --save_freq=50 --preset pando atari openai --pop_per_cpu=2"
-      config: atari
-      seeds: 0
+      cmd: "srun python BERL/run.py --wandb=sureli/BERL_paper --seed=$seed --job=$SLURM_JOB_ID --save_freq=50 --preset pando procgen openai --pop_per_cpu=2"
+      config: procgen
+      seeds: 0 1 2
       sweep:
-        "--tag": ["weight_decay"]
-        "--es_wd": [0.001]
-        "--es_sigma": [0.02]
-        "--es_lr": [0.01]
-        "--es_momentum": [0.9]
+        "--tag": ["procgen"]
+        "--n_evaluations": [1, 5]
       args:
-        - "--net=canonical --env=sticky-Pong-v0"
+        - "--env=leaper"
+        - "--env=bossfight"
+        - "--env=bigfish"
+        - "--env=starpilot"
+
+  # - name: "Run Atari"
+  #   hosts:
+  #     - pando
+  #   srun:
+  #     job_name: "BERL"
+  #     cmd: "srun python BERL/run.py --wandb=sureli/BERL_paper --seed=$seed --job=$SLURM_JOB_ID --save_freq=50 --preset pando atari openai --pop_per_cpu=2"
+  #     config: atari
+  #     seeds: 0
+  #     sweep:
+  #       "--tag": ["weight_decay"]
+  #       "--es_wd": [0.001]
+  #       "--es_sigma": [0.02]
+  #       "--es_lr": [0.01]
+  #       "--es_momentum": [0.9]
+  #     args:
+  #       - "--net=canonical --env=sticky-Pong-v0"

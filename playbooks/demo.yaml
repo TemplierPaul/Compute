@@ -22,7 +22,16 @@ tasks:
       - pando
       - calmip
     git:
+      action: pull
       path: "~/BERL"
+
+  - name: "Git clone"
+    hosts:
+      - pando
+    clone:
+      repos:  
+        - https://github.com/kenjyoung/MinAtar.git
+      install: true
 
   - name: "Run SLURM"
     hosts:

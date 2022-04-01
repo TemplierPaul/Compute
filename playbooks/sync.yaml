@@ -8,5 +8,5 @@ tasks:
       - calmip
     sync:
       # jobs:
-        # - 813456
-      job_array: [815734, 815741]
+        # - 815735
+      job_array: [815775, 815795]

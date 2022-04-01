@@ -129,3 +129,44 @@ calmip , 815738 , --env=Enduro-v0 --tag=openai_paper
 calmip , 815739 , --env=Qbert-v0 --tag=openai_paper 
 calmip , 815740 , --env=Seaquest-v0 --tag=openai_paper 
 calmip , 815741 , --env=SpaceInvaders-v0 --tag=openai_paper 
+pando ,  , --env=leaper --tag=procgen --n_evaluations=1 
+pando ,  , --env=bossfight --tag=procgen --n_evaluations=1 
+pando ,  , --env=bigfish --tag=procgen --n_evaluations=1 
+pando ,  , --env=starpilot --tag=procgen --n_evaluations=1 
+pando , 1301695 , --env=leaper --tag=procgen --n_evaluations=1 
+pando , 1301696 , --env=bossfight --tag=procgen --n_evaluations=1 
+pando , 1301697 , --env=bigfish --tag=procgen --n_evaluations=1 
+pando , 1301698 , --env=starpilot --tag=procgen --n_evaluations=1 
+pando , 1301699 , --env=leaper --tag=procgen --n_evaluations=5 
+pando , 1301700 , --env=bossfight --tag=procgen --n_evaluations=5 
+pando , 1301701 , --env=bigfish --tag=procgen --n_evaluations=5 
+pando , 1301702 , --env=starpilot --tag=procgen --n_evaluations=5 
+calmip , 817775 , --env=Alien-v0 --tag=big_noise  --seed=0 
+calmip , 817776 , --env=BeamRider-v0 --tag=big_noise  --seed=0 
+calmip , 817777 , --env=Breakout-v0 --tag=big_noise  --seed=0 
+calmip , 817778 , --env=Enduro-v0 --tag=big_noise  --seed=0 
+calmip , 817779 , --env=Qbert-v0 --tag=big_noise  --seed=0 
+calmip , 817780 , --env=Seaquest-v0 --tag=big_noise  --seed=0 
+calmip , 817781 , --env=SpaceInvaders-v0 --tag=big_noise  --seed=0 
+calmip , 817782 , --env=Alien-v0 --tag=big_noise  --seed=1 
+calmip , 817783 , --env=BeamRider-v0 --tag=big_noise  --seed=1 
+calmip , 817784 , --env=Breakout-v0 --tag=big_noise  --seed=1 
+calmip , 817785 , --env=Enduro-v0 --tag=big_noise  --seed=1 
+calmip , 817786 , --env=Qbert-v0 --tag=big_noise  --seed=1 
+calmip , 817787 , --env=Seaquest-v0 --tag=big_noise  --seed=1 
+calmip , 817788 , --env=SpaceInvaders-v0 --tag=big_noise  --seed=1 
+calmip , 817789 , --env=Alien-v0 --tag=big_noise  --seed=2 
+calmip , 817790 , --env=BeamRider-v0 --tag=big_noise  --seed=2 
+calmip , 817791 , --env=Breakout-v0 --tag=big_noise  --seed=2 
+calmip , 817792 , --env=Enduro-v0 --tag=big_noise  --seed=2 
+calmip , 817793 , --env=Qbert-v0 --tag=big_noise  --seed=2 
+calmip , 817794 , --env=Seaquest-v0 --tag=big_noise  --seed=2 
+calmip , 817795 , --env=SpaceInvaders-v0 --tag=big_noise  --seed=2 
+pando , 1301975 , --env=leaper --tag=procgen --n_evaluations=1 
+pando , 1301976 , --env=bossfight --tag=procgen --n_evaluations=1 
+pando , 1301977 , --env=bigfish --tag=procgen --n_evaluations=1 
+pando , 1301978 , --env=starpilot --tag=procgen --n_evaluations=1 
+pando , 1301979 , --env=leaper --tag=procgen --n_evaluations=5 
+pando , 1301980 , --env=bossfight --tag=procgen --n_evaluations=5 
+pando , 1301981 , --env=bigfish --tag=procgen --n_evaluations=5 
+pando , 1301982 , --env=starpilot --tag=procgen --n_evaluations=5 
