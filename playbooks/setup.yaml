@@ -16,10 +16,11 @@ tasks:
       - calmip2
     cmd:
       - "module load python/3.6.8; 
-      conda create -y -n myenv;"
-      - "module load python/3.6.8;
-      source activate myenv; 
-      conda install -y -n myenv pip;"
+      conda create -y -p /tmpdir/$(whoami)/envs/myenv;"
+      # - "module load python/3.6.8;
+      # source activate /tmpdir/$(whoami)/envs/myenv; 
+      # conda install -y pip;
+      # python3 -m pip install --user --upgrade pip"
 
   - name: "Pip install"
     hosts:
@@ -32,8 +33,12 @@ tasks:
       - seaborn
       - atari-py
       - cma
+      - lockfile
       - gym
-      - gym3
+      - gym[all]
+      - gym[atari]
+      # - gym3
+      - procgen
       - mpi4py
       - pybullet
       - torch
@@ -74,4 +79,4 @@ tasks:
     cmd:
       - "module load python/3.6.8; 
       source activate myenv; 
-      python -m atari_py.import_roms --roms_dir ~/Atari_ROM"
+      python3 -m atari_py.import_roms ~/Atari_ROM"

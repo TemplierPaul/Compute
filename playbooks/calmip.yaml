@@ -16,27 +16,47 @@ tasks:
     git:
       path: "~/BERL"
 
-  - name: "Run Atari"
-    hosts:
-      - calmip
-    srun:
-      job_name: "BERL"
-      cmd: "srun python BERL/run.py --wandb=sureli/BERL_paper --job=$SLURM_JOB_ID --save_freq=50 --eval_freq=50 --preset calmip atari openai --es_sigma=0.02 --net=canonical --pop_per_cpu=4"
-      config: atari_half
-      seeds: 0
-      sweep:
-        "--tag": ["big_noise"]
-        " --seed": [0, 1, 2]
-      args:
-        # - "--env=Pong-v0 --noise_size: 10"
-        # - "--env=Pong-v0"
-        # - "--env=Alien-v0"
-        # - "--env=BeamRider-v0"
-        # - "--env=Breakout-v0"
-        # - "--env=Enduro-v0"
-        # - "--env=Qbert-v0"
-        # - "--env=Seaquest-v0"
-        # - "--env=SpaceInvaders-v0"
+  # - name: "Run Atari OpenAI"
+  #   hosts:
+  #     - calmip
+  #   srun:
+  #     job_name: "BERL"
+  #     cmd: "srun python BERL/run.py --wandb=sureli/BERL_paper --job=$SLURM_JOB_ID --save_freq=50 --preset calmip atari openai --es_sigma=0.02 --net=canonical --pop_per_cpu=4"
+  #     config: atari_half
+  #     seeds: 0
+  #     sweep:
+  #       "--tag": ["openAI_paper"]
+  #       " --seed": [3]
+  #     args:
+        # - "--env=Pong-v0 --eval_freq=50"
+        # - "--env=Alien-v0 --eval_freq=50"
+        # - "--env=BeamRider-v0 --eval_freq=5"
+        # - "--env=Breakout-v0 --eval_freq=5"
+        # - "--env=Enduro-v0 --eval_freq=50"
+        # - "--env=Qbert-v0 --eval_freq=50"
+        # - "--env=Seaquest-v0 --eval_freq=50"
+        # - "--env=SpaceInvaders-v0 --eval_freq=50"
+
+  # - name: "Run Atari Canonical"
+  #   hosts:
+  #     - calmip
+  #   srun:
+  #     job_name: "BERL"
+  #     cmd: "srun python BERL/run.py --wandb=sureli/BERL_paper --job=$SLURM_JOB_ID --save_freq=50 --preset calmip atari canonical --net=canonical --pop_per_cpu=4"
+  #     config: atari_half
+  #     seeds: 0
+  #     sweep:
+  #       "--tag": ["canonical_paper"]
+  #       " --seed": [3]
+  #     args:
+        # - "--env=Pong-v0 --eval_freq=50"
+        # - "--env=Alien-v0 --eval_freq=50"
+        # - "--env=BeamRider-v0 --eval_freq=5"
+        # - "--env=Breakout-v0 --eval_freq=5"
+        # - "--env=Enduro-v0 --eval_freq=50"
+        # - "--env=Qbert-v0 --eval_freq=50"
+        # - "--env=Seaquest-v0 --eval_freq=50"
+        # - "--env=SpaceInvaders-v0 --eval_freq=50"
 
   # - name: "Run Atari sticky"
   #   hosts:
@@ -58,3 +78,24 @@ tasks:
         # - "--env=Qbert-v0"
         # - "--env=Seaquest-v0"
         # - "--env=SpaceInvaders-v0"
+
+  - name: "Run Procgen"
+    hosts:
+      - calmip
+    srun:
+      job_name: "BERL"
+      cmd: "srun python BERL/run.py --wandb=sureli/ERL_paper --seed=$seed --job=$SLURM_JOB_ID --save_freq=50 --pop_per_cpu=2 --max_frames=500000000"
+      config: procgen
+      seeds: 2
+      sweep:
+        "--preset": ["calmip procgen openai", "calmip procgen canonical"]
+        "--tag": ["procgen"]
+        "--n_evaluations": [1]
+      args:
+        # - "--env=leaper"
+        # - "--env=bossfight"
+        # - "--env=bigfish"
+        # - "--env=starpilot"
+        # - "--env=bossfight --single_seed"
+        - "--env=starpilot --single_seed"
+        # - "--env=bigfish --single_seed"

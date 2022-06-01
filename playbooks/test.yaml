@@ -1,0 +1,68 @@
+inventory:
+  hosts: hosts.yaml
+  configs: configs.yaml
+
+tasks:
+  - name: "Test srun normal"
+    scatter: False
+    hosts:
+      - calmip
+      - pando
+    srun:
+      job_name: "BERL"
+      config: atari_half
+      cmd: "echo hello"
+      seeds: 0 1
+      sweep:
+        "--test": ["test1", "test2"]
+      args:
+        - "args1"
+        - "args2"
+
+  - name: "Test srun scatter"
+    scatter: True
+    hosts:
+      - calmip
+      - pando
+    srun:
+      job_name: "BERL"
+      config: atari_half
+      cmd: "echo hello"
+      seeds: 0 1
+      sweep:
+        "--test": ["test1", "test2"]
+      args:
+        - "args1"
+        - "args2"
+
+  - name: "Test tmux normal"
+    scatter: False
+    hosts:
+      - sureli1
+      - sureli2
+    tmux:
+      job_name: "BERL"
+      config: atari_half
+      cmd: "echo hello"
+      seeds: 0 1
+      sweep:
+        "--test": ["test1", "test2"]
+      args:
+        - "args1"
+        - "args2"
+
+  - name: "Test tmux scatter"
+    scatter: True
+    hosts:
+      - sureli1
+      - sureli2
+    tmux:
+      job_name: "BERL"
+      config: atari_half
+      cmd: "echo hello"
+      seeds: 0 1
+      sweep:
+        "--test": ["test1", "test2"]
+      args:
+        - "args1"
+        - "args2"

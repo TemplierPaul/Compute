@@ -245,7 +245,10 @@ class Compute:
                 new_configs = []
                 for v in values:
                     for c in args_list:
-                        n = f"{c} {arg}={v}"
+                        if isinstance(v, str) and " " in v:
+                            n = f"{c} {arg} {v}"
+                        else:
+                            n = f"{c} {arg}={v}"
                         new_configs.append(n)
                 args_list = new_configs
 
@@ -259,8 +262,25 @@ class Compute:
 
     def slurm_run(self, task, server):
         args_list = self.get_args(task)
+        self._slurm_run(task, args_list, server)
 
+    def slurm_scatter(self, task, servers):
+        args_list = self.get_args(task)
+
+        n = len(servers)
+        b = [[] for _ in range(n)]
+        i = 0
+        for k in args_list:
+            b[i].append(k)
+            i = (i+1) % n
+
+        for i in range(n):
+            if len(b[i]) > 0:
+                self._slurm_run(task, b[i], servers[i])
+
+    def _slurm_run(self, task, args_list, server):
         for args in args_list:
+            print(f"Running {args} on {server.alias}")
             s = make_slurm(task, server, args)
             server.to_file(text=s, path="Compute/custom.slurm")
             o, e = server.srun("Compute/custom.slurm")
@@ -275,9 +295,28 @@ class Compute:
                 f.write(s)
 
     def tmux_run(self, task, server):
-        cd = f"cd {task['cd']} && " if "cd" in task else ""
-
         args_list = self.get_args(task)
+        self._tmux_run(task, args_list, server)
+
+    def tmux_scatter(self, task, servers):
+        args_list = self.get_args(task)
+
+        n = len(servers)
+        b = [[] for _ in range(n)]
+        i = 0
+        for k in args_list:
+            b[i].append(k)
+            i = (i+1) % n
+
+        for i in range(n):
+            if len(b[i]) > 0:
+                self._tmux_run(task, b[i], servers[i])
+
+    def _tmux_run(self, task, args_list, server):
+        for args in args_list:
+            print(f"Running {args} on {server.alias}")
+
+        cd = f"cd {task['cd']} && " if "cd" in task else ""
 
         if "parallel" in task and task["parallel"]:
             cmd = task["cmd"]
@@ -294,10 +333,13 @@ class Compute:
             server.tmux(s, task["job_name"])
 
     def pip(self, task, server):
-        cmd = f"{server.init}\n python3 -m pip install -y " + \
-            " ".join(task)
-        print(cmd)
-        server.run(cmd)
+        for t in task:
+            cmd = f"{server.init}\n python3 -m pip install --user {t}"
+            print(f"> {t}")
+            o, e = server.run(cmd)
+            e = e.lower()
+            if "error" in e or "warning" in e:
+                print(e)
 
     def clone(self, task, server):
         repos = task["repos"]
@@ -365,34 +407,55 @@ class Compute:
 
             servers = [servers] if isinstance(
                 task["hosts"], Server) else task["hosts"]
-            for server_name in servers:
+
+            # SCATTER
+            if "scatter" in task and task["scatter"]:
                 if "name" in task:
-                    print(f" >> {server_name} | {task['name']} << ")
+                    print(
+                        f" >> {task['name']} | SCATTER on {', '.join(servers)} << ")
 
-                if "cd" in task:
-                    server.run(f"cd {task['cd']}")
-
-                server = self.servers[server_name]
-                if "run" in task:
-                    self.run(task["run"], server)
+                server_list = [self.servers[server_name]
+                               for server_name in servers]
 
                 mapping = {
-                    "pip": self.pip,
-                    "copy": self.copy,
-                    "sync": self.sync,
-                    "tmux": self.tmux_run,
-                    "srun": self.slurm_run,
-                    "cmd": self.run,
-                    "clone": self.clone,
+                    "tmux": self.tmux_scatter,
+                    "srun": self.slurm_scatter,
                 }
 
                 for k, v in mapping.items():
                     if k in task:
-                        v(task[k], server)
+                        v(task[k], server_list)
 
-                if "git" in task:
-                    action = task["git"]["action"] if "action" in task["git"] else "pull"
-                    server.git(task["git"]["path"], action)
+            # NO SCATTER
+            else:
+                for server_name in servers:
+                    if "name" in task:
+                        print(f" >> {server_name} | {task['name']} << ")
+
+                    # if "cd" in task:
+                    #     server.run(f"cd {task['cd']}")
+
+                    server = self.servers[server_name]
+                    if "run" in task:
+                        self.run(task["run"], server)
+
+                    mapping = {
+                        "pip": self.pip,
+                        "copy": self.copy,
+                        "sync": self.sync,
+                        "tmux": self.tmux_run,
+                        "srun": self.slurm_run,
+                        "cmd": self.run,
+                        "clone": self.clone,
+                    }
+
+                    for k, v in mapping.items():
+                        if k in task:
+                            v(task[k], server)
+
+                    if "git" in task:
+                        action = task["git"]["action"] if "action" in task["git"] else "pull"
+                        server.git(task["git"]["path"], action)
 
 
 if __name__ == "__main__":

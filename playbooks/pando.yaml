@@ -10,11 +10,11 @@ tasks:
   #     action: push
   #     path: "/home/disc/p.templier/Documents/Doctorat/Dev/BERL"
 
-  - name: "Git pull BERL"
-    hosts:
-      - pando
-    git:
-      path: "~/BERL"
+  # - name: "Git pull BERL"
+  #   hosts:
+  #     - pando
+  #   git:
+  #     path: "~/BERL"
 
   # - name: "Run Mujoco"
   #   hosts:
@@ -43,17 +43,39 @@ tasks:
       - pando
     srun:
       job_name: "BERL"
-      cmd: "srun python BERL/run.py --wandb=sureli/BERL_paper --seed=$seed --job=$SLURM_JOB_ID --save_freq=50 --preset pando procgen openai --pop_per_cpu=2"
+      cmd: "srun python BERL/run.py --wandb=sureli/ERL_paper --seed=$seed --job=$SLURM_JOB_ID --save_freq=50 --pop_per_cpu=2 --max_frames=500000000"
       config: procgen
-      seeds: 0 1 2
+      seeds: 0
       sweep:
+        "--preset": ["pando procgen canonical", "pando procgen openai"]
         "--tag": ["procgen"]
-        "--n_evaluations": [1, 5]
+        "--n_evaluations": [1]
       args:
         - "--env=leaper"
         - "--env=bossfight"
         - "--env=bigfish"
-        - "--env=starpilot"
+        # - "--env=starpilot"
+        # - "--env=leaper --single_seed"
+        - "--env=bossfight --single_seed"
+        - "--env=bigfish --single_seed"
+        - "--env=starpilot --single_seed"
+
+  # - name: "Run Procgen with OpenAI"
+  #   hosts:
+  #     - pando
+  #   srun:
+  #     job_name: "BERL"
+  #     cmd: "srun python BERL/run.py --wandb=sureli/ERL_paper --seed=$seed --job=$SLURM_JOB_ID --save_freq=50 --preset pando procgen openai --pop_per_cpu=2 --max_frames=500000000"
+  #     config: procgen
+  #     seeds: 0
+  #     sweep:
+  #       "--tag": ["procgen"]
+  #       "--n_evaluations": [1, 5]
+  #     args:
+  #       - "--env=leaper"
+  #       - "--env=bossfight"
+  #       - "--env=bigfish"
+  #       - "--env=starpilot"
 
   # - name: "Run Atari"
   #   hosts:

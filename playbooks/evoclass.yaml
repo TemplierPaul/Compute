@@ -1,0 +1,22 @@
+inventory:
+  hosts: hosts.yaml
+  configs: configs.yaml
+
+tasks:
+  - name: "Evo class"
+    hosts:
+      - pando
+    srun:
+      job_name: "BERL"
+      cmd: "srun python BERL/run.py --wandb=sureli/ERL_paper --seed=$seed --job=$SLURM_JOB_ID --save_freq=50 --pop_per_cpu=2 --max_frames=500000000"
+      config: procgen
+      seeds: 0
+      sweep:
+        "--gens": [10, 50, 100, 500, 1000]
+        "--mu_ratio": [0.1, 0.5, 1]
+        "--sigma": [0.1, 0.5, 1]
+        "--lr": [0.1, 0.5, 1]
+      args:
+        - "--env_name=Walker-v0"
+        - "--env_name=Thrower-v0"
+        - "--env_name=Climb-v0"

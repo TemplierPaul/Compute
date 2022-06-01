@@ -170,3 +170,74 @@ pando , 1301979 , --env=leaper --tag=procgen --n_evaluations=5
 pando , 1301980 , --env=bossfight --tag=procgen --n_evaluations=5 
 pando , 1301981 , --env=bigfish --tag=procgen --n_evaluations=5 
 pando , 1301982 , --env=starpilot --tag=procgen --n_evaluations=5 
+calmip , 820619 , --env=Breakout-v0 --eval_freq=5 --tag=canonical_paper  --seed=0 
+calmip , 820620 , --env=Breakout-v0 --eval_freq=5 --tag=canonical_paper  --seed=1 
+calmip , 820621 , --env=Breakout-v0 --eval_freq=5 --tag=canonical_paper  --seed=2 
+calmip , 820623 , --env=Breakout-v0 --eval_freq=5 --tag=canonical_paper  --seed=0 
+calmip , 820624 , --env=Breakout-v0 --eval_freq=5 --tag=canonical_paper  --seed=1 
+calmip , 820625 , --env=Breakout-v0 --eval_freq=5 --tag=canonical_paper  --seed=2 
+calmip , 820978 , --env=Breakout-v0 --eval_freq=5 --tag=openAI_paper  --seed=0 
+calmip , 820979 , --env=Breakout-v0 --eval_freq=5 --tag=openAI_paper  --seed=1 
+calmip , 820980 , --env=Breakout-v0 --eval_freq=5 --tag=openAI_paper  --seed=2 
+calmip , 820982 , --env=BeamRider-v0 --eval_freq=5 --tag=canonical_paper  --seed=3 
+calmip , 821495 , --env=Breakout-v0 --eval_freq=5 --tag=openAI_paper  --seed=0 
+calmip , 821496 , --env=Breakout-v0 --eval_freq=5 --tag=openAI_paper  --seed=1 
+calmip , 821497 , --env=Breakout-v0 --eval_freq=5 --tag=openAI_paper  --seed=2 
+calmip , 821524 , --env=Breakout-v0 --eval_freq=5 --tag=openAI_paper  --seed=3 
+calmip , 821525 , --env=BeamRider-v0 --eval_freq=5 --tag=canonical_paper  --seed=3 
+pando , 1302847 , --env=leaper --preset=pando procgen canonical --tag=procgen --n_evaluations=1 
+pando , 1302848 , --env=bossfight --preset=pando procgen canonical --tag=procgen --n_evaluations=1 
+pando , 1302849 , --env=bigfish --preset=pando procgen canonical --tag=procgen --n_evaluations=1 
+pando , 1302850 , --env=starpilot --preset=pando procgen canonical --tag=procgen --n_evaluations=1 
+pando , 1302851 , --env=bigfish --single_seed --preset=pando procgen canonical --tag=procgen --n_evaluations=1 
+pando , 1302852 , --env=leaper --preset=pando procgen openai --tag=procgen --n_evaluations=1 
+pando , 1302853 , --env=bossfight --preset=pando procgen openai --tag=procgen --n_evaluations=1 
+pando , 1302854 , --env=bigfish --preset=pando procgen openai --tag=procgen --n_evaluations=1 
+pando , 1302855 , --env=starpilot --preset=pando procgen openai --tag=procgen --n_evaluations=1 
+pando , 1302856 , --env=bigfish --single_seed --preset=pando procgen openai --tag=procgen --n_evaluations=1 
+pando , 1302857 , --env=leaper --preset=pando procgen canonical --tag=procgen --n_evaluations=5 
+pando , 1302858 , --env=bossfight --preset=pando procgen canonical --tag=procgen --n_evaluations=5 
+pando , 1302859 , --env=bigfish --preset=pando procgen canonical --tag=procgen --n_evaluations=5 
+pando , 1302860 , --env=starpilot --preset=pando procgen canonical --tag=procgen --n_evaluations=5 
+pando , 1302861 , --env=bigfish --single_seed --preset=pando procgen canonical --tag=procgen --n_evaluations=5 
+pando , 1302862 , --env=leaper --preset=pando procgen openai --tag=procgen --n_evaluations=5 
+pando , 1302863 , --env=bossfight --preset=pando procgen openai --tag=procgen --n_evaluations=5 
+pando , 1302864 , --env=bigfish --preset=pando procgen openai --tag=procgen --n_evaluations=5 
+pando , 1302865 , --env=starpilot --preset=pando procgen openai --tag=procgen --n_evaluations=5 
+pando , 1302866 , --env=bigfish --single_seed --preset=pando procgen openai --tag=procgen --n_evaluations=5 
+pando , 1302872 , --env=leaper --preset pando procgen canonical --tag=procgen --n_evaluations=1 
+pando , 1302873 , --env=leaper --preset pando procgen openai --tag=procgen --n_evaluations=1 
+pando , 1302874 , --env=leaper --preset pando procgen canonical --tag=procgen --n_evaluations=5 
+pando , 1302875 , --env=leaper --preset pando procgen openai --tag=procgen --n_evaluations=5 
+pando , 1302877 , --env=leaper --preset pando procgen canonical --tag=procgen --n_evaluations=1 
+pando , 1302878 , --env=bossfight --preset pando procgen canonical --tag=procgen --n_evaluations=1 
+pando , 1302879 , --env=bigfish --preset pando procgen canonical --tag=procgen --n_evaluations=1 
+pando , 1302880 , --env=starpilot --preset pando procgen canonical --tag=procgen --n_evaluations=1 
+pando , 1302881 , --env=bossfight --single_seed --preset pando procgen canonical --tag=procgen --n_evaluations=1 
+pando , 1302882 , --env=leaper --preset pando procgen openai --tag=procgen --n_evaluations=1 
+pando , 1302883 , --env=bossfight --preset pando procgen openai --tag=procgen --n_evaluations=1 
+pando , 1302884 , --env=bigfish --preset pando procgen openai --tag=procgen --n_evaluations=1 
+pando , 1302885 , --env=starpilot --preset pando procgen openai --tag=procgen --n_evaluations=1 
+pando , 1302886 , --env=bossfight --single_seed --preset pando procgen openai --tag=procgen --n_evaluations=1 
+pando , 1302887 , --env=leaper --preset pando procgen canonical --tag=procgen --n_evaluations=5 
+pando , 1302888 , --env=bossfight --preset pando procgen canonical --tag=procgen --n_evaluations=5 
+pando , 1302889 , --env=bigfish --preset pando procgen canonical --tag=procgen --n_evaluations=5 
+pando , 1302890 , --env=starpilot --preset pando procgen canonical --tag=procgen --n_evaluations=5 
+pando , 1302891 , --env=bossfight --single_seed --preset pando procgen canonical --tag=procgen --n_evaluations=5 
+pando , 1302892 , --env=leaper --preset pando procgen openai --tag=procgen --n_evaluations=5 
+pando , 1302893 , --env=bossfight --preset pando procgen openai --tag=procgen --n_evaluations=5 
+pando , 1302894 , --env=bigfish --preset pando procgen openai --tag=procgen --n_evaluations=5 
+pando , 1302895 , --env=starpilot --preset pando procgen openai --tag=procgen --n_evaluations=5 
+pando , 1302896 , --env=bossfight --single_seed --preset pando procgen openai --tag=procgen --n_evaluations=5 
+pando , 1303382 , --env=bigfish --single_seed --preset pando procgen canonical --tag=procgen --n_evaluations=1 
+pando , 1303383 , --env=bigfish --single_seed --preset pando procgen openai --tag=procgen --n_evaluations=1 
+calmip , 825710 , --env=bigfish --single_seed --preset pando procgen canonical --tag=procgen --n_evaluations=1 
+calmip , 825712 , --env=bigfish --single_seed --preset calmip procgen canonical --tag=procgen --n_evaluations=1 
+calmip , 825715 , --env=leaper --preset calmip procgen canonical --tag=procgen --n_evaluations=1 
+calmip , 825716 , --env=leaper --preset calmip procgen openai --tag=procgen --n_evaluations=1 
+calmip , 825717 , --env=leaper --preset calmip procgen canonical --tag=procgen --n_evaluations=5 
+calmip , 825718 , --env=leaper --preset calmip procgen openai --tag=procgen --n_evaluations=5 
+calmip , 825720 , --env=bossfight --single_seed --preset calmip procgen openai --tag=procgen --n_evaluations=1 
+calmip , 825955 , --env=starpilot --single_seed --preset calmip procgen openai --tag=procgen --n_evaluations=1 
+calmip , 825956 , --env=starpilot --single_seed --preset calmip procgen canonical --tag=procgen --n_evaluations=1 
+pando , 1303695 , --env=starpilot --single_seed --preset pando procgen canonical --tag=procgen --n_evaluations=1 
