@@ -2,13 +2,13 @@
                                                                                                                                                                                                                 
 #SBATCH -J BERL
 
-#SBATCH -N 6
-#SBATCH -n 216
+#SBATCH -N 1
+#SBATCH -n 1
 
 #SBATCH --ntasks-per-node=36
 #SBATCH --ntasks-per-core=1
 #SBATCH --threads-per-core=1
-#SBATCH --time=06:00:00
+#SBATCH --time=00:05:00
 
 #SBATCH --mail-user=paul.templier@isae-supaero.fr
 #SBATCH --mail-type=ALL
@@ -25,9 +25,9 @@ cd
 wandb enabled
 wandb offline
 
-echo CMD echo hellp args1 --test=test1
+echo CMD sleep 5 && echo hello $HOSTNAME run_2
 
-for seed in 0 1 2
+for seed in 0
 do 
-echo hellp args1 --test=test1
+sleep 5 && echo hello $HOSTNAME run_2
 done

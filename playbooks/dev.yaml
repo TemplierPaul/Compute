@@ -1,0 +1,87 @@
+inventory:
+  hosts: hosts.yaml
+  configs: configs.yaml
+
+variables:
+  "£hosts": 
+    # - pando
+    # - calmip
+    - localhost
+    # - raspi
+
+tasks:
+  - name: "Run echo hostname"
+    hosts: "£hosts"
+    cmd: 
+      - "echo hello $HOSTNAME"
+      # - "pwd"
+      # - "tmux new-session -d -s BERL 'echo hello $HOSTNAME; sleep 5'"
+
+  - name: "Test tmux"
+    hosts: "£hosts"
+    tmux:
+      job_name: "BERL"
+      scatter: True
+      parallel: True
+      cd: "~/Documents/Doctorat/Dev/"
+      cmd: "sleep 5 && echo hello $HOSTNAME"
+      # config: procgen
+      seeds: 0
+      # sweep:
+      #   "--preset": ["pando canonical", "pando openai"]
+      #   "--n_evaluations": [1]
+      args:
+        - "run_1"
+        - "run_2"
+        - "run_3"
+
+  # - name: "Test slurm"
+  #   hosts: "£hosts"
+  #   slurm:
+  #     job_name: "BERL"
+  #     scatter: True
+  #     parallel: True
+  #     cmd: "sleep 5 && echo hello $HOSTNAME"
+  #     config: test
+  #     seeds: 0
+  #     # sweep:
+  #     #   "--preset": ["pando canonical", "pando openai"]
+  #     #   "--n_evaluations": [1]
+  #     args:
+  #       - "run_1"
+  #       - "run_2"
+  #       - "run_3"
+
+  # - name: "Test pip"
+  #   hosts: "£hosts"
+  #   pip:
+  #     action: install
+  #     packages:
+  #       - numpy
+  #       - pandas
+
+  # - name: "Test git"
+  #   hosts: 
+  #     - "localhost"
+  #   git:
+  #     action: pull
+  #     path: "~/Documents/Doctorat/Dev/BERL"
+  #     branch: "master"
+
+  # - name: "Test git"
+  #   hosts: 
+  #     - "localhost"
+  #   git:
+  #     action: clone
+  #     path: "~/Documents/Doctorat/Dev/test_compute"
+  #     branch: "master"
+  #     repo: git@github.com:TemplierPaul/BERL.git
+  #     install: False
+
+  # - name: "Copy sentinel"
+  #   hosts:
+  #     - pando
+  #   copy:
+  #     mode: "push" # "pull" or "push"
+  #     src: "/home/disc/p.templier/Documents/Doctorat/Dev/Compute/setup/_testfile.txt" # File
+  #     dest: "~/" # Directory

@@ -1,0 +1,41 @@
+inventory:
+  hosts: hosts.yaml
+  configs: configs.yaml
+
+tasks:
+  - name: "Run minatar"
+    hosts:
+      - pando
+    srun:
+      job_name: "BERL"
+      cmd: "python LUCIES/run.py --wandb=sureli/LUCIES_dev --pop=48 --mu=12 --max_evals=500000 --net=min --multi --eval_budget=5"
+      config: mujoco
+      seeds: 0
+      sweep:
+        "--optim": ["sepcma", "canonical --im"]
+        "--game_seed": [-1]
+        "--episode_frames": [27000]
+      args:
+        - "--env=min-breakout"
+        - "--env=min-seaquest"
+        - "--env=min-asterix"
+        - "--env=min-freeway"
+        - "--env=min-space_invaders"
+
+  # - name: "Run procgen"
+  #   hosts:
+  #     - pando
+  #   srun:
+  #     job_name: "BERL"
+  #     cmd: "python LUCIES/run.py --wandb=sureli/LUCIES_dev --pop=48 --mu=12 --max_evals=500000 --net=impala"
+  #     config: mujoco
+  #     seeds: 0
+  #     sweep:
+  #       "--optim": ["sepcma", "canonical --im"]
+  #       "--game_seed": [0, -1]
+  #       "--episode_frames": [1000]
+  #     args:
+  #       - "--env=bigfish-easy"
+  #       - "--env=leaper-easy"
+  #       - "--env=bossfight-easy"
+  #       - "--env=starpilot-easy"

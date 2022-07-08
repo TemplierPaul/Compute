@@ -57,6 +57,8 @@ mujoco:
     calmip: 72
     localhost: 8
     ninox: 16
+  partition:
+    pando: short
   time: 1-00:00:00
 
 atari:

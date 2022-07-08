@@ -241,3 +241,135 @@ calmip , 825720 , --env=bossfight --single_seed --preset calmip procgen openai -
 calmip , 825955 , --env=starpilot --single_seed --preset calmip procgen openai --tag=procgen --n_evaluations=1 
 calmip , 825956 , --env=starpilot --single_seed --preset calmip procgen canonical --tag=procgen --n_evaluations=1 
 pando , 1303695 , --env=starpilot --single_seed --preset pando procgen canonical --tag=procgen --n_evaluations=1 
+pando , 1408730 , --env=min-breakout --optim=sepcma 
+pando , 1408731 , --env=min-seaquest --optim=sepcma 
+pando , 1408732 , --env=min-asterix --optim=sepcma 
+pando , 1408733 , --env=min-freeway --optim=sepcma 
+pando , 1408734 , --env=min-space_invaders --optim=sepcma 
+pando , 1408735 , --env=min-breakout --im --optim=sepcma 
+pando , 1408736 , --env=min-seaquest --im --optim=sepcma 
+pando , 1408737 , --env=min-asterix --im --optim=sepcma 
+pando , 1408738 , --env=min-freeway --im --optim=sepcma 
+pando , 1408739 , --env=min-space_invaders --im --optim=sepcma 
+pando , 1408740 , --env=min-breakout --optim=canonical 
+pando , 1408741 , --env=min-seaquest --optim=canonical 
+pando , 1408742 , --env=min-asterix --optim=canonical 
+pando , 1408743 , --env=min-freeway --optim=canonical 
+pando , 1408744 , --env=min-space_invaders --optim=canonical 
+pando , 1408745 , --env=min-breakout --im --optim=canonical 
+pando , 1408746 , --env=min-seaquest --im --optim=canonical 
+pando , 1408747 , --env=min-asterix --im --optim=canonical 
+pando , 1408748 , --env=min-freeway --im --optim=canonical 
+pando , 1408750 , --env=min-space_invaders --im --optim=canonical 
+pando , 1409887 , --env=min-breakout --optim=sepcma 
+pando , 1409888 , --env=min-seaquest --optim=sepcma 
+pando , 1409889 , --env=min-asterix --optim=sepcma 
+pando , 1409890 , --env=min-freeway --optim=sepcma 
+pando , 1409891 , --env=min-space_invaders --optim=sepcma 
+pando , 1409892 , --env=min-breakout --im --optim=sepcma 
+pando , 1409893 , --env=min-seaquest --im --optim=sepcma 
+pando , 1409894 , --env=min-asterix --im --optim=sepcma 
+pando , 1409895 , --env=min-freeway --im --optim=sepcma 
+pando , 1409896 , --env=min-space_invaders --im --optim=sepcma 
+pando , 1409897 , --env=min-breakout --optim=canonical 
+pando , 1409898 , --env=min-seaquest --optim=canonical 
+pando , 1409899 , --env=min-asterix --optim=canonical 
+pando , 1409900 , --env=min-freeway --optim=canonical 
+pando , 1409901 , --env=min-space_invaders --optim=canonical 
+pando , 1409902 , --env=min-breakout --im --optim=canonical 
+pando , 1409903 , --env=min-seaquest --im --optim=canonical 
+pando , 1409904 , --env=min-asterix --im --optim=canonical 
+pando , 1409905 , --env=min-freeway --im --optim=canonical 
+pando , 1409906 , --env=min-space_invaders --im --optim=canonical 
+pando , 1409907 , --env=min-breakout --optim=sepcma 
+pando , 1409908 , --env=min-seaquest --optim=sepcma 
+pando , 1409909 , --env=min-asterix --optim=sepcma 
+pando , 1409910 , --env=min-freeway --optim=sepcma 
+pando , 1409911 , --env=min-space_invaders --optim=sepcma 
+pando , 1409912 , --env=min-breakout --im --optim=sepcma 
+pando , 1409913 , --env=min-seaquest --im --optim=sepcma 
+pando , 1409914 , --env=min-asterix --im --optim=sepcma 
+pando , 1409915 , --env=min-freeway --im --optim=sepcma 
+pando , 1409916 , --env=min-space_invaders --im --optim=sepcma 
+pando , 1409917 , --env=min-breakout --optim=canonical 
+pando , 1409918 , --env=min-seaquest --optim=canonical 
+pando , 1409919 , --env=min-asterix --optim=canonical 
+pando , 1409920 , --env=min-freeway --optim=canonical 
+pando , 1409921 , --env=min-space_invaders --optim=canonical 
+pando , 1409922 , --env=min-breakout --im --optim=canonical 
+pando , 1409923 , --env=min-seaquest --im --optim=canonical 
+pando , 1409924 , --env=min-asterix --im --optim=canonical 
+pando , 1409925 , --env=min-freeway --im --optim=canonical 
+pando , 1409926 , --env=min-space_invaders --im --optim=canonical 
+pando , 1409987 , --env=min-breakout --optim=sepcma 
+pando , 1409988 , --env=min-breakout --optim=canonical 
+pando , 1410169 , --env=min-seaquest --optim=sepcma 
+pando , 1410170 , --env=min-asterix --optim=sepcma 
+pando , 1410171 , --env=min-freeway --optim=sepcma 
+pando , 1410172 , --env=min-space_invaders --optim=sepcma 
+pando , 1410173 , --env=min-breakout --im --optim=sepcma 
+pando , 1410174 , --env=min-seaquest --im --optim=sepcma 
+pando , 1410175 , --env=min-asterix --im --optim=sepcma 
+pando , 1410176 , --env=min-freeway --im --optim=sepcma 
+pando , 1410177 , --env=min-space_invaders --im --optim=sepcma 
+pando , 1410178 , --env=min-seaquest --optim=canonical 
+pando , 1410179 , --env=min-asterix --optim=canonical 
+pando , 1410180 , --env=min-freeway --optim=canonical 
+pando , 1410181 , --env=min-space_invaders --optim=canonical 
+pando , 1410182 , --env=min-breakout --im --optim=canonical 
+pando , 1410183 , --env=min-seaquest --im --optim=canonical 
+pando , 1410184 , --env=min-asterix --im --optim=canonical 
+pando , 1410185 , --env=min-freeway --im --optim=canonical 
+pando , 1410186 , --env=min-space_invaders --im --optim=canonical 
+pando , 1410465 , --env=min-breakout --optim=sepcma --game_seed=0 --episode_frames=27000 
+pando , 1410466 , --env=min-seaquest --optim=sepcma --game_seed=0 --episode_frames=27000 
+pando , 1410467 , --env=min-asterix --optim=sepcma --game_seed=0 --episode_frames=27000 
+pando , 1410468 , --env=min-freeway --optim=sepcma --game_seed=0 --episode_frames=27000 
+pando , 1410469 , --env=min-space_invaders --optim=sepcma --game_seed=0 --episode_frames=27000 
+pando , 1410470 , --env=min-breakout --optim canonical --im --game_seed=0 --episode_frames=27000 
+pando , 1410471 , --env=min-seaquest --optim canonical --im --game_seed=0 --episode_frames=27000 
+pando , 1410472 , --env=min-asterix --optim canonical --im --game_seed=0 --episode_frames=27000 
+pando , 1410473 , --env=min-freeway --optim canonical --im --game_seed=0 --episode_frames=27000 
+pando , 1410474 , --env=min-space_invaders --optim canonical --im --game_seed=0 --episode_frames=27000 
+pando , 1410475 , --env=min-breakout --optim=sepcma --game_seed=-1 --episode_frames=27000 
+pando , 1410476 , --env=min-seaquest --optim=sepcma --game_seed=-1 --episode_frames=27000 
+pando , 1410477 , --env=min-asterix --optim=sepcma --game_seed=-1 --episode_frames=27000 
+pando , 1410478 , --env=min-freeway --optim=sepcma --game_seed=-1 --episode_frames=27000 
+pando , 1410479 , --env=min-space_invaders --optim=sepcma --game_seed=-1 --episode_frames=27000 
+pando , 1410480 , --env=min-breakout --optim canonical --im --game_seed=-1 --episode_frames=27000 
+pando , 1410481 , --env=min-seaquest --optim canonical --im --game_seed=-1 --episode_frames=27000 
+pando , 1410482 , --env=min-asterix --optim canonical --im --game_seed=-1 --episode_frames=27000 
+pando , 1410483 , --env=min-freeway --optim canonical --im --game_seed=-1 --episode_frames=27000 
+pando , 1410484 , --env=min-space_invaders --optim canonical --im --game_seed=-1 --episode_frames=27000 
+pando , 1413051 , --env=bigfish-easy --optim=sepcma --game_seed=0 --episode_frames=1000 
+pando , 1413052 , --env=leaper-easy --optim=sepcma --game_seed=0 --episode_frames=1000 
+pando , 1413053 , --env=bossfight-easy --optim=sepcma --game_seed=0 --episode_frames=1000 
+pando , 1413054 , --env=starpilot-easy --optim=sepcma --game_seed=0 --episode_frames=1000 
+pando , 1413055 , --env=bigfish-easy --optim canonical --im --game_seed=0 --episode_frames=1000 
+pando , 1413056 , --env=leaper-easy --optim canonical --im --game_seed=0 --episode_frames=1000 
+pando , 1413057 , --env=bossfight-easy --optim canonical --im --game_seed=0 --episode_frames=1000 
+pando , 1413058 , --env=starpilot-easy --optim canonical --im --game_seed=0 --episode_frames=1000 
+pando , 1413059 , --env=bigfish-easy --optim=sepcma --game_seed=-1 --episode_frames=1000 
+pando , 1413060 , --env=leaper-easy --optim=sepcma --game_seed=-1 --episode_frames=1000 
+pando , 1413061 , --env=bossfight-easy --optim=sepcma --game_seed=-1 --episode_frames=1000 
+pando , 1413062 , --env=starpilot-easy --optim=sepcma --game_seed=-1 --episode_frames=1000 
+pando , 1413063 , --env=bigfish-easy --optim canonical --im --game_seed=-1 --episode_frames=1000 
+pando , 1413064 , --env=leaper-easy --optim canonical --im --game_seed=-1 --episode_frames=1000 
+pando , 1413065 , --env=bossfight-easy --optim canonical --im --game_seed=-1 --episode_frames=1000 
+pando , 1413066 , --env=starpilot-easy --optim canonical --im --game_seed=-1 --episode_frames=1000 
+pando , 1413448 , --env=min-breakout --optim=sepcma --game_seed=-1 --episode_frames=27000 
+pando , 1413449 , --env=min-seaquest --optim=sepcma --game_seed=-1 --episode_frames=27000 
+pando , 1413450 , --env=min-asterix --optim=sepcma --game_seed=-1 --episode_frames=27000 
+pando , 1413451 , --env=min-freeway --optim=sepcma --game_seed=-1 --episode_frames=27000 
+pando , 1413452 , --env=min-space_invaders --optim=sepcma --game_seed=-1 --episode_frames=27000 
+pando , 1413453 , --env=min-breakout --optim canonical --im --game_seed=-1 --episode_frames=27000 
+pando , 1413454 , --env=min-seaquest --optim canonical --im --game_seed=-1 --episode_frames=27000 
+pando , 1413455 , --env=min-asterix --optim canonical --im --game_seed=-1 --episode_frames=27000 
+pando , 1413456 , --env=min-freeway --optim canonical --im --game_seed=-1 --episode_frames=27000 
+pando , 1413457 , --env=min-space_invaders --optim canonical --im --game_seed=-1 --episode_frames=27000 
+pando , 12345 , ['run_1', 'run_2', 'run_3'] 
+pando , 12345 , ['run_1', 'run_3'] 
+calmip , 12345 , ['run_2'] 
+pando , 12345 , run_1 
+pando , 12345 , run_3 
+calmip , 12345 , run_2 

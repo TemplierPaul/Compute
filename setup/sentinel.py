@@ -23,7 +23,8 @@ ISSUE_CANCEL = {
     "Permission denied": False,
     "Out Of Memory": False,
     "slurmstepd": False,
-    "Unknown error": False
+    "Unknown error": False,
+    'other system errors': False
 }
 
 # When grepping for "error", ignore if the line contains one of these
