@@ -2,67 +2,86 @@ inventory:
   hosts: hosts.yaml
   configs: configs.yaml
 
+variables:
+  "£hosts": 
+    - pando
+    # - calmip
+  "£atari": "--net=canonical --pop=800 --mu=50 --episode_frames=27000 --stack_frames=4"
+  "£minatar": "--net=min --pop=48 --mu=12 --episode_frames=27000"
+  "£mujoco": "--pop=48 --mu=12 --episode_frames=1000"
+
+
 tasks:
-  - name: "Test srun normal"
-    scatter: False
+  # - name: "Test srun normal"
+  #   scatter: False
+  #   hosts:
+  #     - calmip
+  #     - pando
+  #   srun:
+  #     job_name: "BERL"
+  #     config: atari_half
+  #     cmd: "echo hello"
+  #     seeds: 0 1
+  #     sweep:
+  #       "--test": ["test1", "test2"]
+  #     args:
+  #       - "args1"
+  #       - "args2"
+
+  # - name: "Test srun scatter"
+  #   scatter: True
+  #   hosts:
+  #     - calmip
+  #     - pando
+  #   srun:
+  #     job_name: "BERL"
+  #     config: atari_half
+  #     cmd: "echo hello"
+  #     seeds: 0 1
+  #     sweep:
+  #       "--test": ["test1", "test2"]
+  #     args:
+  #       - "args1"
+  #       - "args2"
+
+  # - name: "Test tmux normal"
+  #   scatter: False
+  #   hosts:
+  #     - sureli1
+  #     - sureli2
+  #   tmux:
+  #     job_name: "BERL"
+  #     config: atari_half
+  #     cmd: "echo hello"
+  #     seeds: 0 1
+  #     sweep:
+  #       "--test": ["test1", "test2"]
+  #     args:
+  #       - "args1"
+  #       - "args2"
+
+  # - name: "Test tmux scatter"
+  #   scatter: True
+  #   hosts:
+  #     - sureli1
+  #     - sureli2
+  #   tmux:
+  #     job_name: "BERL"
+  #     config: atari_half
+  #     cmd: "echo hello"
+  #     seeds: 0 1
+  #     sweep:
+  #       "--test": ["test1", "test2"]
+  #     args:
+  #       - "args1"
+  #       - "args2"
+
+  - name: "Test ray"
     hosts:
-      - calmip
       - pando
-    srun:
-      job_name: "BERL"
-      config: atari_half
-      cmd: "echo hello"
-      seeds: 0 1
-      sweep:
-        "--test": ["test1", "test2"]
-      args:
-        - "args1"
-        - "args2"
-
-  - name: "Test srun scatter"
-    scatter: True
-    hosts:
-      - calmip
-      - pando
-    srun:
-      job_name: "BERL"
-      config: atari_half
-      cmd: "echo hello"
-      seeds: 0 1
-      sweep:
-        "--test": ["test1", "test2"]
-      args:
-        - "args1"
-        - "args2"
-
-  - name: "Test tmux normal"
-    scatter: False
-    hosts:
-      - sureli1
-      - sureli2
-    tmux:
-      job_name: "BERL"
-      config: atari_half
-      cmd: "echo hello"
-      seeds: 0 1
-      sweep:
-        "--test": ["test1", "test2"]
-      args:
-        - "args1"
-        - "args2"
-
-  - name: "Test tmux scatter"
-    scatter: True
-    hosts:
-      - sureli1
-      - sureli2
-    tmux:
-      job_name: "BERL"
-      config: atari_half
-      cmd: "echo hello"
-      seeds: 0 1
-      sweep:
-        "--test": ["test1", "test2"]
-      args:
-        - "args1"
-        - "args2"
+    slurm:
+      job_name: "Ray"
+      cmd: "python -u ./test_ray.py"
+      config: raytest
+      ray: true
+      seeds: 0

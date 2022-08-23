@@ -1,0 +1,12 @@
+inventory:
+  hosts: hosts.yaml
+  configs: configs.yaml
+
+tasks:
+  - name: "Copy sentinel"
+    hosts:
+      - pando
+    copy:
+      mode: "push" # "pull" or "push"
+      src: "/home/disc/p.templier/Documents/Doctorat/Dev/Compute/setup/sentinel.py" # File
+      dest: "~/" # Directory

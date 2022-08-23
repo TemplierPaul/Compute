@@ -45,7 +45,7 @@ EOF"""
         return stdout, stderr
 
     def to_file(self, text, path):
-        self.run(f"echo -e '{text}' > {path}")
+        return self.run(f"echo -e '{text}' > {path}")
 
     def git(self, path, action="pull"):
         max_tests = 25

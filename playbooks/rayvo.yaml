@@ -1,0 +1,29 @@
+inventory:
+  hosts: hosts.yaml
+  configs: configs.yaml
+
+variables:
+  "£hosts": 
+    - pando
+    # - calmip
+  "£atari": "--net=conv --episode_frames=27000 --stack_frames=4"
+  "£minatar": "--net=min --mu=12 --episode_frames=27000"
+  "£mujoco": "--mu=12 --episode_frames=1000"
+
+tasks:
+  - name: "Run Atari"
+    hosts:
+      - calmip
+      - pando
+    slurm:
+      job_name: "Atari"
+      cmd: "python3 Rayvolution/simple.py --optim=sepcma"
+      config: sepcma
+      ray: true
+      scatter: true
+      seeds: 0
+      sweep:
+        "--pop": [72, 144]
+      args:
+        - "--env=Pong-v0"
+        - "--env=Alien-v0"

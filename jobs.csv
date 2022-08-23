@@ -373,3 +373,173 @@ calmip , 12345 , ['run_2']
 pando , 12345 , run_1 
 pando , 12345 , run_3 
 calmip , 12345 , run_2 
+pando , 1416406 , --net=mujoco-light --env=HalfCheetah-v2 --optim=sepcma --game_seed=0 
+pando , 1416407 , --net=mujoco-light --env=InvertedDoublePendulum-v2 --optim=sepcma --game_seed=0 
+pando , 1416408 , --net=mujoco-discrete --env=Swimmer-v2 --optim=sepcma --game_seed=0 
+pando , 1416409 , --net=mujoco-discrete --env=Hopper-v2 --optim=sepcma --game_seed=0 
+pando , 1416410 , --net=mujoco-light --env=InvertedPendulum-v2 --optim=sepcma --game_seed=0 
+pando , 1416411 , --net=mujoco-light --env=Walker2d-v2 --optim=sepcma --game_seed=0 
+pando , 1416412 , --net=mujoco-light --env=HalfCheetah-v2 --optim canonical --im --game_seed=0 
+pando , 1416413 , --net=mujoco-light --env=InvertedDoublePendulum-v2 --optim canonical --im --game_seed=0 
+pando , 1416414 , --net=mujoco-discrete --env=Swimmer-v2 --optim canonical --im --game_seed=0 
+pando , 1416415 , --net=mujoco-discrete --env=Hopper-v2 --optim canonical --im --game_seed=0 
+pando , 1416416 , --net=mujoco-light --env=InvertedPendulum-v2 --optim canonical --im --game_seed=0 
+pando , 1416417 , --net=mujoco-light --env=Walker2d-v2 --optim canonical --im --game_seed=0 
+pando , 1416418 , --net=mujoco-light --env=HalfCheetah-v2 --optim=sepcma --game_seed=-1 
+pando , 1416419 , --net=mujoco-light --env=InvertedDoublePendulum-v2 --optim=sepcma --game_seed=-1 
+pando , 1416420 , --net=mujoco-discrete --env=Swimmer-v2 --optim=sepcma --game_seed=-1 
+pando , 1416421 , --net=mujoco-discrete --env=Hopper-v2 --optim=sepcma --game_seed=-1 
+pando , 1416422 , --net=mujoco-light --env=InvertedPendulum-v2 --optim=sepcma --game_seed=-1 
+pando , 1416423 , --net=mujoco-light --env=Walker2d-v2 --optim=sepcma --game_seed=-1 
+pando , 1416424 , --net=mujoco-light --env=HalfCheetah-v2 --optim canonical --im --game_seed=-1 
+pando , 1416425 , --net=mujoco-light --env=InvertedDoublePendulum-v2 --optim canonical --im --game_seed=-1 
+pando , 1416426 , --net=mujoco-discrete --env=Swimmer-v2 --optim canonical --im --game_seed=-1 
+pando , 1416427 , --net=mujoco-discrete --env=Hopper-v2 --optim canonical --im --game_seed=-1 
+pando , 1416428 , --net=mujoco-light --env=InvertedPendulum-v2 --optim canonical --im --game_seed=-1 
+pando , 1416429 , --net=mujoco-light --env=Walker2d-v2 --optim canonical --im --game_seed=-1 
+pando , 1416430 , --env=Pong-v0 --optim=sepcma --game_seed=0 
+pando , 1416431 , --env=Alien-v0 --optim=sepcma --game_seed=0 
+pando , 1416432 , --env=Pong-v0 --optim canonical --im --game_seed=0 
+pando , 1416433 , --env=Alien-v0 --optim canonical --im --game_seed=0 
+pando , 1416434 , --env=Pong-v0 --optim=sepcma --game_seed=-1 
+pando , 1416435 , --env=Alien-v0 --optim=sepcma --game_seed=-1 
+pando , 1416436 , --env=Pong-v0 --optim canonical --im --game_seed=-1 
+pando , 1416437 , --env=Alien-v0 --optim canonical --im --game_seed=-1 
+pando , 1422288 , --net=mujoco-light --env=HalfCheetah-v2 --optim=sepcma --game_seed=0 
+pando , 1422289 , --net=mujoco-light --env=InvertedDoublePendulum-v2 --optim=sepcma --game_seed=0 
+pando , 1422290 , --net=mujoco-discrete --env=Swimmer-v2 --optim=sepcma --game_seed=0 
+pando , 1422291 , --net=mujoco-discrete --env=Hopper-v2 --optim=sepcma --game_seed=0 
+pando , 1422292 , --env=Pong-v0 --optim=sepcma --game_seed=0 
+pando , 1422293 , --env=Alien-v0 --optim=sepcma --game_seed=0 
+pando , 1422294 , --env=Pong-v0 --optim canonical --im --game_seed=0 
+pando , 1422295 , --env=Alien-v0 --optim canonical --im --game_seed=0 
+pando , 1422296 , --env=Pong-v0 --optim=sepcma --game_seed=-1 
+pando , 1422297 , --env=Alien-v0 --optim=sepcma --game_seed=-1 
+pando , 1422298 , --env=Pong-v0 --optim canonical --im --game_seed=-1 
+pando , 1422299 , --env=Alien-v0 --optim canonical --im --game_seed=-1 
+pando , 1422300 , --net=mujoco-light --env=HalfCheetah-v2 --optim=sepcma --game_seed=0 
+pando , 1422301 , --net=mujoco-light --env=InvertedDoublePendulum-v2 --optim=sepcma --game_seed=0 
+pando , 1422302 , --net=mujoco-discrete --env=Swimmer-v2 --optim=sepcma --game_seed=0 
+pando , 1422303 , --net=mujoco-discrete --env=Hopper-v2 --optim=sepcma --game_seed=0 
+pando , 1422304 , --net=mujoco-light --env=InvertedPendulum-v2 --optim=sepcma --game_seed=0 
+pando , 1422305 , --net=mujoco-light --env=Walker2d-v2 --optim=sepcma --game_seed=0 
+pando , 1422306 , --net=mujoco-light --env=HalfCheetah-v2 --optim canonical --im --game_seed=0 
+pando , 1422307 , --net=mujoco-light --env=InvertedDoublePendulum-v2 --optim canonical --im --game_seed=0 
+pando , 1422308 , --net=mujoco-discrete --env=Swimmer-v2 --optim canonical --im --game_seed=0 
+pando , 1422309 , --net=mujoco-discrete --env=Hopper-v2 --optim canonical --im --game_seed=0 
+pando , 1422310 , --net=mujoco-light --env=InvertedPendulum-v2 --optim canonical --im --game_seed=0 
+pando , 1422311 , --net=mujoco-light --env=Walker2d-v2 --optim canonical --im --game_seed=0 
+pando , 1422312 , --net=mujoco-light --env=HalfCheetah-v2 --optim=sepcma --game_seed=-1 
+pando , 1422313 , --net=mujoco-light --env=InvertedDoublePendulum-v2 --optim=sepcma --game_seed=-1 
+pando , 1422314 , --net=mujoco-discrete --env=Swimmer-v2 --optim=sepcma --game_seed=-1 
+pando , 1422315 , --net=mujoco-discrete --env=Hopper-v2 --optim=sepcma --game_seed=-1 
+pando , 1422316 , --net=mujoco-light --env=InvertedPendulum-v2 --optim=sepcma --game_seed=-1 
+pando , 1422317 , --net=mujoco-light --env=Walker2d-v2 --optim=sepcma --game_seed=-1 
+pando , 1422318 , --net=mujoco-light --env=HalfCheetah-v2 --optim canonical --im --game_seed=-1 
+pando , 1422319 , --net=mujoco-light --env=InvertedDoublePendulum-v2 --optim canonical --im --game_seed=-1 
+pando , 1422320 , --net=mujoco-discrete --env=Swimmer-v2 --optim canonical --im --game_seed=-1 
+pando , 1422321 , --net=mujoco-discrete --env=Hopper-v2 --optim canonical --im --game_seed=-1 
+pando , 1422322 , --net=mujoco-light --env=InvertedPendulum-v2 --optim canonical --im --game_seed=-1 
+pando , 1422323 , --net=mujoco-light --env=Walker2d-v2 --optim canonical --im --game_seed=-1 
+pando , 1422362 , --net=mujoco-light --env=HalfCheetah-v2 --optim=sepcma --game_seed=0 
+pando , 1422420 ,  
+pando , 1422443 ,  
+pando , 1422445 ,  
+pando , 1422447 ,  
+pando , 1422452 ,  
+pando , 1422454 ,  
+pando , 1422456 ,  
+pando , 1422459 ,  
+pando , 1422460 ,  
+pando , 1422466 ,  
+pando , 1422469 ,  
+pando , 1422477 ,  
+pando , 1422480 ,  
+pando , 1422486 ,  
+pando , 1422490 ,  
+pando , 1422492 ,  
+pando , 1422494 ,  
+pando , 1422496 ,  
+pando , 1422498 ,  
+pando , 1423317 ,  
+pando , 1423319 ,  
+pando , 1423321 ,  
+pando , 1423390 ,  
+pando , 1423396 ,  
+pando , 1423398 ,  
+pando , 1423400 ,  
+pando ,  ,  
+pando ,  ,  
+pando , 1423404 ,  
+pando , 1423406 ,  
+pando , 1423408 ,  
+pando , 1423409 ,  
+pando , 1423410 ,  
+pando , 1423411 ,  
+pando , 1423450 ,  
+pando ,  ,  
+pando ,  ,  
+pando , 1423452 ,  
+pando , 1423461 ,  
+pando , 1423462 , --net=mujoco-light --env=HalfCheetah-v2 --optim=sepcma --game_seed=0 
+pando , 1423463 , --net=mujoco-light --env=HalfCheetah-v2 --optim canonical --im --game_seed=0 
+pando , 1423464 , --net=mujoco-light --env=HalfCheetah-v2 --optim=sepcma --game_seed=-1 
+pando , 1423465 , --net=mujoco-light --env=HalfCheetah-v2 --optim canonical --im --game_seed=-1 
+pando , 1423466 , --net=mujoco-light --env=HalfCheetah-v2 --optim=sepcma --game_seed=0 
+pando , 1423467 , --net=mujoco-light --env=HalfCheetah-v2 --optim=sepcma --game_seed=0 
+pando , 1423468 , --net=mujoco-light --env=InvertedDoublePendulum-v2 --optim=sepcma --game_seed=0 
+pando , 1423469 , --net=mujoco-discrete --env=Swimmer-v2 --optim=sepcma --game_seed=0 
+pando , 1423470 , --net=mujoco-discrete --env=Hopper-v2 --optim=sepcma --game_seed=0 
+pando , 1423471 , --net=mujoco-light --env=InvertedPendulum-v2 --optim=sepcma --game_seed=0 
+pando , 1423472 , --net=mujoco-light --env=Walker2d-v2 --optim=sepcma --game_seed=0 
+pando , 1423473 , --net=mujoco-light --env=HalfCheetah-v2 --optim canonical --im --game_seed=0 
+pando , 1423474 , --net=mujoco-light --env=InvertedDoublePendulum-v2 --optim canonical --im --game_seed=0 
+pando , 1423475 , --net=mujoco-discrete --env=Swimmer-v2 --optim canonical --im --game_seed=0 
+pando , 1423476 , --net=mujoco-discrete --env=Hopper-v2 --optim canonical --im --game_seed=0 
+pando , 1423477 , --net=mujoco-light --env=InvertedPendulum-v2 --optim canonical --im --game_seed=0 
+pando , 1423478 , --net=mujoco-light --env=Walker2d-v2 --optim canonical --im --game_seed=0 
+pando , 1423479 , --net=mujoco-light --env=HalfCheetah-v2 --optim=sepcma --game_seed=-1 
+pando , 1423480 , --net=mujoco-light --env=InvertedDoublePendulum-v2 --optim=sepcma --game_seed=-1 
+pando , 1423481 , --net=mujoco-discrete --env=Swimmer-v2 --optim=sepcma --game_seed=-1 
+pando , 1423482 , --net=mujoco-discrete --env=Hopper-v2 --optim=sepcma --game_seed=-1 
+pando , 1423483 , --net=mujoco-light --env=InvertedPendulum-v2 --optim=sepcma --game_seed=-1 
+pando , 1423484 , --net=mujoco-light --env=Walker2d-v2 --optim=sepcma --game_seed=-1 
+pando , 1423485 , --net=mujoco-light --env=HalfCheetah-v2 --optim canonical --im --game_seed=-1 
+pando , 1423486 , --net=mujoco-light --env=InvertedDoublePendulum-v2 --optim canonical --im --game_seed=-1 
+pando , 1423487 , --net=mujoco-discrete --env=Swimmer-v2 --optim canonical --im --game_seed=-1 
+pando , 1423488 , --net=mujoco-discrete --env=Hopper-v2 --optim canonical --im --game_seed=-1 
+pando , 1423489 , --net=mujoco-light --env=InvertedPendulum-v2 --optim canonical --im --game_seed=-1 
+pando , 1423490 , --net=mujoco-light --env=Walker2d-v2 --optim canonical --im --game_seed=-1 
+pando , 1423491 , --env=Pong-v0 --optim=sepcma --game_seed=0 
+pando , 1423492 , --env=Alien-v0 --optim=sepcma --game_seed=0 
+pando , 1423493 , --env=Pong-v0 --optim canonical --im --game_seed=0 
+pando , 1423494 , --env=Alien-v0 --optim canonical --im --game_seed=0 
+pando , 1423495 , --env=Pong-v0 --optim=sepcma --game_seed=-1 
+pando , 1423496 , --env=Alien-v0 --optim=sepcma --game_seed=-1 
+pando , 1423497 , --env=Pong-v0 --optim canonical --im --game_seed=-1 
+pando , 1423498 , --env=Alien-v0 --optim canonical --im --game_seed=-1 
+pando , 1423499 , --net=mujoco-light --env=HalfCheetah-v2 --optim=sepcma --game_seed=0 
+pando , 1423500 , --net=mujoco-light --env=HalfCheetah-v2 --optim canonical --im --game_seed=0 
+pando , 1423501 , --net=mujoco-light --env=HalfCheetah-v2 --optim=sepcma --game_seed=-1 
+pando , 1423502 , --net=mujoco-light --env=HalfCheetah-v2 --optim canonical --im --game_seed=-1 
+pando , 1423505 , --net=mujoco-light --env=HalfCheetah-v2 --optim=sepcma --game_seed=0 
+pando , 1423506 , --net=mujoco-light --env=HalfCheetah-v2 --optim canonical --im --game_seed=0 
+pando , 1423507 , --net=mujoco-light --env=HalfCheetah-v2 --optim=sepcma --game_seed=-1 
+pando , 1423508 , --net=mujoco-light --env=HalfCheetah-v2 --optim canonical --im --game_seed=-1 
+pando , 1423512 , --net=mujoco-light --env=HalfCheetah-v2 --optim=sepcma --game_seed=0 
+pando , 1423513 , --net=mujoco-light --env=HalfCheetah-v2 --optim=sepcma --game_seed=0 
+pando , 1423514 , --net=mujoco-light --env=HalfCheetah-v2 --optim=sepcma --game_seed=0 
+pando , 1424150 , --net=mujoco-light --env=HalfCheetah-v2 --optim=sepcma --game_seed=0 
+pando ,  , --env=Pong-v0 --optim=sepcma --game_seed=0 
+pando ,  , --env=Pong-v0 --optim=sepcma --game_seed=0 
+pando , 1424153 , --env=Pong-v0 --optim=sepcma --game_seed=0 
+pando , 1424154 , --env=Pong-v0 --optim=sepcma --game_seed=0 
+pando , 1424155 , --env=Pong-v0 --optim=sepcma --game_seed=0 
+calmip , 924174 , --env=Pong-v0 --pop=72 
+calmip , 924175 , --env=Pong-v0 --pop=144 
+pando ,  , --env=Alien-v0 --pop=72 
+pando ,  , --env=Alien-v0 --pop=144 
+calmip , 924178 , --env=Pong-v0 --pop=72 
+calmip , 924179 , --env=Pong-v0 --pop=144 
+pando , 1424764 , --env=Alien-v0 --pop=72 
+pando , 1424765 , --env=Alien-v0 --pop=144 

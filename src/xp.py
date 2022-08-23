@@ -56,14 +56,22 @@ class Slurm(XP):
         for server, args in self.xp.items():
             for a in args:
                 print(f"Running {a} on {server.alias}")
-                s = make_slurm(self.cfg, server, a)
-                server.to_file(text=s, path="Compute/custom.slurm")
+                if "ray" in self.cfg and self.cfg["ray"]:
+                    s = make_ray_slurm(self.cfg, server, a)
+                else:
+                    s = make_slurm(self.cfg, server, a)
+                path = "Compute/remote.slurm"
+                server.run(f"touch {path}")
+                o, e = server.to_file(text=s, path=path)
+                if e:
+                    raise Exception(e)
                 # o, e = "Submitted batch job 12345\n", ""
-                o, e = server.srun("Compute/custom.slurm")
+                o, e = server.srun(path)
                 if e != "":
                     print(e)
                 job_id = o.replace("Submitted batch job ",
                                    "").replace("\n", "")
+                print("> job_id:", job_id)
                 recap = f"{server.alias} , {job_id} , {a} \n"
                 with open("jobs.csv", "a") as f:
                     f.write(recap)

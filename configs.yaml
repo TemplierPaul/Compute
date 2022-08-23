@@ -61,6 +61,17 @@ mujoco:
     pando: short
   time: 1-00:00:00
 
+raytest:
+  cpus:
+    pando: 72
+    calmip: 72
+    localhost: 8
+    ninox: 16
+  partition:
+    pando: short
+  time: 00:10:00
+
+
 atari:
   cpus:
     pando: 384
@@ -100,3 +111,13 @@ atari_half:
   partition:
     pando: medium
   time: 06:00:00
+
+sepcma:
+  cpus:
+    pando: 72
+    calmip: 72
+    localhost: 8
+    ninox: 16
+  partition:
+    pando: short
+  time: 1-00:00:00

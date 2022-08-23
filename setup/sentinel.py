@@ -24,7 +24,12 @@ ISSUE_CANCEL = {
     "Out Of Memory": False,
     "slurmstepd": False,
     "Unknown error": False,
-    'other system errors': False
+    'other system errors': False,
+    "unexpected system error": False,
+    # "Error: Failure in initializing endpoint": False,
+    # 'Returned "Error" (-1) instead of "Success"': False,
+    # "An error occurred in MPI_Init_thread": False,
+    # "MPI_ERRORS_ARE_FATAL": False,
 }
 
 # When grepping for "error", ignore if the line contains one of these
@@ -33,7 +38,11 @@ IGNORE_ISSUES = {
     "other system errors; your job may hang, crash, or produce silent",
     "Network error",
     "CANCELLED",
-    "CondaValueError"
+    "CondaValueError",
+    "to see all help / error messages",
+    # 'Returned "Error" (-1) instead of "Success"',
+    # "Error: Failure in initializing endpoint",
+    # "An error occurred in MPI_Init_thread"
 }
 
 ISSUES = {}
@@ -167,7 +176,7 @@ def get_issues(joblist):
                         add_issue("Unknown error", i)
 
 
-def render(running_jobs, pending_jobs, time, cpus):
+def render(running_jobs, pending_jobs, time, cpus, ignore=False):
     t = localtime()
     current_time = strftime("%H:%M:%S", t)
     clear()
@@ -183,14 +192,15 @@ def render(running_jobs, pending_jobs, time, cpus):
     print(f"{total_issues} ISSUES FOUND")
     # print("------------------------------------")
 
-    if total_issues > 0:
-        for issue_type in ISSUES:
-            print(f"> {issue_type}:")
-            warn(jobs=ISSUES[issue_type], err_type=issue_type)
-            for i in ISSUES[issue_type]:
-                print(i)
-                if issue_type in ISSUE_CANCEL and ISSUE_CANCEL[issue_type]:
-                    cancel(i)
+    if not ignore:
+        if total_issues > 0:
+            for issue_type in ISSUES:
+                print(f"> {issue_type}:")
+                warn(jobs=ISSUES[issue_type], err_type=issue_type)
+                for i in ISSUES[issue_type]:
+                    print(i)
+                    if issue_type in ISSUE_CANCEL and ISSUE_CANCEL[issue_type]:
+                        cancel(i)
 
     if len(running_jobs) > 0:
         print("------------------------------------")
@@ -213,8 +223,9 @@ def render(running_jobs, pending_jobs, time, cpus):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Get DQNES arguments')
+    parser = argparse.ArgumentParser(description='Get sentinel arguments')
     parser.add_argument('--freq', type=int, default=15)
+    parser.add_argument('--ignore', action='store_true')
     args = parser.parse_args()
 
     sleep_time = args.freq
@@ -222,8 +233,9 @@ if __name__ == "__main__":
     while True:
         try:
             running_jobs, pending_jobs, time, cpus = get_jobs()
-            get_issues(running_jobs)
-            render(running_jobs, pending_jobs, time, cpus)
+            if not args.ignore:
+                get_issues(running_jobs)
+            render(running_jobs, pending_jobs, time, cpus, ignore=args.ignore)
             sleep(sleep_time)
         except KeyboardInterrupt:
             print("Stopped")

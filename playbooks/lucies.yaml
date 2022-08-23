@@ -2,30 +2,75 @@ inventory:
   hosts: hosts.yaml
   configs: configs.yaml
 
+variables:
+  "£hosts": 
+    - pando
+    # - calmip
+  "£atari": "--net=canonical --pop=800 --mu=50 --episode_frames=27000 --stack_frames=4"
+  "£minatar": "--net=min --pop=48 --mu=12 --episode_frames=27000"
+  "£mujoco": "--pop=48 --mu=12 --episode_frames=1000"
+
 tasks:
-  - name: "Run minatar"
+  # - name: "Run minatar"
+  #   hosts:
+  #     - pando
+  #   slurm:
+  #     job_name: "BERL"
+  #     cmd: "python LUCIES/run.py £minatar --wandb=sureli/LUCIES_dev --max_evals=500000 --eval_budget=5"
+  #     config: mujoco
+  #     seeds: 0
+  #     sweep:
+  #       "--optim": ["sepcma", "canonical --im"]
+  #       "--game_seed": [-1]
+  #     args:
+  #       - "--env=min-breakout"
+  #       - "--env=min-seaquest"
+  #       - "--env=min-asterix"
+  #       - "--env=min-freeway"
+  #       - "--env=min-space_invaders"
+
+  # - name: "Run Mujoco"
+  #   hosts:
+  #     - pando
+  #   slurm:
+  #     job_name: "Mujoco"
+  #     cmd: "python LUCIES/run.py £mujoco --wandb=sureli/LUCIES_dev --max_evals=500000 --eval_budget=5"
+  #     config: mujoco
+  #     ray: true
+  #     seeds: 0
+  #     sweep:
+  #       "--optim": ["sepcma"]
+  #       "--game_seed": [0]
+  #     args:
+  #       - "--net=mujoco-light --env=HalfCheetah-v2"
+        # - "--net=mujoco-light --env=InvertedDoublePendulum-v2"  
+        # - "--net=mujoco-discrete --env=Swimmer-v2"
+        # - "--net=mujoco-discrete --env=Hopper-v2"
+        # - "--net=mujoco-light --env=InvertedPendulum-v2"
+        # - "--net=mujoco-light --env=Walker2d-v2"
+
+
+  - name: "Run Atari"
     hosts:
       - pando
-    srun:
-      job_name: "BERL"
-      cmd: "python LUCIES/run.py --wandb=sureli/LUCIES_dev --pop=48 --mu=12 --max_evals=500000 --net=min --multi --eval_budget=5"
-      config: mujoco
+    slurm:
+      job_name: "Atari"
+      cmd: "python LUCIES/run.py £atari --wandb=sureli/LUCIES_dev --max_evals=5000000 --eval_budget=5"
+      config: atari_half
+      ray: true
       seeds: 0
       sweep:
-        "--optim": ["sepcma", "canonical --im"]
-        "--game_seed": [-1]
-        "--episode_frames": [27000]
+        "--optim": ["sepcma"]
+        "--game_seed": [0]
       args:
-        - "--env=min-breakout"
-        - "--env=min-seaquest"
-        - "--env=min-asterix"
-        - "--env=min-freeway"
-        - "--env=min-space_invaders"
+        - "--env=Pong-v0"
+        # - "--env=Alien-v0"
+
 
   # - name: "Run procgen"
   #   hosts:
   #     - pando
-  #   srun:
+  #   slurm:
   #     job_name: "BERL"
   #     cmd: "python LUCIES/run.py --wandb=sureli/LUCIES_dev --pop=48 --mu=12 --max_evals=500000 --net=impala"
   #     config: mujoco
