@@ -49,6 +49,26 @@ heavy:
     pando: medium
   time: 1-00:00:00
 
+long:
+  cpus:
+    pando: 24
+    calmip: 36
+    localhost: 8
+    ninox: 16
+  partition:
+    pando: long
+  time: 7-00:00:00
+
+debug:
+  cpus:
+    pando: 48
+    calmip: 72
+    localhost: 8
+    ninox: 16
+  partition:
+    pando: debug
+  time: 01:00:00
+
 # SPECIFIC CONFIGS
 
 mujoco:
@@ -82,6 +102,26 @@ atari:
     pando: medium
   time: 1-00:00:00
 
+atari_half:
+  cpus:
+    pando: 192
+    calmip: 216
+    localhost: 8
+    ninox: 16
+  partition:
+    pando: medium
+  time: 06:00:00
+
+atari_full:
+  cpus:
+    pando: 768
+    calmip: 828
+    localhost: 8
+    ninox: 16
+  partition:
+    pando: medium
+  time: 06:00:00
+
 procgen:
   cpus:
     pando: 192
@@ -102,22 +142,13 @@ procgen_light:
     pando: short
   time: 1-00:00:00
 
-atari_half:
-  cpus:
-    pando: 192
-    calmip: 216
-    localhost: 8
-    ninox: 16
-  partition:
-    pando: medium
-  time: 06:00:00
-
 sepcma:
   cpus:
-    pando: 72
-    calmip: 72
+    pando: 24
+    calmip: 36
     localhost: 8
     ninox: 16
   partition:
     pando: short
   time: 1-00:00:00
+

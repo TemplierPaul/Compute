@@ -543,3 +543,117 @@ calmip , 924178 , --env=Pong-v0 --pop=72
 calmip , 924179 , --env=Pong-v0 --pop=144 
 pando , 1424764 , --env=Alien-v0 --pop=72 
 pando , 1424765 , --env=Alien-v0 --pop=144 
+calmip , 924184 , --env=Pong-v0 --pop=72 
+calmip , 924185 , --env=Pong-v0 --pop=144 
+pando , 1424766 , --env=Alien-v0 --pop=72 
+pando , 1424767 , --env=Alien-v0 --pop=144 
+calmip , 924191 , --env=Pong-v0 --pop=72 
+calmip , 924192 , --env=Pong-v0 --pop=144 
+pando , 1424769 , --env=Alien-v0 --pop=72 
+pando , 1424770 , --env=Alien-v0 --pop=144 
+calmip , 924197 , --env=Pong-v0 --pop=72 
+calmip , 924199 , --env=Pong-v0 --pop=144 
+pando , 1424771 , --env=Alien-v0 --pop=72 
+pando , 1424772 , --env=Alien-v0 --pop=144 
+calmip , 924201 , --env=Pong-v0 --pop=72 
+calmip , 924202 , --env=Pong-v0 --pop=144 
+pando , 1424773 , --env=Alien-v0 --pop=72 
+pando , 1424774 , --env=Alien-v0 --pop=144 
+calmip , 924207 , --env=Pong-v0 --pop=72 
+calmip , 924208 , --env=Pong-v0 --pop=144 
+pando , 1424775 , --env=Alien-v0 --pop=72 
+pando , 1424776 , --env=Alien-v0 --pop=144 
+calmip , 924227 , --env=Pong-v0 --pop=72 
+calmip , 924228 , --env=Pong-v0 --pop=144 
+pando , 1424786 , --env=Alien-v0 --pop=72 
+pando , 1424787 , --env=Alien-v0 --pop=144 
+calmip , 924238 , --env=Pong-v0 --pop=72 
+pando , 1424788 , --env=Alien-v0 --pop=72 
+calmip , 924241 , --env=Pong-v0 --pop=800 
+calmip , 924242 , --env=Alien-v0 --pop=800 
+calmip , 924245 , --env=Pong-v0 --pop=800 
+pando , 1424800 , --env=Pong-v0 --pop=72 
+pando , 1424809 , --env=bigfish-easy --pop=72 
+pando , 1424832 , --env=bigfish-easy --pop=72 
+calmip , 924879 , --env=bigfish-easy --pop=72 
+pando , 1424836 , --env=Pong-v0 
+pando , 1424837 , --env=Alien-v0 
+pando , 1424847 , --env=bigfish-easy --pop=72 
+pando , 1424848 , --env=bigfish-easy 
+pando , 1424855 , python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --pop=72 --mu=12 --env=bigfish-easy --optim=sepcma 
+pando , 1424856 , python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --pop=72 --mu=12 --env=bigfish-easy --optim=canonical 
+pando , 1424858 , python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --pop=72 --mu=24 --env=bigfish-easy --optim=sepcma 
+pando , 1424859 , python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --pop=72 --mu=24 --env=bigfish-easy --optim=canonical 
+calmip , 924937 , python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --pop=72 --mu=24 --env=bigfish-easy --optim=sepcma 
+calmip , 924938 , python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --pop=72 --mu=24 --env=bigfish-easy --optim=canonical 
+calmip , 924952 , python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --pop=72 --mu=24 --env=bigfish-easy --optim=sepcma 
+calmip , 924953 , python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --pop=72 --mu=24 --env=bigfish-easy --optim=canonical 
+calmip , 925266 , python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --pop=72 --mu=24 --env=bigfish-easy --optim=sepcma 
+calmip , 925267 , python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --pop=72 --mu=24 --env=bigfish-easy --optim=canonical 
+pando , 1424933 , python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --pop=72 --mu=24 --env=bigfish-easy --optim=sepcma 
+pando , 1424934 , python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --pop=72 --mu=24 --env=bigfish-easy --optim=canonical 
+pando , 1424935 , python3 Rayvolution/simple.py --net=conv --episode_frames=27000 --stack_frames=4 --optim=canonical --pop=72 --mu=12 --env=Pong-v0 
+pando , 1424936 , python3 Rayvolution/simple.py --net=conv --episode_frames=27000 --stack_frames=4 --optim=canonical --pop=72 --mu=12 --env=Alien-v0 
+pando , 1424943 , python3 Rayvolution/simple.py --net=conv --episode_frames=27000 --stack_frames=4 --pop=24 --mu=12 --env=Pong-v0 --optim=canonical 
+pando , 1424944 , python3 Rayvolution/simple.py --net=conv --episode_frames=27000 --stack_frames=4 --pop=24 --mu=12 --env=Alien-v0 --optim=canonical 
+pando , 1424945 , python3 Rayvolution/simple.py --net=conv --episode_frames=27000 --stack_frames=4 --pop=24 --mu=12 --env=Pong-v0 --optim=sepcma 
+pando , 1424946 , python3 Rayvolution/simple.py --net=conv --episode_frames=27000 --stack_frames=4 --pop=24 --mu=12 --env=Alien-v0 --optim=sepcma 
+pando , 1424958 , python3 Rayvolution/simple.py --net=conv --episode_frames=27000 --stack_frames=4 --pop=24 --mu=12 --max_frames=1000000000 --max_evals=10000000 --env=Pong-v0 --optim=canonical 
+pando , 1424959 , python3 Rayvolution/simple.py --net=conv --episode_frames=27000 --stack_frames=4 --pop=24 --mu=12 --max_frames=1000000000 --max_evals=10000000 --env=Alien-v0 --optim=canonical 
+pando , 1424960 , python3 Rayvolution/simple.py --net=conv --episode_frames=27000 --stack_frames=4 --pop=24 --mu=12 --max_frames=1000000000 --max_evals=10000000 --env=Pong-v0 --optim=sepcma 
+pando , 1424961 , python3 Rayvolution/simple.py --net=conv --episode_frames=27000 --stack_frames=4 --pop=24 --mu=12 --max_frames=1000000000 --max_evals=10000000 --env=Alien-v0 --optim=sepcma 
+pando , 1424962 , python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --pop=24 --mu=12 --max_frames=1000000000 --max_evals=10000000 --env=bigfish-easy --optim=canonical 
+pando , 1424963 , python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --pop=24 --mu=12 --max_frames=1000000000 --max_evals=10000000 --env=bigfish-easy --optim=sepcma 
+pando , 1424971 , python3 Rayvolution/simple.py --net=conv --episode_frames=27000 --stack_frames=4 --pop=24 --mu=12 --max_frames=1000000000 --max_evals=10000000 --env=Pong-v0 --optim=canonical 
+pando , 1424972 , python3 Rayvolution/simple.py --net=conv --episode_frames=27000 --stack_frames=4 --pop=24 --mu=12 --max_frames=1000000000 --max_evals=10000000 --env=Alien-v0 --optim=canonical 
+pando , 1424973 , python3 Rayvolution/simple.py --net=conv --episode_frames=27000 --stack_frames=4 --pop=24 --mu=12 --max_frames=1000000000 --max_evals=10000000 --env=Pong-v0 --optim=sepcma 
+pando , 1424974 , python3 Rayvolution/simple.py --net=conv --episode_frames=27000 --stack_frames=4 --pop=24 --mu=12 --max_frames=1000000000 --max_evals=10000000 --env=Alien-v0 --optim=sepcma 
+pando , 1424975 , python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --pop=24 --mu=12 --max_frames=1000000000 --max_evals=10000000 --env=bigfish-easy --optim=canonical 
+pando , 1424976 , python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --pop=24 --mu=12 --max_frames=1000000000 --max_evals=10000000 --env=bigfish-easy --optim=sepcma 
+calmip ,  , python3 Rayvolution/ test_procgen.py  
+calmip , 925392 , python3 Rayvolution/ test_procgen.py  
+calmip , 925393 , python3 Rayvolution/ test_procgen.py  
+pando ,  , python3 Rayvolution/ test_procgen.py  
+pando , 1424987 , python3 Rayvolution/ test_procgen.py  
+calmip , 925404 , python3 Rayvolution/test_procgen.py  
+pando , 1424988 , python3 Rayvolution/test_procgen.py  
+calmip , 925406 , python3 Rayvolution/test_procgen.py  
+calmip , 925411 , python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --pop=24 --mu=12 --max_frames=1000000000 --max_evals=10000000 --env=bigfish-easy --optim=canonical 
+calmip , 925412 , python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --pop=24 --mu=12 --max_frames=1000000000 --max_evals=10000000 --env=bigfish-easy --optim=sepcma 
+pando , 1424989 , python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --pop=24 --mu=12 --max_frames=1000000000 --max_evals=10000000 --env=bigfish-easy --optim=canonical 
+pando , 1424990 , python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --pop=24 --mu=12 --max_frames=1000000000 --max_evals=10000000 --env=bigfish-easy --optim=sepcma 
+calmip , 925427 , python3 Rayvolution/test_procgen.py  
+pando , 1424996 , python3 Rayvolution/test_procgen.py  
+pando , 1424999 , python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --pop=24 --mu=12 --max_frames=1000000000 --max_evals=10000000 --env=bigfish-easy --optim=canonical 
+pando , 1425000 , python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --pop=24 --mu=12 --max_frames=1000000000 --max_evals=10000000 --env=bigfish-easy --optim=sepcma 
+pando , 1425007 , python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --pop=24 --mu=12 --max_frames=1000000000 --max_evals=10000000 --env=leaper-easy --optim=canonical 
+pando , 1425008 , python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --pop=24 --mu=12 --max_frames=1000000000 --max_evals=10000000 --env=bossfight-easy --optim=canonical 
+pando , 1425009 , python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --pop=24 --mu=12 --max_frames=1000000000 --max_evals=10000000 --env=starpilot-easy --optim=canonical 
+pando , 1425010 , python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --pop=24 --mu=12 --max_frames=1000000000 --max_evals=10000000 --env=leaper-easy --optim=sepcma 
+pando , 1425011 , python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --pop=24 --mu=12 --max_frames=1000000000 --max_evals=10000000 --env=bossfight-easy --optim=sepcma 
+pando , 1425012 , python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --pop=24 --mu=12 --max_frames=1000000000 --max_evals=10000000 --env=starpilot-easy --optim=sepcma 
+pando , 1425312 , python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --pop=24 --mu=12 --max_frames=1000000000 --max_evals=10000000 --env=bigfish-easy --optim=sepcma --seeding=random --wandb=sureli/rayvolution 
+pando , 1425313 , python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --pop=24 --mu=12 --max_frames=1000000000 --max_evals=10000000 --env=leaper-easy --optim=sepcma --seeding=random --wandb=sureli/rayvolution 
+pando , 1425314 , python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --pop=24 --mu=12 --max_frames=1000000000 --max_evals=10000000 --env=bossfight-easy --optim=sepcma --seeding=random --wandb=sureli/rayvolution 
+pando , 1425315 , python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --pop=24 --mu=12 --max_frames=1000000000 --max_evals=10000000 --env=starpilot-easy --optim=sepcma --seeding=random --wandb=sureli/rayvolution 
+pando , 1425316 , python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --pop=24 --mu=12 --max_frames=1000000000 --max_evals=10000000 --env=bigfish-easy --optim=canonical --seeding=random --wandb=sureli/rayvolution 
+pando , 1425317 , python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --pop=24 --mu=12 --max_frames=1000000000 --max_evals=10000000 --env=leaper-easy --optim=canonical --seeding=random --wandb=sureli/rayvolution 
+pando , 1425318 , python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --pop=24 --mu=12 --max_frames=1000000000 --max_evals=10000000 --env=bossfight-easy --optim=canonical --seeding=random --wandb=sureli/rayvolution 
+pando , 1425319 , python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --pop=24 --mu=12 --max_frames=1000000000 --max_evals=10000000 --env=starpilot-easy --optim=canonical --seeding=random --wandb=sureli/rayvolution 
+pando , 1425320 , python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --pop=24 --mu=12 --max_frames=1000000000 --max_evals=10000000 --env=bigfish-easy --optim=sepcma --seeding=unique --wandb=sureli/rayvolution 
+pando , 1425321 , python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --pop=24 --mu=12 --max_frames=1000000000 --max_evals=10000000 --env=leaper-easy --optim=sepcma --seeding=unique --wandb=sureli/rayvolution 
+pando , 1425322 , python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --pop=24 --mu=12 --max_frames=1000000000 --max_evals=10000000 --env=bossfight-easy --optim=sepcma --seeding=unique --wandb=sureli/rayvolution 
+pando , 1425323 , python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --pop=24 --mu=12 --max_frames=1000000000 --max_evals=10000000 --env=starpilot-easy --optim=sepcma --seeding=unique --wandb=sureli/rayvolution 
+pando , 1425324 , python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --pop=24 --mu=12 --max_frames=1000000000 --max_evals=10000000 --env=bigfish-easy --optim=canonical --seeding=unique --wandb=sureli/rayvolution 
+pando , 1425325 , python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --pop=24 --mu=12 --max_frames=1000000000 --max_evals=10000000 --env=leaper-easy --optim=canonical --seeding=unique --wandb=sureli/rayvolution 
+pando , 1425326 , python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --pop=24 --mu=12 --max_frames=1000000000 --max_evals=10000000 --env=bossfight-easy --optim=canonical --seeding=unique --wandb=sureli/rayvolution 
+pando , 1425327 , python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --pop=24 --mu=12 --max_frames=1000000000 --max_evals=10000000 --env=starpilot-easy --optim=canonical --seeding=unique --wandb=sureli/rayvolution 
+pando , 1425328 , python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --pop=24 --mu=12 --max_frames=1000000000 --max_evals=10000000 --env=bigfish-easy --optim=sepcma --seeding=generation --wandb=sureli/rayvolution 
+pando , 1425329 , python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --pop=24 --mu=12 --max_frames=1000000000 --max_evals=10000000 --env=leaper-easy --optim=sepcma --seeding=generation --wandb=sureli/rayvolution 
+pando , 1425330 , python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --pop=24 --mu=12 --max_frames=1000000000 --max_evals=10000000 --env=bossfight-easy --optim=sepcma --seeding=generation --wandb=sureli/rayvolution 
+pando , 1425331 , python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --pop=24 --mu=12 --max_frames=1000000000 --max_evals=10000000 --env=starpilot-easy --optim=sepcma --seeding=generation --wandb=sureli/rayvolution 
+pando , 1425332 , python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --pop=24 --mu=12 --max_frames=1000000000 --max_evals=10000000 --env=bigfish-easy --optim=canonical --seeding=generation --wandb=sureli/rayvolution 
+pando , 1425333 , python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --pop=24 --mu=12 --max_frames=1000000000 --max_evals=10000000 --env=leaper-easy --optim=canonical --seeding=generation --wandb=sureli/rayvolution 
+pando , 1425334 , python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --pop=24 --mu=12 --max_frames=1000000000 --max_evals=10000000 --env=bossfight-easy --optim=canonical --seeding=generation --wandb=sureli/rayvolution 
+pando , 1425335 , python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --pop=24 --mu=12 --max_frames=1000000000 --max_evals=10000000 --env=starpilot-easy --optim=canonical --seeding=generation --wandb=sureli/rayvolution 
+calmip , 926494 , python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --pop=24 --mu=12 --max_frames=1000000000 --max_evals=10000000 --env=bigfish-easy --wandb=sureli/rayvolution 

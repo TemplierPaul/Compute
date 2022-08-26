@@ -55,7 +55,7 @@ class Slurm(XP):
     def run(self):
         for server, args in self.xp.items():
             for a in args:
-                print(f"Running {a} on {server.alias}")
+                print(f"Running on {server.alias}: {self.cfg['cmd']} {a}")
                 if "ray" in self.cfg and self.cfg["ray"]:
                     s = make_ray_slurm(self.cfg, server, a)
                 else:
@@ -72,7 +72,7 @@ class Slurm(XP):
                 job_id = o.replace("Submitted batch job ",
                                    "").replace("\n", "")
                 print("> job_id:", job_id)
-                recap = f"{server.alias} , {job_id} , {a} \n"
+                recap = f"{server.alias} , {job_id} , {self.cfg['cmd']} {a} \n"
                 with open("jobs.csv", "a") as f:
                     f.write(recap)
 

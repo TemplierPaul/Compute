@@ -61,6 +61,7 @@ EOF"""
             print(f"{self} | Failed to git {action} {path}")
 
         if action in ['push', 'pull']:
+            print(f"{self} | Git {action} {path}")
             return self.run(f"cd {path} && git {action} && cd")
 
     def test_git(self):
