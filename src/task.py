@@ -125,5 +125,7 @@ class Copy(Task):
             else:
                 raise Exception("Unknown mode")
             cmd = f'scp -r {source} {dest}'
+            print(cmd)
             print(f"> Copy {source} ==> {dest}")
-            self.local_run(cmd)
+            o, e = self.local_run(cmd)
+            print(o, e)

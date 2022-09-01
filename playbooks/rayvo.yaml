@@ -6,19 +6,19 @@ variables:
   "£hosts": 
     - pando
     # - calmip
-  "£atari": "--net=conv --episode_frames=27000 --stack_frames=4"
-  "£minatar": "--net=min --mu=12 --episode_frames=27000"
-  "£mujoco": "--mu=12 --episode_frames=1000"
-  "£procgen": "--net=impala --episode_frames=1000 --stack_frames=1"
+  "£atari":   "--job=$SLURM_JOB_ID --net=conv --episode_frames=27000 --stack_frames=4 --max_frames=1000000000 --max_evals=10000000"
+  "£minatar": "--job=$SLURM_JOB_ID --net=min --mu=12 --episode_frames=27000 --max_frames=100000000 --max_evals=10000000"
+  "£mujoco":  "--job=$SLURM_JOB_ID --mu=12 --episode_frames=1000 --max_frames=100000000 --max_evals=10000000"
+  "£procgen": "--net=impala --episode_frames=1000 --stack_frames=1 --max_frames=250000000 --max_evals=10000000 --job=$SLURM_JOB_ID"
 
 tasks:
-  - name: "Git pull"
-    hosts:
-      - pando
-      - calmip
-    git:
-      action: pull
-      path: "~/Rayvolution"
+  # - name: "Git pull"
+  #   hosts:
+  #     - pando
+  #     - calmip
+  #   git:
+  #     action: pull
+  #     path: "~/Rayvolution"
 
   # - name: "Run Atari"
   #   hosts:
@@ -39,21 +39,26 @@ tasks:
 
   - name: "Run Procgen"
     hosts:
-      - calmip
-      # - pando
+      # - calmip
+      - pando
     slurm:
       job_name: "Procgen"
-      cmd: "python3 Rayvolution/simple.py £procgen --pop=24 --mu=12 --max_frames=1000000000 --max_evals=10000000"
+      cmd: "python3 Rayvolution/simple.py £procgen --pop=48 --mu=12 --tag=procgen_branch"
       config: sepcma
       ray: true
-      scatter: true
+      scatter: false
       seeds: 0
       sweep:
-        # "--optim": ["sepcma", "canonical"]
-        # "--seeding": ["random", "unique", "generation"]
+        "--optim": 
+          - sepcma
+          - canonical
+        "--seeding": 
+          - random
+          - unique
+          - generation
         "--wandb": ["sureli/rayvolution"]
       args:
         - "--env=bigfish-easy"
-        # - "--env=leaper-easy"
-        # - "--env=bossfight-easy"
-        # - "--env=starpilot-easy"
+        - "--env=bossfight-easy"
+        - "--env=starpilot-easy"
+        - "--env=leaper-easy"

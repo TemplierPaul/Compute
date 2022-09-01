@@ -4,7 +4,7 @@ import requests
 from time import sleep, localtime, strftime
 import time
 import argparse
-
+# test
 # IFTTT webhooks token: https://ifttt.com/maker_webhooks
 # None or empty to ignore notifications
 token = "bQYn8DuIiJSpmioPsxYDPl"
@@ -20,12 +20,15 @@ ISSUE_CANCEL = {
     "Disk quota exceeded": True,
     "numpy.core._exceptions.MemoryError": True,
     "NameError": True,
+    "Segmentation fault": True,
     "Permission denied": False,
     "Out Of Memory": False,
-    "slurmstepd": False,
+    # "slurmstepd": False,
     "Unknown error": False,
     'other system errors': False,
     "unexpected system error": False,
+    "Internal wandb error": False,
+    "unrecognized arguments": True,
     # "Error: Failure in initializing endpoint": False,
     # 'Returned "Error" (-1) instead of "Success"': False,
     # "An error occurred in MPI_Init_thread": False,
@@ -40,6 +43,7 @@ IGNORE_ISSUES = {
     "CANCELLED",
     "CondaValueError",
     "to see all help / error messages",
+    # "slurmstepd",
     # 'Returned "Error" (-1) instead of "Success"',
     # "Error: Failure in initializing endpoint",
     # "An error occurred in MPI_Init_thread"
@@ -80,17 +84,23 @@ WARNED = {
 def warn(jobs, err_type):
     if not isinstance(jobs, list):
         jobs = [jobs]
+    if len(jobs) == 0:
+        return
     if token is None or token == "":
         return
     jobs = [i for i in jobs if i not in WARNED[err_type]]
-    if len(jobs) == 0:
-        return
+    # get unique jobs
+    jobs = list(set(jobs))
     WARNED[err_type] += jobs
     event = "Compute"
     url = f"https://maker.ifttt.com/trigger/{event}/with/key/{token}"
+    jobs = " | ".join(jobs)
+    if jobs.replace(" ", "") == "":
+        return
+
     json = {
         "value1": HOST,
-        "value2": " | ".join(jobs),
+        "value2": jobs,
         "value3": err_type
     }
     requests.post(url, json=json)
@@ -158,6 +168,7 @@ def get_issues(joblist):
                 f"cat {logs_dir}slurm.{i}.err | grep '{grep}'")
             if mpiout != "":
                 add_issue(grep, i)
+        # print("Known issues")
 
         for grep in ["error", "Error"]:
             mpiout, mpierr = run(
@@ -167,16 +178,22 @@ def get_issues(joblist):
                 for l in l_errors:
                     if l == "":
                         continue
-                    report = True
-                    for ignore in IGNORE_ISSUES:
-                        if ignore in l:
-                            report = False
+                    report = all(i not in l for i in IGNORE_ISSUES) and all(
+                        i not in l for i in ISSUE_CANCEL.keys())
+                    # for ignore in IGNORE_ISSUES:
+                    #     if ignore in l:
+                    #         report = False
                     if report:
-                        print(f"Unknown error: {l}")
+                        # print(f"Unknown error: {l}")
                         add_issue("Unknown error", i)
+        # print("Unknown issues")
 
 
-def render(running_jobs, pending_jobs, time, cpus, ignore=False):
+def render(running_jobs, pending_jobs, time, cpus, args):
+    ignore = args.ignore
+    wandb = args.wandb
+    clean = args.clean
+
     t = localtime()
     current_time = strftime("%H:%M:%S", t)
     clear()
@@ -206,8 +223,32 @@ def render(running_jobs, pending_jobs, time, cpus, ignore=False):
         print("------------------------------------")
         print(f"RUNNING")
         for i in running_jobs:
-            out, err = run(f"cat {logs_dir}slurm.{i}.out | grep '{cmd_grep}'")
-            cmd = out.replace("--", "| ").replace("\n", "")
+            if wandb:
+                out, err = run(
+                    f"cat {logs_dir}slurm.{i}.out | grep 'wandb run: '")
+                # cmd = out
+                cmd = out.replace("wandb run: ", " ").replace("\n", "")
+                cmd = f'WandB: {cmd}'
+            elif clean:
+                out, err = run(
+                    f"cat {logs_dir}slurm.{i}.out | grep '{cmd_grep}'")
+                # Get env argument
+                env = ""
+                if "--env" in out:
+                    env = out.split("--env=")[1]
+                    env = env.split(" ")[0]
+                optim = ""
+                if "--optim" in out:
+                    optim = out.split("--optim=")[1]
+                    optim = optim.split(" ")[0]
+
+                cmd = f'{env} | {optim}'
+
+            else:
+                out, err = run(
+                    f"cat {logs_dir}slurm.{i}.out | grep '{cmd_grep}'")
+                cmd = out.replace("--", "| ").replace("\n", "")
+
             if ("pando" in cmd and HOST == "calmip") or ("calmip" in cmd and HOST == "pando"):
                 warn([i], "Wrong platform as argument")
                 cancel(i)
@@ -226,16 +267,21 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Get sentinel arguments')
     parser.add_argument('--freq', type=int, default=15)
     parser.add_argument('--ignore', action='store_true')
+    parser.add_argument('--wandb', action='store_true')
+    parser.add_argument('--clean', action='store_true')
     args = parser.parse_args()
 
     sleep_time = args.freq
 
     while True:
         try:
+            # print("Getting jobs...")
             running_jobs, pending_jobs, time, cpus = get_jobs()
+            # print("Getting issues...")
             if not args.ignore:
                 get_issues(running_jobs)
-            render(running_jobs, pending_jobs, time, cpus, ignore=args.ignore)
+            # print("Rendering...")
+            render(running_jobs, pending_jobs, time, cpus, args=args)
             sleep(sleep_time)
         except KeyboardInterrupt:
             print("Stopped")

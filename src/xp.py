@@ -67,10 +67,12 @@ class Slurm(XP):
                     raise Exception(e)
                 # o, e = "Submitted batch job 12345\n", ""
                 o, e = server.srun(path)
+                # print(o)
                 if e != "":
                     print(e)
-                job_id = o.replace("Submitted batch job ",
-                                   "").replace("\n", "")
+                o = o.split("Submitted")[-1]
+                job_id = o.replace("batch job ",
+                                   "").replace("\n", "").replace(" ", "")
                 print("> job_id:", job_id)
                 recap = f"{server.alias} , {job_id} , {self.cfg['cmd']} {a} \n"
                 with open("jobs.csv", "a") as f:

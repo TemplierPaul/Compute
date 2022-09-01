@@ -6,6 +6,7 @@ tasks:
   - name: "Copy sentinel"
     hosts:
       - pando
+      - calmip
     copy:
       mode: "push" # "pull" or "push"
       src: "/home/disc/p.templier/Documents/Doctorat/Dev/Compute/setup/sentinel.py" # File

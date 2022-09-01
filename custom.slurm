@@ -1,29 +1,30 @@
 #!/bin/bash         
 #SBATCH -J Procgen
 
-#SBATCH --nodes=1
-#SBATCH --ntasks=1
+#SBATCH --nodes=2
+#SBATCH --ntasks=2
 
 #SBATCH --ntasks-per-node=1
 
-#SBATCH --cpus-per-task=36
+#SBATCH --cpus-per-task=24
 
 #SBATCH --time=1-00:00:00
+#SBATCH --partition=short
 
 #SBATCH --mail-user=paul.templier@isae-supaero.fr
 #SBATCH --mail-type=ALL
 
-export OMP_NUM_THREADS=1
 module purge
-module load intel/18.2
-module load intelmpi/18.2
-module load python/3.6.8
-source activate /tmpdir/templier/envs/torchenv
+module load python/3.7
+module load libosmesa/17.2.3
+cd /home/disc/p.templier/parallelpy
+source pyenv/bin/activate
+echo $(which python)
 cd
 
 
 wandb enabled
-wandb offline
+wandb online
 
 redis_password=$(uuidgen)
 export redis_password
@@ -54,9 +55,9 @@ done
 
 
 
-echo CMD python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --pop=24 --mu=12 --max_frames=1000000000 --max_evals=10000000 --env=bigfish-easy --wandb=sureli/rayvolution
+echo CMD python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --max_frames=250000000 --max_evals=10000000 --job=$SLURM_JOB_ID --pop=48 --mu=12 --tag=procgen_branch --env=leaper-easy --optim=sepcma --seeding=unique --wandb=sureli/rayvolution
 
 for seed in 0
 do 
-python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --pop=24 --mu=12 --max_frames=1000000000 --max_evals=10000000 --env=bigfish-easy --wandb=sureli/rayvolution
+python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --max_frames=250000000 --max_evals=10000000 --job=$SLURM_JOB_ID --pop=48 --mu=12 --tag=procgen_branch --env=leaper-easy --optim=sepcma --seeding=unique --wandb=sureli/rayvolution
 done

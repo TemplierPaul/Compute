@@ -144,7 +144,7 @@ procgen_light:
 
 sepcma:
   cpus:
-    pando: 24
+    pando: 48
     calmip: 36
     localhost: 8
     ninox: 16
