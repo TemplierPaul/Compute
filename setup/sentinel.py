@@ -12,6 +12,8 @@ token = "bQYn8DuIiJSpmioPsxYDPl"
 # To detect which command is run
 cmd_grep = "CMD"
 
+args_to_parse = ['--env', '--optim', '--seeding', "--pop"]
+
 # Keys are grepped in .err files
 # Value: bool, if True cancels the run when the error is found in .err
 ISSUE_CANCEL = {
@@ -23,12 +25,14 @@ ISSUE_CANCEL = {
     "Segmentation fault": True,
     "Permission denied": False,
     "Out Of Memory": False,
+    "ObjectStoreFullError": True,
     # "slurmstepd": False,
     "Unknown error": False,
     'other system errors': False,
     "unexpected system error": False,
     "Internal wandb error": False,
     "unrecognized arguments": True,
+    "GOAWAY": False,
     # "Error: Failure in initializing endpoint": False,
     # 'Returned "Error" (-1) instead of "Success"': False,
     # "An error occurred in MPI_Init_thread": False,
@@ -68,7 +72,7 @@ def run(cmd):
 def clear(): return os.system('clear')
 
 
-clear()
+# clear()
 
 
 def cancel(i):
@@ -98,10 +102,14 @@ def warn(jobs, err_type):
     if jobs.replace(" ", "") == "":
         return
 
+    stopped = ""
+    if err_type in ISSUE_CANCEL and ISSUE_CANCEL[err_type]:
+        stopped = " (Stopped)"
+
     json = {
         "value1": HOST,
         "value2": jobs,
-        "value3": err_type
+        "value3": err_type + stopped
     }
     requests.post(url, json=json)
 
@@ -109,13 +117,16 @@ def warn(jobs, err_type):
 HOST = run("hostname")[0].replace("\n", "")
 user = run("whoami")[0].replace("\n", "")
 
-if "pando" in HOST:
+if "pando" in HOST or "node" in HOST:
+    print("Pando")
     logs_dir = f"/scratch/disc/{user}/slurm_logs/"
     HOST = "pando"
 elif "olympe" in HOST:
+    print("CALMIP")
     logs_dir = f"/tmpdir/{user}/slurm_logs/"
     HOST = "calmip"
 else:
+    print("Unknown host", HOST, user)
     warn([], "Compute cluster not recognised")
 
 
@@ -233,16 +244,13 @@ def render(running_jobs, pending_jobs, time, cpus, args):
                 out, err = run(
                     f"cat {logs_dir}slurm.{i}.out | grep '{cmd_grep}'")
                 # Get env argument
-                env = ""
-                if "--env" in out:
-                    env = out.split("--env=")[1]
-                    env = env.split(" ")[0]
-                optim = ""
-                if "--optim" in out:
-                    optim = out.split("--optim=")[1]
-                    optim = optim.split(" ")[0]
+                arg_list = []
+                for arg in args_to_parse:
+                    if arg in out:
+                        arg_list.append(out.split(arg)[1].split(" ")[
+                                        0].replace("=", ""))
 
-                cmd = f'{env} | {optim}'
+                cmd = " | ".join(arg_list)
 
             else:
                 out, err = run(
@@ -258,8 +266,15 @@ def render(running_jobs, pending_jobs, time, cpus, args):
     if len(pending_jobs) > 0:
         print("------------------------------------")
         print(f"Pending")
-        for i in pending_jobs:
-            print(f"{i} ({'0:00':>8}) [{cpus[i]:>3}]\t  pending...")
+        if len(pending_jobs) + len(running_jobs) > 41:
+            pending_jobs = pending_jobs[:41 -
+                                        len(running_jobs) - len(pending_jobs)]
+            for i in pending_jobs:
+                print(f"{i} ({'0:00':>8}) [{cpus[i]:>3}]\t  pending...")
+            print("Too many jobs to display...")
+        else:
+            for i in pending_jobs:
+                print(f"{i} ({'0:00':>8}) [{cpus[i]:>3}]\t  pending...")
     print("------------------------------------")
 
 
@@ -269,6 +284,7 @@ if __name__ == "__main__":
     parser.add_argument('--ignore', action='store_true')
     parser.add_argument('--wandb', action='store_true')
     parser.add_argument('--clean', action='store_true')
+    parser.add_argument('--headless', action='store_true')
     args = parser.parse_args()
 
     sleep_time = args.freq
@@ -281,7 +297,8 @@ if __name__ == "__main__":
             if not args.ignore:
                 get_issues(running_jobs)
             # print("Rendering...")
-            render(running_jobs, pending_jobs, time, cpus, args=args)
+            if not args.headless:
+                render(running_jobs, pending_jobs, time, cpus, args=args)
             sleep(sleep_time)
         except KeyboardInterrupt:
             print("Stopped")

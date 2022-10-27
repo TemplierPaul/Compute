@@ -11,3 +11,14 @@ tasks:
       mode: "push" # "pull" or "push"
       src: "/home/disc/p.templier/Documents/Doctorat/Dev/Compute/setup/sentinel.py" # File
       dest: "~/" # Directory
+
+  # - name: "Run sentinel"
+  #   hosts:
+  #     # - calmip
+  #     # - pando
+  #   slurm:
+  #     job_name: "Sentinel"
+  #     cmd: "python3 sentinel.py --freq=10 --headless"
+  #     config: sentinel
+  #     ray: false
+  #     scatter: false

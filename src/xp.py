@@ -54,6 +54,7 @@ class Slurm(XP):
 
     def run(self):
         for server, args in self.xp.items():
+            print(f"--- {len(args)} JOBS ON {server} ---")
             for a in args:
                 print(f"Running on {server.alias}: {self.cfg['cmd']} {a}")
                 if "ray" in self.cfg and self.cfg["ray"]:

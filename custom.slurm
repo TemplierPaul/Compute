@@ -1,5 +1,5 @@
 #!/bin/bash         
-#SBATCH -J Procgen
+#SBATCH -J Optim
 
 #SBATCH --nodes=2
 #SBATCH --ntasks=2
@@ -9,7 +9,6 @@
 #SBATCH --cpus-per-task=24
 
 #SBATCH --time=1-00:00:00
-#SBATCH --partition=short
 
 #SBATCH --mail-user=paul.templier@isae-supaero.fr
 #SBATCH --mail-type=ALL
@@ -55,9 +54,9 @@ done
 
 
 
-echo CMD python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --max_frames=250000000 --max_evals=10000000 --job=$SLURM_JOB_ID --pop=48 --mu=12 --tag=procgen_branch --env=leaper-easy --optim=sepcma --seeding=unique --wandb=sureli/rayvolution
+echo CMD python3 Rayvolution/simple.py --pop=48 --mu=24 --job=$SLURM_JOB_ID --es_seed=$seed --max_frames=100000 --max_evals=100000 --save_freq=0 --env=himmelblau --optim=canonical --sampling=dynamic --eval_budget=5 --noise=500 --wandb=sureli/rayvolution --tag=same_noise_level
 
-for seed in 0
+for seed in 0 1 2 3 4 5 6 7 8 9
 do 
-python3 Rayvolution/simple.py --net=impala --episode_frames=1000 --stack_frames=1 --max_frames=250000000 --max_evals=10000000 --job=$SLURM_JOB_ID --pop=48 --mu=12 --tag=procgen_branch --env=leaper-easy --optim=sepcma --seeding=unique --wandb=sureli/rayvolution
+python3 Rayvolution/simple.py --pop=48 --mu=24 --job=$SLURM_JOB_ID --es_seed=$seed --max_frames=100000 --max_evals=100000 --save_freq=0 --env=himmelblau --optim=canonical --sampling=dynamic --eval_budget=5 --noise=500 --wandb=sureli/rayvolution --tag=same_noise_level
 done

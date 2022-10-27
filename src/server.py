@@ -88,7 +88,7 @@ EOF"""
 
             d["cpus"] = c["cpus"] if isinstance(
                 c["cpus"], int) else c["cpus"][self.alias]
-
+            c["partition"] = c["partition"] if "partition" in c else {}
             d["partition"] = c["partition"][self.alias] if self.alias in c["partition"] else None
         return d
 

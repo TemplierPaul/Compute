@@ -37,28 +37,140 @@ tasks:
   #       - "--env=Pong-v0"
   #       - "--env=Alien-v0"
 
-  - name: "Run Procgen"
+  # - name: "Run Procgen 48"
+  #   hosts:
+  #     # - calmip
+  #     - pando
+  #   slurm:
+  #     job_name: "Procgen"
+  #     cmd: "python3 Rayvolution/simple.py £procgen --pop=100 --mu=15 --tag=procgen_large"
+  #     config: procgen_light
+  #     ray: true
+  #     scatter: false
+  #     seeds: 0
+  #     sweep:
+  #       "--optim": 
+  #         - sepcma
+  #         - canonical
+  #       "--seeding": 
+  #         - random
+  #         - unique
+  #         # - generation
+  #       "--wandb": ["sureli/rayvolution"]
+  #     args:
+  #       - "--env=bigfish-easy"
+  #       - "--env=bossfight-easy"
+  #       - "--env=starpilot-easy"
+  #       # - "--env=leaper-easy"
+
+  # - name: "Run Procgen 96"
+  #   hosts:
+  #     # - calmip
+  #     - pando
+  #   slurm:
+  #     job_name: "Procgen"
+  #     cmd: "python3 Rayvolution/simple.py £procgen --pop=96 --mu=12 --tag=big_pop"
+  #     config: procgen_light
+  #     ray: true
+  #     scatter: false
+  #     seeds: 0
+  #     sweep:
+  #       "--optim": 
+  #         - sepcma
+  #         - canonical
+  #       "--seeding": 
+  #         - random
+  #         - unique
+  #         # - generation
+  #       "--wandb": ["sureli/rayvolution"]
+  #     args:
+  #       - "--env=bigfish-easy"
+  #       - "--env=bossfight-easy"
+  #       # - "--env=starpilot-easy"
+  #       # - "--env=leaper-easy"
+
+  # - name: "Run minatar"
+  #   hosts:
+  #     - pando
+  #   slurm:
+  #     job_name: "Minatar"
+  #     cmd: "python3 Rayvolution/simple.py £minatar --pop=48 --mu=12 --tag=minatar"
+  #     config: mujoco
+  #     ray: true
+  #     scatter: false
+  #     seeds: 0
+  #     sweep:
+  #       "--optim": 
+  #         - sepcma
+  #         - canonical
+  #       "--seeding": 
+  #         - random
+  #         - unique
+  #         # - generation
+  #       "--wandb": ["sureli/rayvolution"]
+  #     args:
+  #       - "--env=min-breakout"
+  #       - "--env=min-seaquest"
+  #       - "--env=min-asterix"
+  #       - "--env=min-freeway"
+  #       - "--env=min-space_invaders"
+
+  - name: "MC"
     hosts:
-      # - calmip
       - pando
     slurm:
-      job_name: "Procgen"
-      cmd: "python3 Rayvolution/simple.py £procgen --pop=48 --mu=12 --tag=procgen_branch"
-      config: sepcma
+      job_name: "Optim"
+      cmd: "python3 Rayvolution/simple.py --pop=48 --mu=24 --job=$SLURM_JOB_ID --es_seed=$seed --max_frames=100000 --max_evals=100000 --save_freq=0"
+      config: medium
       ray: true
       scatter: false
-      seeds: 0
+      seeds: 0 1 
       sweep:
         "--optim": 
-          - sepcma
           - canonical
-        "--seeding": 
-          - random
-          - unique
-          - generation
+          # - sepcma
+          # - cma
+        "--sampling":
+          - "mc"
+        "--eval_budget": [5]
+        "--batch_rs": [1]
+        "--noise_type": ["uniform", "gaussian"]
+        "--noise": [0, 1, 10, 100, 500]
+        # "--mc_epsilon_decay": [0.99, 0.95]
+        "--mc_samples": [25]
         "--wandb": ["sureli/rayvolution"]
+        "--tag": ["same_noise_level"]
       args:
-        - "--env=bigfish-easy"
-        - "--env=bossfight-easy"
-        - "--env=starpilot-easy"
-        - "--env=leaper-easy"
+        - "--env=rastrigin"
+        - "--env=rosen"
+        - "--env=himmelblau" 
+
+  - name: "Optim"
+    hosts:
+      - pando
+    slurm:
+      job_name: "Optim"
+      cmd: "python3 Rayvolution/simple.py --pop=48 --mu=24 --job=$SLURM_JOB_ID --es_seed=$seed --max_frames=100000 --max_evals=100000 --save_freq=0"
+      config: medium
+      ray: true
+      scatter: false
+      seeds: 0 1 2 3 4 5 6 7 8 9
+      sweep:
+        "--optim": 
+          - canonical
+          # - sepcma
+          # - cma
+        "--sampling":
+          - default
+          - static
+          - dynamic
+        # "--batch_rs": [1, 5]
+        "--eval_budget": [5]
+        "--noise": [0, 1, 10, 100, 500]
+        "--wandb": ["sureli/rayvolution"]
+        "--tag": ["same_noise_level"]
+      args:
+        - "--env=rastrigin"
+        - "--env=rosen"
+        - "--env=himmelblau" 
+ 

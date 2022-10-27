@@ -25,8 +25,8 @@ test:
 
 light:
   cpus:
-    pando: 48
-    calmip: 72
+    pando: 24
+    calmip: 36
     localhost: 8
     ninox: 16
   time: 1-00:00:00
@@ -145,7 +145,7 @@ procgen_light:
 sepcma:
   cpus:
     pando: 48
-    calmip: 36
+    calmip: 72
     localhost: 8
     ninox: 16
   partition:
