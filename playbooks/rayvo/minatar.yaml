@@ -1,0 +1,214 @@
+inventory:
+  hosts: hosts.yaml
+  configs: configs.yaml
+
+variables:
+  "£hosts": 
+    - pando
+    # - calmip
+  "£atari":   "--job=$SLURM_JOB_ID --net=conv --episode_frames=27000 --stack_frames=4 --max_frames=1000000000 --max_evals=10000000"
+  "£minatar": "--job=$SLURM_JOB_ID --net=min --episode_frames=500 --max_frames=10000000 --max_evals=10000000"
+  "£mujoco":  "--job=$SLURM_JOB_ID --episode_frames=1000 --max_frames=100000000 --max_evals=10000000"
+  "£procgen": "--net=impala --episode_frames=1000 --stack_frames=1 --max_frames=250000000 --max_evals=10000000 --job=$SLURM_JOB_ID"
+  "£control":
+    - "--env=MountainCar-v0 --max_frames=10000000"
+    - "--env=CartPole-v1 --max_frames=500000"
+    - "--env=LunarLander-v2 --max_frames=1000000"
+    - "--env=Acrobot-v1 --max_frames=10000000"
+  "£imageenvs":
+    # - "--env=min-breakout"
+    # - "--env=min-space_invaders"
+    # - "--env=min-asterix"
+    # - "--env=min-seaquest"
+    - "--env=min-freeway"
+
+
+tasks:
+  - name: "Minatar SepCMA"
+    hosts:
+      - pando
+    slurm:
+      job_name: "M-SepCMA"
+      cmd: "python3 Rayvolution/simple.py £minatar --max_evals=10000000 --save_freq=100 --noise_type=none --job=$SLURM_JOB_ID"
+      config: atari
+      ray: true
+      scatter: true
+      seeds: 0
+      sweep:
+        "--pop": [800]
+        "--mu": [50]
+        "--sigma": [1]
+        # "--cma_c_sigma": [0.0001, 0.001, 0.01]
+        # "--cma_cmu": [0.0001, 0.001, 0.01]
+        "--actor_injection": [0]
+        "--es_seed": [42]
+        "--optim": ["sepcma"]
+        "--seeding": ["unique"]
+        "--wandb": ["sureli/rayvolution"]
+        "--tag": ["minatar_monday"]
+      args: £imageenvs
+
+
+  # - name: "Minatar CURLIES"
+  #   hosts:
+  #     - pando
+  #   slurm:
+  #     job_name: "M-CURLIES"
+  #     cmd: "python3 Rayvolution/simple.py £minatar --pop=800 --mu=50  --max_evals=10000000 --save_freq=10 --noise_type=none --buffer_size=3000000 --job=$SLURM_JOB_ID --cuda"
+  #     config: atari_hetero
+  #     ray: true
+  #     heterogeneous: true
+  #     scatter: true
+  #     seeds: 0
+  #     sweep:
+  #       "--rl": ["munchausen"]
+  #       "--rl_steps": [5000]
+  #       "--backprop_steps": [100]
+  #       "--rl_lr": [0.00025]
+  #       "--rl_batch_size": [32]
+  #       "--sgd_update": [true]
+  #       "--actor_injection": [1]
+  #       "--sigma": [1]
+  #       "--es_seed": [42]
+  #       "--optim": ["sepcma"]
+  #       "--seeding": ["unique"]
+  #       "--wandb": ["sureli/rayvolution"]
+  #       "--tag": ["minatar_monday"]
+  #     args: £imageenvs
+
+  # - name: "Minatar CURLIES CPU"
+  #   hosts:
+  #     - pando
+  #   slurm:
+  #     job_name: "M-CURLIES-CPU"
+  #     cmd: "python3 Rayvolution/simple.py £minatar --pop=96 --mu=48  --max_evals=10000000 --save_freq=10 --noise_type=none --buffer_size=3000000 --job=$SLURM_JOB_ID"
+  #     config: minatar
+  #     ray: true
+  #     heterogeneous: false
+  #     scatter: true
+  #     seeds: 0
+  #     sweep:
+  #       "--rl": ["munchausen"]
+  #       "--rl_steps": [5000]
+  #       "--backprop_steps": [100]
+  #       "--rl_lr": [0.00025, 0.001, 0.01]
+  #       "--rl_batch_size": [32]
+  #       "--sgd_update": [true]
+  #       "--actor_injection": [1]
+  #       "--sigma": [1]
+  #       "--es_seed": [42]
+  #       "--optim": ["sepcma"]
+  #       "--seeding": ["unique"]
+  #       "--wandb": ["sureli/rayvolution"]
+  #       "--tag": ["minatar_monday"]
+  #     args: £imageenvs
+
+  # - name: "Minatar CARLIES"
+  #   hosts:
+  #     - pando
+  #   slurm:
+  #     job_name: "M-CARLIES"
+  #     cmd: "python3 Rayvolution/simple.py £minatar --pop=96 --mu=48  --max_evals=10000000 --save_freq=10 --noise_type=none --buffer_size=3000000 --job=$SLURM_JOB_ID --cuda"
+  #     config: minatar_hetero
+  #     ray: true
+  #     heterogeneous: true
+  #     scatter: true
+  #     seeds: 0
+  #     sweep:
+  #       "--rl": ["munchausen"]
+  #       "--rl_steps": [1000]
+  #       "--rl_lr": [0.00025]
+  #       "--rl_batch_size": [32]
+  #       "--backprop_es": [true] 
+  #       "--sgd_update": [false]
+  #       "--backprop_steps": [100]
+  #       "--actor_injection": [0]
+  #       "--sigma": [1]
+  #       "--es_seed": [42, 43]
+  #       "--optim": ["sepcma"]
+  #       "--seeding": ["random"]
+  #       "--wandb": ["sureli/rayvolution"]
+  #       "--tag": ["minatar_weekend"]
+  #     args: £imageenvs
+
+
+  # - name: "Minatar ES-RL"
+  #   hosts:
+  #     - pando
+  #   slurm:
+  #     job_name: "M-ES-RL"
+  #     cmd: "python3 Rayvolution/simple.py £minatar --pop=96 --mu=48  --max_evals=10000000 --save_freq=10 --noise_type=none --buffer_size=3000000 --job=$SLURM_JOB_ID --cuda"
+  #     config: minatar_hetero
+  #     ray: true
+  #     heterogeneous: true
+  #     scatter: true
+  #     seeds: 0
+  #     sweep:
+  #       "--rl": ["munchausen"]
+  #       "--rl_steps": [1000]
+  #       "--rl_lr": [0.00025]
+  #       "--rl_batch_size": [32]
+  #       "--backprop_ind": [true] 
+  #       "--sgd_update": [false]
+  #       "--backprop_steps": [100]
+  #       "--actor_injection": [0]
+  #       "--sigma": [1]
+  #       "--es_seed": [42, 43]
+  #       "--optim": ["sepcma"]
+  #       "--seeding": ["random"]
+  #       "--wandb": ["sureli/rayvolution"]
+  #       "--tag": ["minatar_weekend"]
+  #     args: £imageenvs
+
+
+  # - name: "Minatar SepCMA-AI"
+  #   hosts:
+  #     - pando
+  #   slurm:
+  #     job_name: "M-SepCMA-AI"
+  #     cmd: "python3 Rayvolution/simple.py £minatar --pop=96 --mu=48  --max_evals=10000000 --save_freq=10 --noise_type=none --buffer_size=3000000 --job=$SLURM_JOB_ID --cuda"
+  #     config: minatar_hetero
+  #     ray: true
+  #     heterogeneous: true
+  #     scatter: true
+  #     seeds: 0
+  #     sweep:
+  #       "--rl": ["munchausen"]
+  #       "--rl_steps": [1000]
+  #       "--rl_lr": [0.00025]
+  #       "--rl_batch_size": [32]
+  #       "--backprop_ind": [false] 
+  #       "--sgd_update": [false]
+  #       "--backprop_steps": [100]
+  #       "--actor_injection": [1]
+  #       "--sigma": [1]
+  #       "--es_seed": [42, 43]
+  #       "--optim": ["sepcma"]
+  #       "--seeding": ["random"]
+  #       "--wandb": ["sureli/rayvolution"]
+  #       "--tag": ["minatar_weekend"]
+  #     args: £imageenvs
+
+  # - name: "Minatar DQN"
+  #   hosts:
+  #     - pando
+  #   slurm:
+  #     job_name: "M-DQN"
+  #     cmd: "python3 Rayvolution/simple_rl.py £minatar --save_freq=10 --noise_type=none --job=$SLURM_JOB_ID"
+  #     config: gpu
+  #     ray: false
+  #     scatter: true
+  #     seeds: 0
+  #     sweep:
+  #       "--rl": ["munchausen"]
+  #       "--replay_start_size": [5000]
+  #       "--rl_lr": [0.00025]
+  #       "--epsilon_decay_frac": [0.02]
+  #       "--epsilon_min": [0.1]
+  #       "--es_seed": [42, 43]
+  #       "--rl_batch_size": [32]
+  #       "--buffer_size": [100000]
+  #       "--seeding": ["random"]
+  #       "--wandb": ["sureli/rayvolution"]
+  #       "--tag": ["minatar_dqn"]
+  #     args: £imageenvs

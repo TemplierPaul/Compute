@@ -1,0 +1,265 @@
+inventory:
+  hosts: hosts.yaml
+  configs: configs.yaml
+
+variables:
+  "£hosts": 
+    - pando
+    # - calmip
+  "£atari":   "--job=$SLURM_JOB_ID --net=conv --episode_frames=27000 --stack_frames=4 --max_frames=1000000000 --max_evals=10000000"
+  "£minatar": "--job=$SLURM_JOB_ID --net=min --episode_frames=100000 --max_frames=5000000 --max_evals=10000000"
+  "£mujoco":  "--job=$SLURM_JOB_ID --episode_frames=1000 --max_frames=100000000 --max_evals=10000000"
+  "£procgen": "--net=impala --episode_frames=1000 --stack_frames=1 --max_frames=250000000 --max_evals=10000000 --job=$SLURM_JOB_ID"
+  "£control":
+    - "--env=MountainCar-v0 --max_frames=10000000"
+    # - "--env=CartPole-v1 --max_frames=500000"
+    - "--env=LunarLander-v2 --max_frames=5000000"
+    # - "--env=Acrobot-v1 --max_frames=10000000"
+  "£minatarenvs":
+    - "--env=min-breakout"
+    - "--env=min-seaquest"
+    - "--env=min-asterix"
+    - "--env=min-freeway"
+    - "--env=min-space_invaders"
+
+
+tasks:
+  - name: "Control CURLIES"
+    hosts:
+      - pando
+    slurm:
+      job_name: "C-CURLIES"
+      cmd: "python3 Rayvolution/simple.py --pop=96 --mu=48  --max_evals=10000000 --save_freq=10 --noise_type=none --buffer_size=3000000 --job=$SLURM_JOB_ID"
+      config: medium
+      ray: true
+      scatter: true
+      seeds: 0
+      sweep:
+        "--rl": ["munchausen"]
+        "--rl_batch_size": [32]
+        "--rl_lr": [0.00025]
+        "--rl_steps": [1000]
+        # "--backprop_es": [false] 
+        "--sgd_update": [true]
+        # "--softmax_act": [false]
+        # "--softmax_temp_decay": [0.99]
+        "--backprop_steps": [1000]
+        "--actor_injection": [0]
+        "--sigma": [1]
+        "--w_decay": [0.01]
+        "--es_seed": [42, 43]
+        "--optim": ["sepcma"]
+        "--seeding": ["random"]
+        "--wandb": ["sureli/rayvolution"]
+        "--tag": ["post-gecco"]
+      args: £control
+
+  - name: "Control SepCMA"
+    hosts:
+      - pando
+    slurm:
+      job_name: "C-SepCMA"
+      cmd: "python3 Rayvolution/simple.py  --max_evals=10000000 --save_freq=10 --noise_type=none --buffer_size=3000000 --job=$SLURM_JOB_ID"
+      config: medium
+      ray: true
+      scatter: true
+      seeds: 0
+      sweep:
+        "--actor_injection": [0]
+        # "--softmax_act": [true]
+        # "--softmax_temp_decay": [0.99]
+        "--zero_start": [false]
+        "--net": ["flat"] 
+        "--sigma": [1]
+        "--pop": [96]
+        "--mu": [48]
+        "--es_seed": [42, 43]
+        "--w_decay": [0.01]
+        "--optim": ["sepcma"]
+        "--seeding": ["random"]
+        "--wandb": ["sureli/rayvolution"]
+        "--tag": ["post-gecco"]
+      args: £control
+
+  # - name: "Control CURLIES-AI"
+  #   hosts:
+  #     - pando
+  #   slurm:
+  #     job_name: "C-CURLIES-AI"
+  #     cmd: "python3 Rayvolution/simple.py --pop=96 --mu=48  --max_evals=10000000 --save_freq=10 --noise_type=none --buffer_size=3000000 --job=$SLURM_JOB_ID"
+  #     config: medium
+  #     ray: true
+  #     scatter: true
+  #     seeds: 0
+  #     sweep:
+  #       "--rl": ["munchausen"]
+  #       "--rl_batch_size": [32]
+  #       "--rl_lr": [0.00025]
+  #       "--rl_steps": [1000]
+  #       # "--backprop_es": [false] 
+  #       "--sgd_update": [true]
+  #       "--backprop_steps": [1000]
+  #       "--actor_injection": [1]
+  #       "--sigma": [1]
+  #       "--es_seed": [42, 43, 44]
+  #       "--optim": ["sepcma"]
+  #       "--seeding": ["random"]
+  #       "--wandb": ["sureli/rayvolution"]
+  #       "--tag": ["MC"]
+  #     args: £control
+
+  - name: "Control CARLIES"
+    hosts:
+      - pando
+    slurm:
+      job_name: "C-CARLIES"
+      cmd: "python3 Rayvolution/simple.py --pop=96 --mu=48  --max_evals=10000000 --save_freq=10 --noise_type=none --buffer_size=3000000 --job=$SLURM_JOB_ID"
+      config: medium
+      ray: true
+  
+      scatter: true
+      seeds: 0
+      sweep:
+        "--rl": ["munchausen"]
+        "--rl_batch_size": [32]
+        "--rl_lr": [0.00025]
+        "--rl_steps": [1000]
+        "--backprop_es": [true] 
+        "--sgd_update": [false]
+        "--backprop_steps": [1000]
+        "--actor_injection": [0]
+        "--sigma": [1]
+        "--w_decay": [0.01]
+        "--es_seed": [42, 43]
+        "--optim": ["sepcma"]
+        "--seeding": ["random"]
+        "--wandb": ["sureli/rayvolution"]
+        "--tag": ["post-gecco"]
+      args: £control
+
+
+  # - name: "Control SepCMA-AI"
+  #   hosts:
+  #     - pando
+  #   slurm:
+  #     job_name: "C-SepCMA-AI"
+  #     cmd: "python3 Rayvolution/simple.py --pop=96 --mu=48  --max_evals=10000000 --save_freq=10 --noise_type=none --buffer_size=3000000 --job=$SLURM_JOB_ID"
+  #     config: medium
+  #     ray: true
+  
+  #     scatter: true
+  #     seeds: 0
+  #     sweep:
+  #       "--rl": ["munchausen"]
+  #       "--rl_batch_size": [32]
+  #       "--rl_lr": [0.00025]
+  #       "--rl_steps": [1000]
+  #       "--backprop_es": [false] 
+  #       "--sgd_update": [false]
+  #       "--backprop_steps": [100]
+  #       "--actor_injection": [1]
+  #       "--sigma": [1]
+  #       "--es_seed": [42, 43, 44, 45, 46]
+  #       "--optim": ["sepcma"]
+  #       "--seeding": ["random"]
+  #       "--wandb": ["sureli/rayvolution"]
+  #       "--tag": ["lunar_lander_5M"]
+  #     args: £control
+
+  # - name: "Control Canonical"
+  #   hosts:
+  #     - pando
+  #   slurm:
+  #     job_name: "C-Canonical"
+  #     cmd: "python3 Rayvolution/simple.py --pop=96 --mu=48  --max_evals=10000000 --save_freq=10 --noise_type=none --buffer_size=3000000 --job=$SLURM_JOB_ID"
+  #     config: medium
+  #     ray: true
+  #     scatter: true
+  #     seeds: 0
+  #     sweep:
+  #       "--actor_injection": [0]
+  #       "--sigma": [1]
+  #       "--es_seed": [42, 43, 44]
+  #       "--optim": ["canonical --sigma=0.1"]
+  #       "--seeding": ["random"]
+  #       "--wandb": ["sureli/rayvolution"]
+  #       "--tag": ["lunar_lander_5M"]
+  #     args: £control
+
+  # - name: "Control ES-RL"
+  #   hosts:
+  #     - pando
+  #   slurm:
+  #     job_name: "C-ES-RL"
+  #     cmd: "python3 Rayvolution/simple.py --pop=96 --mu=48  --max_evals=10000000 --save_freq=10 --noise_type=none --buffer_size=3000000 --job=$SLURM_JOB_ID"
+  #     config: medium
+  #     ray: true
+  #     scatter: true
+  #     seeds: 0
+  #     sweep:
+  #       "--rl": ["munchausen"]
+  #       "--rl_batch_size": [32]
+  #       "--rl_lr": [0.00025]
+  #       "--rl_steps": [1000]
+  #       "--backprop_ind": [true] 
+  #       # "--sgd_update": [true]
+  #       "--backprop_steps": [100]
+  #       # "--actor_injection": [1, 0]
+  #       "--sigma": [1]
+  #       "--es_seed": [42, 43, 44]
+  #       "--optim": ["sepcma"]
+  #       "--seeding": ["random"]
+  #       "--wandb": ["sureli/rayvolution"]
+  #       "--tag": ["MC"]
+  #     args: £control
+
+  # - name: "Control Full"
+  #   hosts:
+  #     - pando
+  #   slurm:
+  #     job_name: "C-Full"
+  #     cmd: "python3 Rayvolution/simple.py --pop=96 --mu=48  --max_evals=10000000 --save_freq=10 --noise_type=none --buffer_size=3000000 --job=$SLURM_JOB_ID"
+  #     config: medium
+  #     ray: true
+  #     scatter: true
+  #     seeds: 0
+  #     sweep:
+  #       "--rl": ["munchausen"]
+  #       "--rl_batch_size": [32]
+  #       "--rl_lr": [0.00025]
+  #       "--rl_steps": [1000]
+  #       "--backprop_ind": [true] 
+  #       "--sgd_update": [true]
+  #       "--backprop_steps": [100]
+  #       "--actor_injection": [1, 0]
+  #       "--sigma": [1]
+  #       "--es_seed": [42, 43, 44]
+  #       "--optim": ["sepcma"]
+  #       "--seeding": ["random"]
+  #       "--wandb": ["sureli/rayvolution"]
+  #       "--tag": ["lunar_lander_5M"]
+  #     args: £control
+
+  # - name: "Control DQN"
+  #   hosts:
+  #     - pando
+  #   slurm:
+  #     job_name: "C-DQN"
+  #     cmd: "python3 Rayvolution/simple_rl.py --save_freq=10 --noise_type=none --job=$SLURM_JOB_ID"
+  #     config: medium
+  #     ray: false
+  #     scatter: true
+  #     seeds: 0
+  #     sweep:
+  #       "--rl": ["munchausen"]
+  #       "--replay_start_size": [5000]
+  #       "--epsilon_decay_frac": [0.02]
+  #       "--rl_batch_size": [32]
+  #       "--rl_lr": [0.00025]
+  #       "--epsilon_min": [0.1]
+  #       "--buffer_size": [100000]
+  #       "--es_seed": [42, 43, 44]
+  #       "--seeding": ["random"]
+  #       "--wandb": ["sureli/rayvolution"]
+  #       "--tag": ["MC_monday"]
+  #     args: £control

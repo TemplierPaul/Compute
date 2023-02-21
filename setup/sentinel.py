@@ -9,6 +9,8 @@ import argparse
 # None or empty to ignore notifications
 token = "bQYn8DuIiJSpmioPsxYDPl"
 
+MAX_PENDING = 30
+
 # To detect which command is run
 cmd_grep = "CMD"
 
@@ -32,7 +34,9 @@ ISSUE_CANCEL = {
     "unexpected system error": False,
     "Internal wandb error": False,
     "unrecognized arguments": True,
-    "GOAWAY": False,
+    "FALED": False,
+    # "Waiting for W&B process to finish... (success)": True,
+    # "GOAWAY": False,
     # "Error: Failure in initializing endpoint": False,
     # 'Returned "Error" (-1) instead of "Success"': False,
     # "An error occurred in MPI_Init_thread": False,
@@ -47,6 +51,10 @@ IGNORE_ISSUES = {
     "CANCELLED",
     "CondaValueError",
     "to see all help / error messages",
+    "wandb: Network error resolved",
+    "retrying request",
+    "internal database error",
+    "GOAWAY",
     # "slurmstepd",
     # 'Returned "Error" (-1) instead of "Success"',
     # "Error: Failure in initializing endpoint",
@@ -131,7 +139,8 @@ else:
 
 
 def get_jobs():
-    jobs_cmd = run(f"squeue -u {user} -o '%.8i %.6M %.6C'")[0]
+    pending_reason = None
+    jobs_cmd = run(f"squeue -u {user} -o '%.8i %.6M %.6C %R'")[0]
     squeue = jobs_cmd.split("\n")[1:-1]
     squeue = [i.strip() for i in squeue]
 
@@ -140,17 +149,27 @@ def get_jobs():
     running_jobs = []
     pending_jobs = []
     for s in squeue:
-        i, t, c = s.split()
+        try:
+            i, t, c, r = s.split(maxsplit=3)
+        except:
+            print("Error parsing squeue\n", s)
+            for i in s.split(maxsplit=3):
+                print(i)
+            raise ValueError
         time[i] = t
         cpus[i] = c
         if t == "0:00":
             pending_jobs.append(i)
+            if "Priority" not in r:
+                pending_reason = r
         else:
             running_jobs.append(i)
+    if pending_jobs and pending_reason is None:
+        pending_reason = "Priority"
 
     running_jobs.sort()
     pending_jobs.sort()
-    return running_jobs, pending_jobs, time, cpus
+    return running_jobs, pending_jobs, time, cpus, pending_reason
 
 
 def count_finished(job):
@@ -200,10 +219,10 @@ def get_issues(joblist):
         # print("Unknown issues")
 
 
-def render(running_jobs, pending_jobs, time, cpus, args):
+def render(running_jobs, pending_jobs, time, cpus, args, pending_reason):
     ignore = args.ignore
     wandb = args.wandb
-    clean = args.clean
+    clean = len(args.parse) > 0
 
     t = localtime()
     current_time = strftime("%H:%M:%S", t)
@@ -216,23 +235,22 @@ def render(running_jobs, pending_jobs, time, cpus, args):
     print(f"Idle CPU cores: {idle} / {total}")
     print("------------------------------------")
 
-    total_issues = sum([len(v) for v in ISSUES.values()])
+    total_issues = sum(len(v) for v in ISSUES.values())
     print(f"{total_issues} ISSUES FOUND")
     # print("------------------------------------")
 
-    if not ignore:
-        if total_issues > 0:
-            for issue_type in ISSUES:
-                print(f"> {issue_type}:")
-                warn(jobs=ISSUES[issue_type], err_type=issue_type)
-                for i in ISSUES[issue_type]:
-                    print(i)
-                    if issue_type in ISSUE_CANCEL and ISSUE_CANCEL[issue_type]:
-                        cancel(i)
+    if not ignore and total_issues > 0:
+        for issue_type in ISSUES:
+            print(f"> {issue_type}:")
+            warn(jobs=ISSUES[issue_type], err_type=issue_type)
+            for i in ISSUES[issue_type]:
+                print(i)
+                if issue_type in ISSUE_CANCEL and ISSUE_CANCEL[issue_type]:
+                    cancel(i)
 
     if len(running_jobs) > 0:
         print("------------------------------------")
-        print(f"RUNNING")
+        print("RUNNING")
         for i in running_jobs:
             if wandb:
                 out, err = run(
@@ -243,12 +261,18 @@ def render(running_jobs, pending_jobs, time, cpus, args):
             elif clean:
                 out, err = run(
                     f"cat {logs_dir}slurm.{i}.out | grep '{cmd_grep}'")
-                # Get env argument
+                out = out.replace("\n", "")
                 arg_list = []
-                for arg in args_to_parse:
-                    if arg in out:
-                        arg_list.append(out.split(arg)[1].split(" ")[
-                                        0].replace("=", ""))
+                for l in out.split("--")[1:]:
+                    if "=" in l:
+                        k, v = l.split("=")
+                    else:
+                        k = l
+                        v = "True"
+                    if k in args_to_parse:
+                        arg_list.append(v)
+                # Get env argument
+                # arg_list = [d[arg] for arg in args_to_parse if arg in d]
 
                 cmd = " | ".join(arg_list)
 
@@ -261,13 +285,14 @@ def render(running_jobs, pending_jobs, time, cpus, args):
                 warn([i], "Wrong platform as argument")
                 cancel(i)
             n_finished = count_finished(i)
-            print(f"{i} ({time[i]:>8}) [{cpus[i]:>3}]\t({n_finished})  {cmd}")
+            # print(f"{i} ({time[i]:>8}) [{cpus[i]:>3}]\t({n_finished})  {cmd}")
+            print(f"{i} ({time[i]:>8}) [{cpus[i]:>3}]  {cmd}")
 
     if len(pending_jobs) > 0:
         print("------------------------------------")
-        print(f"Pending")
-        if len(pending_jobs) + len(running_jobs) > 41:
-            pending_jobs = pending_jobs[:41 -
+        print(f"Pending {pending_reason}")
+        if len(pending_jobs) + len(running_jobs) > MAX_PENDING:
+            pending_jobs = pending_jobs[:MAX_PENDING -
                                         len(running_jobs) - len(pending_jobs)]
             for i in pending_jobs:
                 print(f"{i} ({'0:00':>8}) [{cpus[i]:>3}]\t  pending...")
@@ -280,25 +305,34 @@ def render(running_jobs, pending_jobs, time, cpus, args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Get sentinel arguments')
-    parser.add_argument('--freq', type=int, default=15)
-    parser.add_argument('--ignore', action='store_true')
-    parser.add_argument('--wandb', action='store_true')
-    parser.add_argument('--clean', action='store_true')
-    parser.add_argument('--headless', action='store_true')
+    parser.add_argument('--freq', type=int, default=15,
+                        help='Refresh frequency')
+    parser.add_argument('--ignore', action='store_true', help='Ignore issues')
+    parser.add_argument('--wandb', action='store_true',
+                        help='Show wandb commands')
+    parser.add_argument('--headless', action='store_true',
+                        help='Run without display')
+    # list of args to parse
+    parser.add_argument('--parse', nargs='+', default=[],
+                        help='List of args to parse, plots the command if empty')
     args = parser.parse_args()
+
+    args_to_parse = [f"{i}" for i in args.parse]
+    print(args_to_parse)
 
     sleep_time = args.freq
 
     while True:
         try:
             # print("Getting jobs...")
-            running_jobs, pending_jobs, time, cpus = get_jobs()
+            running_jobs, pending_jobs, time, cpus, pending_reason = get_jobs()
             # print("Getting issues...")
             if not args.ignore:
                 get_issues(running_jobs)
             # print("Rendering...")
             if not args.headless:
-                render(running_jobs, pending_jobs, time, cpus, args=args)
+                render(running_jobs, pending_jobs, time, cpus,
+                       args=args, pending_reason=pending_reason)
             sleep(sleep_time)
         except KeyboardInterrupt:
             print("Stopped")

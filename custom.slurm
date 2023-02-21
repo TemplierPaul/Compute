@@ -1,14 +1,13 @@
 #!/bin/bash         
-#SBATCH -J Optim
+#SBATCH -J Pytest
 
-#SBATCH --nodes=2
-#SBATCH --ntasks=2
-
-#SBATCH --ntasks-per-node=1
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
 
 #SBATCH --cpus-per-task=24
 
-#SBATCH --time=1-00:00:00
+#SBATCH --time=02:00:00
+#SBATCH --partition=debug
 
 #SBATCH --mail-user=paul.templier@isae-supaero.fr
 #SBATCH --mail-type=ALL
@@ -16,12 +15,14 @@
 module purge
 module load python/3.7
 module load libosmesa/17.2.3
+module load cuda/11.6
 cd /home/disc/p.templier/parallelpy
 source pyenv/bin/activate
 echo $(which python)
 cd
 
 
+export WANDB_DIR="/scratch/disc/p.templier/wandb_files"
 wandb enabled
 wandb online
 
@@ -51,12 +52,18 @@ for ((i = 1; i <= worker_num; i++)); do
   sleep 5
 done
 
+ray status
 
 
 
-echo CMD python3 Rayvolution/simple.py --pop=48 --mu=24 --job=$SLURM_JOB_ID --es_seed=$seed --max_frames=100000 --max_evals=100000 --save_freq=0 --env=himmelblau --optim=canonical --sampling=dynamic --eval_budget=5 --noise=500 --wandb=sureli/rayvolution --tag=same_noise_level
 
-for seed in 0 1 2 3 4 5 6 7 8 9
+echo CMD pytest -v --disable-pytest-warnings --color=yes Rayvolution/tests 
+
+for seed in 0
 do 
-python3 Rayvolution/simple.py --pop=48 --mu=24 --job=$SLURM_JOB_ID --es_seed=$seed --max_frames=100000 --max_evals=100000 --save_freq=0 --env=himmelblau --optim=canonical --sampling=dynamic --eval_budget=5 --noise=500 --wandb=sureli/rayvolution --tag=same_noise_level
+pytest -v --disable-pytest-warnings --color=yes Rayvolution/tests 
 done
+echo  "JOB FINISHED"
+sleep 5
+ray stop --force
+echo "RAY STOPPED"

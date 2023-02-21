@@ -14,16 +14,22 @@ class XP(Task):
         else:
             self.no_scatter()
 
-    def get_args(self, task):
+    def get_args(self, task):  # sourcery skip: assign-if-exp
         self.args_list = task["args"] if "args" in task else [""]
 
         if "sweep" in task:
             for arg, values in task["sweep"].items():
                 new_configs = []
-                for v in values:
-                    for c in self.args_list:
-                        n = f"{c} {arg} {v}" if isinstance(
-                            v, str) and " " in v else f"{c} {arg}={v}"
+                if "--" not in arg:
+                    arg = f"--{arg}"
+                for v in values: # Loop on the values to sweep over
+                    for c in self.args_list: # Loop on he previous configs
+                        if isinstance(v, str) and " " in v: # If the value is a string with spaces
+                            n = f"{c} {arg} {v}"  
+                        elif isinstance(v, bool):
+                            n = f"{c} {arg}" if v else c
+                        else:
+                            n = f"{c} {arg}={v}"
                         new_configs.append(n)
                 self.args_list = new_configs
 
@@ -54,11 +60,14 @@ class Slurm(XP):
 
     def run(self):
         for server, args in self.xp.items():
-            print(f"--- {len(args)} JOBS ON {server} ---")
+            print(f"\n\n--- {len(args)} JOBS ON {server} ---")
             for a in args:
                 print(f"Running on {server.alias}: {self.cfg['cmd']} {a}")
                 if "ray" in self.cfg and self.cfg["ray"]:
-                    s = make_ray_slurm(self.cfg, server, a)
+                    if "heterogeneous" in self.cfg and self.cfg["heterogeneous"]:
+                        s = make_ray_hetero_slurm(self.cfg, server, a)
+                    else:
+                        s = make_ray_slurm(self.cfg, server, a)
                 else:
                     s = make_slurm(self.cfg, server, a)
                 path = "Compute/remote.slurm"
@@ -71,6 +80,7 @@ class Slurm(XP):
                 # print(o)
                 if e != "":
                     print(e)
+                    print(s)
                 o = o.split("Submitted")[-1]
                 job_id = o.replace("batch job ",
                                    "").replace("\n", "").replace(" ", "")
@@ -90,7 +100,9 @@ class Tmux(XP):
 
     def run(self):
         for s, args in self.xp.items():
-            print(f"Running {args} on {s.alias}")
+            print(f"Running {len(args)} args on {s.alias}:")
+            for a in args:
+                print(a)                
 
             cd = f"cd {self.cfg['cd']} && " if "cd" in self.cfg else ""
 

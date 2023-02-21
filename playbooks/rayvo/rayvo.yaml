@@ -1,0 +1,322 @@
+inventory:
+  hosts: hosts.yaml
+  configs: configs.yaml
+
+variables:
+  "£hosts": 
+    - pando
+    # - calmip
+  "£atari":   "--job=$SLURM_JOB_ID --net=conv --episode_frames=27000 --stack_frames=4 --max_frames=1000000000 --max_evals=10000000"
+  "£minatar": "--job=$SLURM_JOB_ID --net=min --episode_frames=27000 --max_frames=100000000 --max_evals=10000000"
+  "£mujoco":  "--job=$SLURM_JOB_ID --episode_frames=1000 --max_frames=100000000 --max_evals=10000000"
+  "£procgen": "--net=impala --episode_frames=1000 --stack_frames=1 --max_frames=250000000 --max_evals=10000000 --job=$SLURM_JOB_ID"
+
+tasks:
+  # - name: "Git push Rayvo"
+  #   hosts:
+  #     - localhost
+  #   git:
+  #     action: push
+  #     path: "/home/disc/p.templier/Documents/Doctorat/Dev/Rayvolution"
+
+  # - name: "Git pull"
+  #   hosts:
+  #     - pando
+  #     - calmip
+  #   git:
+  #     action: pull
+  #     path: "~/Rayvolution"
+
+  # - name: "Run Atari"
+  #   hosts:
+  #     # - calmip
+  #     - pando
+  #   slurm:
+  #     job_name: "Atari"
+  #     cmd: "python3 Rayvolution/simple.py £atari --pop=24 --mu=12 --max_frames=1000000000 --max_evals=10000000"
+  #     config: sepcma
+  #     ray: true
+  #     scatter: true
+  #     seeds: 0
+  #     sweep:
+  #       "--optim": ["canonical", "sepcma"]
+  #     args:
+  #       - "--env=Pong-v0"
+  #       - "--env=Alien-v0"
+
+  # - name: "Run Procgen 48"
+  #   hosts:
+  #     # - calmip
+  #     - pando
+  #   slurm:
+  #     job_name: "Procgen"
+  #     cmd: "python3 Rayvolution/simple.py £procgen --pop=100 --mu=15 --tag=procgen_large"
+  #     config: procgen_light
+  #     ray: true
+  #     scatter: false
+  #     seeds: 0
+  #     sweep:
+  #       "--optim": 
+  #         - sepcma
+  #         - canonical
+  #       "--seeding": 
+  #         - random
+  #         - unique
+  #         # - generation
+  #       "--wandb": ["sureli/rayvolution"]
+  #     args:
+  #       - "--env=bigfish-easy"
+  #       - "--env=bossfight-easy"
+  #       - "--env=starpilot-easy"
+  #       # - "--env=leaper-easy"
+
+  # - name: "Run Procgen 96"
+  #   hosts:
+  #     # - calmip
+  #     - pando
+  #   slurm:
+  #     job_name: "Procgen"
+  #     cmd: "python3 Rayvolution/simple.py £procgen --pop=96 --mu=12 --tag=big_pop"
+  #     config: procgen_light
+  #     ray: true
+  #     scatter: false
+  #     seeds: 0
+  #     sweep:
+  #       "--optim": 
+  #         - sepcma
+  #         - canonical
+  #       "--seeding": 
+  #         - random
+  #         - unique
+  #         # - generation
+  #       "--wandb": ["sureli/rayvolution"]
+  #     args:
+  #       - "--env=bigfish-easy"
+  #       - "--env=bossfight-easy"
+  #       # - "--env=starpilot-easy"
+  #       # - "--env=leaper-easy"
+
+  # - name: "Run minatar"
+  #   hosts:
+  #     - pando
+  #   slurm:
+  #     job_name: "Minatar"
+  #     cmd: "python3 Rayvolution/simple.py £minatar --pop=48 --mu=12 --tag=minatar"
+  #     config: mujoco
+  #     ray: true
+  #     scatter: false
+  #     seeds: 0
+  #     sweep:
+  #       "--optim": 
+  #         - sepcma
+  #         - canonical
+  #       "--seeding": 
+  #         - random
+  #         - unique
+  #         # - generation
+  #       "--wandb": ["sureli/rayvolution"]
+  #     args:
+  #       - "--env=min-breakout"
+  #       - "--env=min-seaquest"
+  #       - "--env=min-asterix"
+  #       - "--env=min-freeway"
+  #       - "--env=min-space_invaders"
+
+  # - name: "Optim"
+  #   hosts:
+  #     - pando
+  #   slurm:
+  #     job_name: "Optim"
+  #     cmd: "python3 Rayvolution/simple.py --pop=24 --mu=12 --job=$SLURM_JOB_ID --max_frames=1000000 --max_evals=1000000 --save_freq=0"
+  #     config: light
+  #     ray: true
+  #     scatter: false
+  #     seeds: 0
+  #     sweep:
+  #       "--optim": 
+  #         - canonical
+  #         - sepcma
+  #         # - cma
+  #       "--noise": [0.1, 0.5] #[1, 10, 50]
+  #       "--noise_type": 
+  #         - gaussian
+  #         - uniform 
+  #         - bimodal
+  #         # - none
+  #       "--sampling":
+  #         - default
+  #         - bigpop
+  #         - dynamic
+  #         # - mc
+  #         - static
+  #         # - smc
+  #       "--es_seed": [1, 2]
+  #       "--eval_budget": [5]
+  #       "--batch_rs": [1]
+  #       # "--mc_epsilon_decay": [0.99, 0.95]
+  #       "--mc_samples": [25]
+  #       "--wandb": ["sureli/rayvolution"]
+  #       "--tag": ["noise_factor"]
+  #     args:
+  #       # - "--env=rastrigin"
+  #       - "--env=rosen --noise_factor=1000"
+  #       # - "--env=himmelblau" 
+ 
+
+
+  # - name: "MC"
+  #   hosts:
+  #     - pando
+  #   slurm:
+  #     job_name: "MC"
+  #     cmd: "python3 Rayvolution/simple.py --pop=24 --mu=12 --job=$SLURM_JOB_ID --max_frames=1000000 --max_evals=1000000 --save_freq=0"
+  #     config: medium
+  #     ray: true
+  #     scatter: false
+  #     seeds: 0
+  #     sweep:
+  #       "--optim": 
+  #         - canonical
+  #         # - sepcma
+  #         # - cma
+  #       "--noise": [0.1, 1, 10]
+  #       "--noise_type": 
+  #         - gaussian
+  #         # - uniform 
+  #         # - bimodal
+  #       "--sampling":
+  #         - mc
+  #         # - default
+  #         - dynamic
+  #         # - static
+  #         # - smc
+  #       "--es_seed": [0, 1]
+  #       "--eval_budget": [5]
+  #       "--batch_rs": [1, 5]
+  #       # "--mc_epsilon_decay": [0.99, 0.95]
+  #       "--mc_samples": [25]
+  #       "--wandb": ["sureli/rayvolution"]
+  #       "--tag": ["fast_mc"]
+  #     args:
+  #       - "--env=rastrigin --noise_factor=100"
+  #       # - "--env=rosen --noise_factor=1000"
+  #       # - "--env=himmelblau" 
+
+
+  - name: "Run Procgen long"
+    hosts:
+      # - calmip
+      - pando
+    slurm:
+      job_name: "Procgen"
+      cmd: "python3 Rayvolution/simple.py £procgen --pop=96 --mu=24"
+      config: long
+      ray: true
+      scatter: false
+      seeds: 0
+      sweep:
+        "--optim": 
+          - canonical
+          # - sepcma
+        "--seeding": 
+          - random
+          # - unique
+          # - generation
+        "--sampling":
+          - mc
+          # - dynamic
+          # - default
+          # - static
+          # - smc
+        "--es_seed": [1]
+        "--eval_budget": [20]
+        "--batch_rs": [10]
+        "--mc_samples": [25]
+        "--noise_type": 
+          - none
+        "--wandb": ["sureli/rayvolution"]
+        "--tag": ["procgen-long"]
+      args:
+        - "--env=bigfish-easy"
+        # - "--env=starpilot-easy"
+        # - "--env=bossfight-easy"
+        # - "--env=bigfish-hard"
+        # - "--env=leaper-easy"
+
+
+  # - name: "Run Atari"
+  #   hosts:
+  #     - pando
+  #   slurm:
+  #     job_name: "Atari"
+  #     cmd: "python3 Rayvolution/simple.py £atari --pop=400 --mu=50 "
+  #     config: atari_half
+  #     ray: true
+  #     scatter: false
+  #     seeds: 0
+  #     sweep:
+  #       "--optim": 
+  #         - canonical
+  #         # - sepcma
+  #       "--seeding": 
+  #         - random
+  #         # - unique
+  #         # - generation
+  #       "--sampling":
+  #         - default
+  #         - mc
+  #         - dynamic
+  #         # - static
+  #         # - smc
+  #       "--es_seed": [1]
+  #       "--eval_budget": [5]
+  #       "--batch_rs": [5]
+  #       "--mc_samples": [25]
+  #       "--noise_type": 
+  #         - none
+  #       "--wandb": ["sureli/rayvolution"]
+  #       "--tag": ["atari-mc"]
+  #     args:
+  #       - "--env=Pong-v0"
+  #       - "--env=Alien-v0"
+
+
+  # - name: "Run Mujoco"
+  #   hosts:
+  #     - pando
+  #   slurm:
+  #     job_name: "Mujoco"
+  #     cmd: "python Rayvolution/simple.py --pop=48 --mu=12  £mujoco"
+  #     config: mujoco
+  #     ray: true
+  #     scatter: false
+  #     seeds: 0
+  #     sweep:
+  #       "--optim": 
+  #         - canonical
+  #         # - sepcma
+  #       "--seeding": 
+  #         - random
+  #         # - unique
+  #         # - generation
+  #       "--sampling":
+  #         - mc
+  #         - dynamic
+  #         - default
+  #         - static
+  #         # - smc
+  #       "--es_seed": [1]
+  #       "--eval_budget": [5]
+  #       "--batch_rs": [5]
+  #       "--mc_samples": [25]
+  #       "--noise_type": 
+  #         - none
+  #       "--wandb": ["sureli/rayvolution"]
+  #       "--tag": ["mujoco"]
+  #     args:
+  #       - "--net=mujoco-light --env=HalfCheetah-v2"
+  #       - "--net=mujoco-light --env=InvertedDoublePendulum-v2"  
+  #       - "--net=mujoco-discrete --env=Swimmer-v2"
+  #       - "--net=mujoco-discrete --env=Hopper-v2"
+  #       - "--net=mujoco-light --env=InvertedPendulum-v2"
+  #       - "--net=mujoco-light --env=Walker2d-v2"

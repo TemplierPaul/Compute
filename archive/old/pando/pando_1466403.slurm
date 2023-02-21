@@ -1,0 +1,61 @@
+#!/bin/bash         
+#SBATCH -J TD3_Injection
+
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+
+#SBATCH --cpus-per-task=24
+
+#SBATCH --time=1-00:00:00
+
+#SBATCH --mail-user=paul.templier@isae-supaero.fr
+#SBATCH --mail-type=ALL
+
+module purge
+module load python/3.7
+module load libosmesa/17.2.3
+module load cuda/11.6
+cd /home/disc/p.templier/parallelpy
+source pyenv/bin/activate
+echo $(which python)
+cd
+
+
+wandb enabled
+wandb online
+
+redis_password=$(uuidgen)
+export redis_password
+
+nodes=$(scontrol show hostnames "$SLURM_JOB_NODELIST") # Getting the node names
+nodes_array=($nodes)
+
+node_1=${nodes_array[0]}
+ip=$(srun --nodes=1 --ntasks=1 -w "$node_1" hostname --ip-address) # making redis-address
+
+port=6379
+ip_head=$ip:$port
+export ip_head
+echo "IP Head: $ip_head"
+
+echo "STARTING HEAD at $node_1"
+srun --nodes=1 --ntasks=1 -w "$node_1"   ray start --head --node-ip-address="$ip" --port=$port --redis-password="$redis_password" --block &
+sleep 30
+
+worker_num=$((SLURM_JOB_NUM_NODES - 1)) #number of nodes other than the head node
+for ((i = 1; i <= worker_num; i++)); do
+  node_i=${nodes_array[$i]}
+  echo "STARTING WORKER $i at $node_i"
+  srun --nodes=1 --ntasks=1 -w "$node_i" ray start --address "$ip_head" --redis-password="$redis_password" --block &
+  sleep 5
+done
+
+
+
+
+echo CMD python3 Rayvolution/simple.py --job=$SLURM_JOB_ID --episode_frames=1000 --max_frames=100000000 --max_evals=10000000 --pop=24 --mu=12  --max_evals=10000000 --save_freq=10 --sigma=0.1 --noise_type=none --seeding=random --buffer_size=1000000 --job=$SLURM_JOB_ID --net=mujoco-light --env=InvertedPendulum-v2 --rl=td3 --rl_steps=1000 --rl_lr=0.0001 --rl_batch_size=4096 --backprop_es=0 --actor_injection=1 --es_seed=0 --optim=sepcma --wandb=sureli/rayvolution --tag=injection
+
+for seed in 0
+do 
+python3 Rayvolution/simple.py --job=$SLURM_JOB_ID --episode_frames=1000 --max_frames=100000000 --max_evals=10000000 --pop=24 --mu=12  --max_evals=10000000 --save_freq=10 --sigma=0.1 --noise_type=none --seeding=random --buffer_size=1000000 --job=$SLURM_JOB_ID --net=mujoco-light --env=InvertedPendulum-v2 --rl=td3 --rl_steps=1000 --rl_lr=0.0001 --rl_batch_size=4096 --backprop_es=0 --actor_injection=1 --es_seed=0 --optim=sepcma --wandb=sureli/rayvolution --tag=injection
+done

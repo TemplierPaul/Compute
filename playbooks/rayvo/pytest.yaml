@@ -1,0 +1,25 @@
+inventory:
+  hosts: hosts.yaml
+  configs: configs.yaml
+
+variables:
+  # "£hosts": 
+    # - pando
+    # - calmip
+  "£atari":   "--job=$SLURM_JOB_ID --net=conv --episode_frames=27000 --stack_frames=4 --max_frames=1000000000 --max_evals=10000000"
+  "£minatar": "--job=$SLURM_JOB_ID --net=min --episode_frames=27000 --max_frames=100000000 --max_evals=10000000"
+  "£mujoco":  "--job=$SLURM_JOB_ID --episode_frames=1000 --max_frames=100000000 --max_evals=10000000"
+  "£procgen": "--net=impala --episode_frames=1000 --stack_frames=1 --max_frames=250000000 --max_evals=10000000 --job=$SLURM_JOB_ID"
+
+tasks:
+  - name: "Pytest"
+    hosts:
+      # - calmip
+      - pando
+    slurm:
+      job_name: "Pytest" 
+      cmd: "pytest -v --disable-pytest-warnings --color=yes Rayvolution/tests"
+      config: pytest
+      ray: true
+      scatter: false
+      seeds: 0

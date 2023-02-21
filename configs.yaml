@@ -23,20 +23,49 @@ test:
   partition:
     pando: debug
 
+pytest:
+  cpus: 12
+  time: 02:00:00
+  partition:
+    pando: debug
+  gpu: 0
+
+pytest_gpu:
+  cpus: 12
+  time: 05:00:00
+  partition:
+    pando: gpu
+  gpu: 1
+
 light:
+  cpus:
+    pando: 12
+    calmip: 6
+    localhost: 8
+    ninox: 16
+  partition:
+    pando: gpucpu
+  time: 02:00:00
+
+medium:
   cpus:
     pando: 24
     calmip: 36
     localhost: 8
     ninox: 16
+  # partition:
+  #   pando: gpucpu
   time: 1-00:00:00
 
-medium:
+gpu:
   cpus:
-    pando: 48
-    calmip: 72
+    pando: 6
+    calmip: 6
     localhost: 8
     ninox: 16
+  partition:
+    pando: gpu
+  gpu: 1
   time: 1-00:00:00
 
 heavy:
@@ -51,8 +80,8 @@ heavy:
 
 long:
   cpus:
-    pando: 24
-    calmip: 36
+    pando: 96
+    calmip: 72
     localhost: 8
     ninox: 16
   partition:
@@ -91,6 +120,24 @@ raytest:
     pando: short
   time: 00:10:00
 
+minatar:
+  cpus:
+    pando: 48
+    calmip: 72
+    localhost: 8
+    ninox: 16
+  # partition:
+    # pando: gpucpu
+  time: 1-00:00:00
+
+minatar_hetero:
+  cpus:
+    pando: 96
+    calmip: 72
+    localhost: 8
+    ninox: 16
+  gpu: 1
+  time: 1-00:00:00
 
 atari:
   cpus:
@@ -102,6 +149,17 @@ atari:
     pando: medium
   time: 1-00:00:00
 
+atari_hetero:
+  cpus:
+    pando: 384
+    calmip: 396
+    localhost: 8
+    ninox: 16
+  partition:
+    pando: medium
+  gpu: 1
+  time: 1-00:00:00
+
 atari_half:
   cpus:
     pando: 192
@@ -109,8 +167,8 @@ atari_half:
     localhost: 8
     ninox: 16
   partition:
-    pando: medium
-  time: 06:00:00
+    pando: gpucpu
+  time: 0-12:00:00
 
 atari_full:
   cpus:
@@ -131,6 +189,16 @@ procgen:
   partition:
     pando: medium
   time: 1-00:00:00
+
+procgen_long:
+  cpus:
+    pando: 192
+    calmip: 180
+    localhost: 8
+    ninox: 16
+  partition:
+    pando: long
+  time: 6-00:00:00
 
 procgen_light:
   cpus:

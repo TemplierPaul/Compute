@@ -15,7 +15,7 @@ tasks:
   # - name: "Test srun normal"
   #   scatter: False
   #   hosts:
-  #     - calmip
+  #     # - calmip
   #     - pando
   #   srun:
   #     job_name: "BERL"
@@ -44,21 +44,21 @@ tasks:
   #       - "args1"
   #       - "args2"
 
-  # - name: "Test tmux normal"
-  #   scatter: False
-  #   hosts:
-  #     - sureli1
-  #     - sureli2
-  #   tmux:
-  #     job_name: "BERL"
-  #     config: atari_half
-  #     cmd: "echo hello"
-  #     seeds: 0 1
-  #     sweep:
-  #       "--test": ["test1", "test2"]
-  #     args:
-  #       - "args1"
-  #       - "args2"
+  - name: "Test tmux normal"
+    scatter: True
+    hosts:
+      - localhost
+    tmux:
+      job_name: "BERL"
+      config: atari_half
+      cmd: "echo hello"
+      seeds: 0 1
+      sweep:
+        "--test": ["test1", "test2"]
+        "--boolean_arg": [true, false]
+      args:
+        - "args1"
+        - "args2"
 
   # - name: "Test tmux scatter"
   #   scatter: True
@@ -76,12 +76,12 @@ tasks:
   #       - "args1"
   #       - "args2"
 
-  - name: "Test ray"
-    hosts:
-      - pando
-    slurm:
-      job_name: "Ray"
-      cmd: "python -u ./test_ray.py"
-      config: raytest
-      ray: true
-      seeds: 0
+  # - name: "Test ray"
+  #   hosts:
+  #     - pando
+  #   slurm:
+  #     job_name: "Ray"
+  #     cmd: "python -u ./test_ray.py"
+  #     config: raytest
+  #     ray: true
+  #     seeds: 0
