@@ -7,6 +7,9 @@ import argparse
 # test
 # IFTTT webhooks token: https://ifttt.com/maker_webhooks
 # None or empty to ignore notifications
+
+# get token from env 
+# token = os.environ.get('IFTTT_TOKEN')
 token = "bQYn8DuIiJSpmioPsxYDPl"
 
 MAX_PENDING = 30
@@ -14,11 +17,14 @@ MAX_PENDING = 30
 # To detect which command is run
 cmd_grep = "CMD"
 
+REQUEUE_FAILED = True
+
 args_to_parse = ['--env', '--optim', '--seeding', "--pop"]
 
 # Keys are grepped in .err files
 # Value: bool, if True cancels the run when the error is found in .err
 ISSUE_CANCEL = {
+    "Exception in thread SockSrvRdThr": True,
     "MPI.Exception": True,
     "_pickle.UnpicklingError": True,
     "Disk quota exceeded": True,
@@ -35,6 +41,8 @@ ISSUE_CANCEL = {
     "Internal wandb error": False,
     "unrecognized arguments": True,
     "FALED": False,
+    "slow_operation_alarm.cc": True, # Jax slow operation
+    "CUDA_ERROR_OUT_OF_MEMORY": False,
     # "Waiting for W&B process to finish... (success)": True,
     # "GOAWAY": False,
     # "Error: Failure in initializing endpoint": False,
@@ -55,6 +63,7 @@ IGNORE_ISSUES = {
     "retrying request",
     "internal database error",
     "GOAWAY",
+    "This warning will be replaced by an error",
     # "slurmstepd",
     # 'Returned "Error" (-1) instead of "Success"',
     # "Error: Failure in initializing endpoint",
@@ -76,8 +85,32 @@ def run(cmd):
         cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     return sp.stdout.decode('utf-8'), sp.stderr.decode('utf-8')
 
+def clear_core():
+    out, err = run("rm core.*")
+    return out, err
 
 def clear(): return os.system('clear')
+
+def make_red(text):
+    return "\033[1;31;40m" + text + "\033[0m"
+
+def make_green(text):
+    return "\033[1;32;40m" + text + "\033[0m"
+
+def make_yellow(text):
+    return "\033[1;33;40m" + text + "\033[0m"
+
+def make_blue(text):
+    return "\033[1;34;40m" + text + "\033[0m"
+
+def make_magenta(text):
+    return "\033[1;35;40m" + text + "\033[0m"
+
+def make_cyan(text):
+    return "\033[1;36;40m" + text + "\033[0m"
+
+def make_white(text):
+    return "\033[1;37;40m" + text + "\033[0m"
 
 
 # clear()
@@ -87,6 +120,11 @@ def cancel(i):
     out, err = run(f"scancel {i}")
     print(f"Canceling job {i} | {out} {err}")
 
+def requeue(i):
+    out, err = run(f"scontrol requeue {i}")
+    print(f"Requeuing job {i} | {out} {err}")
+
+stop = requeue if REQUEUE_FAILED else cancel
 
 WARNED = {
     k: [] for k in ISSUE_CANCEL.keys()
@@ -112,7 +150,7 @@ def warn(jobs, err_type):
 
     stopped = ""
     if err_type in ISSUE_CANCEL and ISSUE_CANCEL[err_type]:
-        stopped = " (Stopped)"
+        stopped = " (Requeued)" if REQUEUE_FAILED else " (Canceled)"
 
     json = {
         "value1": HOST,
@@ -140,7 +178,7 @@ else:
 
 def get_jobs():
     pending_reason = None
-    jobs_cmd = run(f"squeue -u {user} -o '%.8i %.6M %.6C %R'")[0]
+    jobs_cmd = run(f"squeue --all -u {user} -o '%.8i %.6M %.6C %R'")[0]
     squeue = jobs_cmd.split("\n")[1:-1]
     squeue = [i.strip() for i in squeue]
 
@@ -188,6 +226,27 @@ def get_free_nodes():
     allocated, idle, other, total = mpiout.split("/")
     return idle, total
 
+def get_free_gpus():
+    mpiout, mpierr = run("squeue --all -h -t R -O gres | grep gpu|wc -l")
+    idle = int(mpiout)
+    if HOST == "pando":
+        mpiout, mpierr = run('sinfo --Node --format="%.10P  %.10G" | grep -vE "gpucpu|visu" | grep gpu:')
+    else:
+        mpiout, mpierr = run("sinfo --Node --Format=gres | grep gpu:")
+    gpus = mpiout.split("gpu")
+    max_gpu = 0
+    for g in gpus:
+        if ":" in g:
+            g = g.split(":")[-1]
+            max_gpu += int(g)
+    max_gpu = max_gpu    
+    return max_gpu - idle, max_gpu
+
+def get_pending_gpus():
+    command = f"squeue --all --states=PD | grep gpu | grep -v {user[:8]}"
+    mpiout, mpierr = run(command)
+    pending = mpiout.count("0:00")
+    return pending
 
 def get_issues(joblist):
     global ISSUES
@@ -222,21 +281,46 @@ def get_issues(joblist):
 def render(running_jobs, pending_jobs, time, cpus, args, pending_reason):
     ignore = args.ignore
     wandb = args.wandb
+    config = args.config
     clean = len(args.parse) > 0
 
     t = localtime()
     current_time = strftime("%H:%M:%S", t)
-    clear()
+    if not args.debug:
+        clear()
     print(f"{current_time} - Logged as {user} on {HOST}")
     print("------------------------------------")
-    print(f"{len(running_jobs)} Running jobs")
-    print(f"{len(pending_jobs)} Pending jobs")
+    r_j = f"{len(running_jobs)} Running jobs"
+    if len(running_jobs) > 0:
+        r_j = make_green(r_j)
+    p_j = f"{len(pending_jobs)} Pending jobs"
+    if len(pending_jobs) > 0:
+        p_j = make_red(p_j)
+    print(r_j)
+    print(p_j)
+
     idle, total = get_free_nodes()
     print(f"Idle CPU cores: {idle} / {total}")
-    print("------------------------------------")
+    idle, total = get_free_gpus()
+    s = f"Idle GPUs: {idle} / {total}"
+    if idle > 0:
+        s = make_green(s)
+    else:
+        s = make_red(s)
+    print(s)
+    pending = get_pending_gpus()
+    if pending > 0:
+        pending = f"Requested GPUs: {pending}"
+        pending = make_red(pending)
+    else:
+        pending = f"Requested GPUs: {pending}"
+        pending = make_green(pending)
+    print(pending)
 
     total_issues = sum(len(v) for v in ISSUES.values())
-    print(f"{total_issues} ISSUES FOUND")
+    if total_issues > 0:
+        print("------------------------------------")
+        print(f"{total_issues} ISSUES FOUND")
     # print("------------------------------------")
 
     if not ignore and total_issues > 0:
@@ -246,7 +330,7 @@ def render(running_jobs, pending_jobs, time, cpus, args, pending_reason):
             for i in ISSUES[issue_type]:
                 print(i)
                 if issue_type in ISSUE_CANCEL and ISSUE_CANCEL[issue_type]:
-                    cancel(i)
+                    stop(i)
 
     if len(running_jobs) > 0:
         print("------------------------------------")
@@ -258,6 +342,49 @@ def render(running_jobs, pending_jobs, time, cpus, args, pending_reason):
                 # cmd = out
                 cmd = out.replace("wandb run: ", " ").replace("\n", "")
                 cmd = f'WandB: {cmd}'
+            elif config:
+                if args.max_fit:
+                    try:
+                        out, err = run(
+                            f"cat {logs_dir}slurm.{i}.err | grep 'Gen:'")
+                        out = out.split("\r")[-1]
+                        max_fit = out.split("max_fitness: ")[1].split(",")[0]
+                        max_fit = f" -> {float(max_fit):>.0f}"
+                    except:
+                        max_fit = ""
+                else:
+                    max_fit = ""
+
+                out, err = run(
+                    f"cat {logs_dir}slurm.{i}.out")
+                try:
+                    config_cmd = out.split("Initialized wandb")
+                    if len(config_cmd) == 0:
+                        raise ValueError
+                    config_cmd = config_cmd[0]
+                    config_cmd = config_cmd.split('\n')[-2]
+                    config_cmd = make_green(config_cmd)
+                    try:
+                        net = out.split("Policy network MLP")[1].split("\n")[0]
+                        net = make_yellow(net)
+                    except:
+                        net = ""
+                    try:
+                        critic = out.split("Critic network MLP")[1].split("\n")[0]
+                        critic = make_yellow(critic)
+                    except:
+                        critic = ""
+                    run_cmd = out.split(cmd_grep)[1].split("\n")[0]
+                    env = run_cmd.split("--env=")[1].split(" ")[0]
+                    env = make_red(env)
+                    seed = run_cmd.split("--seed=")[1].split(" ")[0]
+                    seed = make_red(seed)
+                    tag = run_cmd.split("--tag=")[1].split(" ")[0]
+                    tag = make_blue(tag)
+                    # print(env)
+                    cmd = f"{env:<15} {seed:<2} [{tag}] {max_fit} \n{config_cmd} - {net} | {critic}"
+                except:
+                    cmd = "Starting..."
             elif clean:
                 out, err = run(
                     f"cat {logs_dir}slurm.{i}.out | grep '{cmd_grep}'")
@@ -286,13 +413,15 @@ def render(running_jobs, pending_jobs, time, cpus, args, pending_reason):
                 cancel(i)
             n_finished = count_finished(i)
             # print(f"{i} ({time[i]:>8}) [{cpus[i]:>3}]\t({n_finished})  {cmd}")
-            print(f"{i} ({time[i]:>8}) [{cpus[i]:>3}]  {cmd}")
+            run_data = f" > {i} ({time[i]:>8}) [{cpus[i]:>3}]"
+            # run_data = make_blue(run_data)
+            print(f"{run_data} \n{cmd}")
 
     if len(pending_jobs) > 0:
         print("------------------------------------")
         print(f"Pending {pending_reason}")
-        if len(pending_jobs) + len(running_jobs) > MAX_PENDING:
-            pending_jobs = pending_jobs[:MAX_PENDING -
+        if len(pending_jobs) + len(running_jobs) > args.pending:
+            pending_jobs = pending_jobs[:args.pending -
                                         len(running_jobs) - len(pending_jobs)]
             for i in pending_jobs:
                 print(f"{i} ({'0:00':>8}) [{cpus[i]:>3}]\t  pending...")
@@ -310,8 +439,16 @@ if __name__ == "__main__":
     parser.add_argument('--ignore', action='store_true', help='Ignore issues')
     parser.add_argument('--wandb', action='store_true',
                         help='Show wandb commands')
+    parser.add_argument('--config', action='store_true',
+                        help='Get config field')
     parser.add_argument('--headless', action='store_true',
                         help='Run without display')
+    parser.add_argument('--debug', action='store_true',
+                        help='One loop, no clear')
+    parser.add_argument('--pending', type=int, default=MAX_PENDING,
+                        help='Max pending jobs')
+    parser.add_argument('--max_fit', action='store_true',
+                        help='Get max fitness')
     # list of args to parse
     parser.add_argument('--parse', nargs='+', default=[],
                         help='List of args to parse, plots the command if empty')
@@ -324,6 +461,7 @@ if __name__ == "__main__":
 
     while True:
         try:
+            out, err = clear_core()
             # print("Getting jobs...")
             running_jobs, pending_jobs, time, cpus, pending_reason = get_jobs()
             # print("Getting issues...")
@@ -333,6 +471,8 @@ if __name__ == "__main__":
             if not args.headless:
                 render(running_jobs, pending_jobs, time, cpus,
                        args=args, pending_reason=pending_reason)
+            if args.debug:
+                break
             sleep(sleep_time)
         except KeyboardInterrupt:
             print("Stopped")
